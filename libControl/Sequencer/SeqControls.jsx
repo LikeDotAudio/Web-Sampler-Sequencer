@@ -12,14 +12,15 @@ window.SeqControls = ({
     const STEP_OPTIONS = [4, 8, 16, 32, 64];
 
     return (
-        <div style={{ display: 'flex', gap: '10px', marginBottom: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+    const playbackControls = (
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             <SeqButton
                 label={recording ? '● Rec ●' : '● Rec'}
                 onClick={toggleRecording}
                 active={recording}
                 color="#5a1f1f" activeColor="#d32f2f" textColor="#fff"
                 title="Record: while playing, hit the Sampler pads to write them into the pattern at their velocity"
-                style={{ padding: '6px 15px', border: recording ? '1px solid #ff8a80' : '1px solid #722', boxShadow: recording ? '0 0 8px rgba(211,47,47,0.85)' : 'none' }}
+                style={{ padding: '4px 12px', fontSize: '13px', border: recording ? '1px solid #ff8a80' : '1px solid #722', boxShadow: recording ? '0 0 8px rgba(211,47,47,0.85)' : 'none' }}
             />
             <SeqKnob
                 value={Math.round(clickVol * 100)} min={0} max={100} def={80}
@@ -31,13 +32,22 @@ window.SeqControls = ({
                 label={isPlaying ? '■ Stop' : '► Play'}
                 onClick={togglePlayback}
                 color={isPlaying ? '#ffb300' : '#388e3c'} textColor="#fff"
-                style={{ padding: '6px 15px', border: 'none' }}
+                style={{ padding: '4px 12px', fontSize: '13px', border: 'none' }}
             />
-            <div style={{ marginLeft: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ marginLeft: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span style={{ fontSize: '12px', color: '#aaa' }}>Tempo:</span>
                 <SeqKnob value={bpm} min={40} max={300} def={120} onChange={setBpm} label="BPM" flash={tapping} title="Drag up/down or scroll to change BPM" />
-                <SeqButton label="TAP" onClick={tapTempo} active={tapping} title="Tap to set tempo" style={{ padding: '6px 10px' }} />
+                <SeqButton label="TAP" onClick={tapTempo} active={tapping} title="Tap to set tempo" style={{ padding: '4px 8px', fontSize: '12px' }} />
             </div>
+        </div>
+    );
+
+    return (
+        <div style={{ display: 'flex', gap: '10px', marginBottom: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+            {document.getElementById('seq-footer-slot') 
+                ? ReactDOM.createPortal(playbackControls, document.getElementById('seq-footer-slot'))
+                : playbackControls}
+
             <div style={{ marginLeft: '15px', display: 'flex', alignItems: 'flex-start', gap: '5px' }}>
                 <span style={{ fontSize: '12px', color: '#aaa', marginTop: '6px' }}>Steps:</span>
                 {STEP_OPTIONS.map((n, i) => (

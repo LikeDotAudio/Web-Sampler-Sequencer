@@ -21,7 +21,45 @@ const Mixer = () => {
         setSolos({});
     };
 
+    const meterRefs = React.useRef([]);
+    const stateRef = React.useRef({ trackVol, mutes, solos, isAnySolo });
+    React.useEffect(() => {
+        stateRef.current = { trackVol, mutes, solos, isAnySolo };
+    }, [trackVol, mutes, solos, isAnySolo]);
+
+    React.useEffect(() => {
+        const onPlay = (e) => {
+            const idx = e.detail && e.detail.idx;
+            if (idx == null) return;
+            const el = meterRefs.current[idx];
+            if (!el) return;
+            
+            const { trackVol: tVol, mutes: tMutes, solos: tSolos, isAnySolo: tAnySolo } = stateRef.current;
+            const vol = tVol[idx] == null ? 1 : tVol[idx];
+            
+            if (tMutes[idx] || (tAnySolo && !tSolos[idx]) || vol === 0) return;
+            
+            const i = Math.max(0, Math.min(1, ((e.detail.velocity || 0) / 100) * vol));
+            const targetHeight = (1 - i) * 100;
+            
+            el.style.transition = 'none';
+            el.style.height = `${targetHeight}%`;
+            
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    if (el) {
+                        el.style.transition = 'height 0.3s cubic-bezier(0.2, 1, 0.3, 1)';
+                        el.style.height = '100%';
+                    }
+                });
+            });
+        };
+        window.addEventListener('oa-drum-play', onPlay);
+        return () => window.removeEventListener('oa-drum-play', onPlay);
+    }, []);
+
     const panLabel = v => Math.abs(v) < 0.02 ? "C" : (v < 0 ? "L" + Math.round(-v * 100) : "R" + Math.round(v * 100));
+
 
     return (
         <div style={{ display: 'flex', gap: '6px', padding: '16px', overflowX: 'auto', alignItems: 'stretch', backgroundColor: 'var(--bg)' }}>
@@ -60,7 +98,7 @@ const Mixer = () => {
                                 width: '10px', borderRadius: '3px', position: 'relative', overflow: 'hidden', border: '1px solid #0008',
                                 background: 'linear-gradient(to top, #c26915 0%, #e87b10 74%, #f4902c 78%, #f7a048 88%, #ffb44d 93%, #ffd494 100%)'
                             }}>
-                                <i style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b' }}></i>
+                                <i ref={el => meterRefs.current[i] = el} style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b' }}></i>
                             </div>
                             <SvgFader 
                                 value={vol} color={color} width={50} height={225} 
