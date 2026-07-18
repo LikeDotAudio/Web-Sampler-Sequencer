@@ -140,15 +140,7 @@ const Mixer = () => {
                             </button>
                         </div>
                         
-                        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', marginBottom: '6px' }}>
-                            <SvgKnob 
-                                value={pan} min={-1} max={1} defaultVal={0} bipolar={true} color={color} size={32} 
-                                onChange={(v) => setTrackPan((pprev) => { const n = [...pprev]; n[i] = v; return n; })}
-                            />
-                            <div style={{ fontSize: '8px', color: 'var(--muted)', fontVariantNumeric: 'tabular-nums' }}>{panLabel(pan)}</div>
-                        </div>
-
-                        <div style={{ display: 'flex', gap: '4px', alignItems: 'stretch', height: '180px', opacity: mutedBySolo ? 0.4 : 1, transition: 'opacity 0.2s', width: '100%', justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', gap: '4px', alignItems: 'stretch', height: '180px', opacity: mutedBySolo ? 0.4 : 1, transition: 'opacity 0.2s', width: '100%', justifyContent: 'center', marginBottom: '6px' }}>
                             <div style={{
                                 width: '6px', borderRadius: '2px', position: 'relative', overflow: 'hidden', border: '1px solid #0008',
                                 background: 'linear-gradient(to top, #c26915 0%, #e87b10 74%, #f4902c 78%, #f7a048 88%, #ffb44d 93%, #ffd494 100%)'
@@ -159,6 +151,14 @@ const Mixer = () => {
                                 value={vol} color={color} width={36} height={180} 
                                 onChange={(v) => setTrackVol((prev) => { const n = [...prev]; n[i] = v; return n; })}
                             />
+                        </div>
+
+                        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
+                            <SvgKnob 
+                                value={pan} min={-1} max={1} defaultVal={0} bipolar={true} color={color} size={32} 
+                                onChange={(v) => setTrackPan((pprev) => { const n = [...pprev]; n[i] = v; return n; })}
+                            />
+                            <div style={{ fontSize: '8px', color: 'var(--muted)', fontVariantNumeric: 'tabular-nums' }}>{panLabel(pan)}</div>
                         </div>
 
                     </div>
