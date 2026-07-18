@@ -83,7 +83,11 @@ window.SeqControls = ({
                 />
                 <SeqButton
                     label="Clear"
-                    onClick={clearPattern}
+                    onClick={() => {
+                        if (window.confirm("Are you sure you want to clear the entire pattern?")) {
+                            clearPattern();
+                        }
+                    }}
                     style={{ padding: '6px 12px', border: 'none' }}
                 />
             </div>
