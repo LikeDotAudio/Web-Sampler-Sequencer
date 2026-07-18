@@ -2,24 +2,14 @@ const SvgKnob = window.SvgKnob;
 const SvgFader = window.SvgFader;
 
 const Mixer = () => {
-    const { trackVol, setTrackVol, trackPan, setTrackPan, mutes, toggleMute } = window.useSeqState('Pattern Sequencer', 16, window.OA_DRUM_KIT || []);
+    const { trackVol, setTrackVol, trackPan, setTrackPan, mutes, toggleMute, solos, toggleSolo, clearSolos, masterVol, setMasterVol } = window.useSeqState('Pattern Sequencer', 16, window.OA_DRUM_KIT || []);
     const tracks = window.OA_DRUM_KIT || [];
 
     const PALETTE = ["#f4902c", "#f7a048", "#f08018", "#f4902c", "#faa552", "#e67300",
                      "#f4902c", "#f28b22", "#f79b39", "#f4902c", "#e0750d", "#fca858",
                      "#f4902c", "#f59638", "#eb8117", "#f4902c"];
 
-    // Local state for Solos, since sequencer doesn't natively support solo yet
-    const [solos, setSolos] = React.useState({});
-    const isAnySolo = Object.values(solos).some(v => v);
-
-    const toggleSolo = (idx) => {
-        setSolos(prev => ({ ...prev, [idx]: !prev[idx] }));
-    };
-
-    const clearSolos = () => {
-        setSolos({});
-    };
+    const isAnySolo = solos.some(v => v);
 
     const meterRefs = React.useRef([]);
     const masterRefs = React.useRef([null, null]);
@@ -90,7 +80,7 @@ const Mixer = () => {
 
 
     return (
-        <div style={{ display: 'flex', gap: '6px', padding: '16px', overflowX: 'auto', alignItems: 'stretch', backgroundColor: 'var(--bg)' }}>
+        <div className="fat-scrollbar-mobile" style={{ display: 'flex', gap: '6px', padding: '16px', overflowX: 'auto', alignItems: 'stretch', backgroundColor: 'var(--bg)' }}>
             {tracks.map((track, i) => {
                 const color = PALETTE[i % PALETTE.length];
                 const isMuted = mutes[i];
@@ -182,7 +172,7 @@ const Mixer = () => {
                         <i ref={el => masterRefs.current[0] = el} style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b', transition: 'height 0.05s linear' }}></i>
                     </div>
                     {/* Master Fader */}
-                    <SvgFader value={1} color="#aaa" width={36} height={180} onChange={() => {}} />
+                    <SvgFader value={masterVol} color="#aaa" width={36} height={180} onChange={(v) => setMasterVol(v)} />
                     {/* R Meter */}
                     <div style={{
                         width: '6px', borderRadius: '2px', position: 'relative', overflow: 'hidden', border: '1px solid #0008',

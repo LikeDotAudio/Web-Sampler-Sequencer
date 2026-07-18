@@ -1,7 +1,8 @@
 window.useSeqScheduler = (
     bpmRef, stepsRef, mutesRef, trackVolRef, trackPanRef, 
     recordingRef, clickVolRef, toneTrackRef, toneRootRef,
-    patternRef, currentStepRef, setRecordedNotes, setSeqRef, getAudioCtx
+    patternRef, currentStepRef, setRecordedNotes, setSeqRef, getAudioCtx,
+    solosRef, masterVolRef
 ) => {
     const nextNoteTimeRef = React.useRef(0);
     const timerIDRef = React.useRef(null);
@@ -30,10 +31,14 @@ window.useSeqScheduler = (
         const ctx = getAudioCtx();
         const TRACKS = window.OA_DRUM_KIT || [];
 
+        const anySolo = solosRef && solosRef.current && solosRef.current.some(s => s);
+        
         patternRef.current.forEach((track, trkIdx) => {
             const vel = typeof track[stepNumber] === 'number' ? track[stepNumber] : (track[stepNumber] ? 100 : 0);
-            if (vel > 0 && !mutesRef.current[trkIdx]) {
-                const vol = (vel / 100) * (trackVolRef.current[trkIdx] == null ? 1 : trackVolRef.current[trkIdx]);
+            const isMuted = mutesRef.current[trkIdx] || (anySolo && !solosRef.current[trkIdx]);
+            
+            if (vel > 0 && !isMuted) {
+                const vol = (vel / 100) * (trackVolRef.current[trkIdx] == null ? 1 : trackVolRef.current[trkIdx]) * (masterVolRef && masterVolRef.current != null ? masterVolRef.current : 1);
                 const pan = trackPanRef.current[trkIdx] || 0;
                 const glowDelay = Math.max(0, (time - ctx.currentTime) * 1000);
                 setTimeout(() => window.dispatchEvent(new CustomEvent('oa-drum-play', { detail: { idx: trkIdx, velocity: vel } })), glowDelay);

@@ -85,6 +85,21 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
     };
     const trackPanRef = React.useRef(trackPan); trackPanRef.current = trackPan;
 
+    const [solosState, setSolosState] = window.useMqttState(`OpenAir/Gui/Sequencer/${safeLabel}/solos`, { items: Array(TRACKS.length).fill(false) });
+    const solos = (solosState && solosState.items) || Array(TRACKS.length).fill(false);
+    const setSolos = (update) => {
+        const next = typeof update === 'function' ? update(solos) : update;
+        setSolosState({ items: next });
+    };
+    const solosRef = React.useRef(solos); solosRef.current = solos;
+    const toggleSolo = (trkIdx) => setSolos((prev) => { const n = [...prev]; n[trkIdx] = !n[trkIdx]; return n; });
+    const clearSolos = () => setSolos(Array(TRACKS.length).fill(false));
+
+    const [masterVolState, setMasterVolState] = window.useMqttState(`OpenAir/Gui/Sequencer/${safeLabel}/masterVol`, { value: 1 });
+    const masterVol = (masterVolState && masterVolState.value != null) ? masterVolState.value : 1;
+    const setMasterVol = (val) => setMasterVolState({ value: val });
+    const masterVolRef = React.useRef(masterVol); masterVolRef.current = masterVol;
+
     const [recording, setRecording] = React.useState(false);
     const recordingRef = React.useRef(recording); recordingRef.current = recording;
     const playingRef = React.useRef(isPlaying); playingRef.current = isPlaying;
@@ -196,7 +211,9 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
         setPattern, setBpm, tapping, tapTempo, setSteps, doubleTo,
         clickVol, setClickVol, clickVolRef,
         mutes, mutesRef, toggleMute,
+        solos, solosRef, toggleSolo, clearSolos,
         trackVol, setTrackVol, trackVolRef, trackPan, setTrackPan, trackPanRef,
+        masterVol, setMasterVol, masterVolRef,
         recording, toggleRecording, recordingRef,
         recordedNotes, setRecordedNotes,
         writeStepVel, previewVoice, getAudioCtx, currentStepRef,

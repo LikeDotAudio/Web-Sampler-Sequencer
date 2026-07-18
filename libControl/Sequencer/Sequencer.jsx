@@ -32,7 +32,9 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
         setPattern, setBpm, tapping, tapTempo, setSteps, doubleTo,
         clickVol, setClickVol, clickVolRef,
         mutes, mutesRef, toggleMute,
+        solos, solosRef, toggleSolo, clearSolos,
         trackVol, setTrackVol, trackVolRef, trackPan, setTrackPan, trackPanRef,
+        masterVol, setMasterVol, masterVolRef,
         recording, toggleRecording, recordingRef,
         recordedNotes, setRecordedNotes,
         writeStepVel, previewVoice, getAudioCtx, currentStepRef,
@@ -45,7 +47,8 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
     const { timerIDRef, nextNoteTimeRef, scheduler } = window.useSeqScheduler(
         bpmRef, stepsRef, mutesRef, trackVolRef, trackPanRef, 
         recordingRef, clickVolRef, toneTrackRef, toneRootRef,
-        patternRef, currentStepRef, setRecordedNotes, setSeqRef, getAudioCtx
+        patternRef, currentStepRef, setRecordedNotes, setSeqRef, getAudioCtx,
+        solosRef, masterVolRef
     );
 
     const [activeFader, setActiveFader] = React.useState(null);
