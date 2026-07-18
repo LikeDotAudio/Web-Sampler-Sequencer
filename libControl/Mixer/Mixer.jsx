@@ -103,105 +103,103 @@ const Mixer = () => {
 
                 return (
                     <div key={i} style={{
-                        background: 'var(--strip)', border: `1px solid ${color}`, borderRadius: '8px',
-                        width: '82px', flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center',
-                        padding: '0 6px 8px', gap: '8px', overflow: 'hidden'
+                        background: 'var(--strip)', border: `1px solid ${color}`, borderRadius: '6px',
+                        width: '60px', flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center',
+                        padding: '0 5px 8px', overflow: 'hidden'
                     }}>
-                        <div style={{ width: 'calc(100% + 12px)', margin: '0 -6px 4px', height: '8px', background: color }}></div>
                         
-                        <div style={{ width: '66px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
-                            <div style={{ fontSize: '10px', color: 'var(--muted)', letterSpacing: '.6px', textTransform: 'uppercase' }}>Pan</div>
-                            <SvgKnob 
-                                value={pan} min={-1} max={1} defaultVal={0} bipolar={true} color={color} size={42} 
-                                onChange={(v) => setTrackVol((prev) => {
-                                    // Wait, changing trackPan using trackVol setter? BUG.
-                                    setTrackPan((pprev) => { const n = [...pprev]; n[i] = v; return n; })
-                                })}
-                            />
-                            <div style={{ fontSize: '9px', color: 'var(--muted)', fontVariantNumeric: 'tabular-nums' }}>{panLabel(pan)}</div>
+                        <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', gap: '3px', marginTop: '6px', marginBottom: '6px' }}>
+                            <span style={{ fontSize: '10px', color: color, fontWeight: '700' }}>{String(i + 1).padStart(2, '0')}:</span>
+                            <span style={{ fontSize: '10px', color: '#ccc', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{track.name || 'Track'}</span>
                         </div>
 
-                        <div style={{ display: 'flex', gap: '8px', alignItems: 'stretch', height: '225px', opacity: mutedBySolo ? 0.4 : 1, transition: 'opacity 0.2s' }}>
+                        <div style={{ display: 'flex', width: '100%', gap: '4px', marginBottom: '8px' }}>
+                            <button 
+                                onClick={() => toggleMute(i)}
+                                style={{
+                                    flex: 1, padding: '3px 0', textAlign: 'center', borderRadius: '4px',
+                                    border: `1px solid ${!isMuted ? 'var(--on)' : '#444b57'}`,
+                                    background: !isMuted ? '#6b3f14' : '#353b45',
+                                    color: !isMuted ? '#ffe9d4' : 'var(--muted)',
+                                    cursor: 'pointer', fontSize: '9px', fontWeight: '600', letterSpacing: '.5px'
+                                }}
+                            >
+                                ON
+                            </button>
+                            <button 
+                                onClick={() => toggleSolo(i)}
+                                style={{
+                                    width: '18px', padding: '3px 0', textAlign: 'center', borderRadius: '4px',
+                                    border: `1px solid ${isSolo ? 'var(--solo)' : '#444b57'}`,
+                                    background: isSolo ? '#6b5014' : '#353b45',
+                                    color: isSolo ? '#fff3c4' : 'var(--muted)',
+                                    cursor: 'pointer', fontSize: '9px', fontWeight: '600'
+                                }}
+                            >
+                                S
+                            </button>
+                        </div>
+                        
+                        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', marginBottom: '6px' }}>
+                            <SvgKnob 
+                                value={pan} min={-1} max={1} defaultVal={0} bipolar={true} color={color} size={32} 
+                                onChange={(v) => setTrackPan((pprev) => { const n = [...pprev]; n[i] = v; return n; })}
+                            />
+                            <div style={{ fontSize: '8px', color: 'var(--muted)', fontVariantNumeric: 'tabular-nums' }}>{panLabel(pan)}</div>
+                        </div>
+
+                        <div style={{ display: 'flex', gap: '4px', alignItems: 'stretch', height: '180px', opacity: mutedBySolo ? 0.4 : 1, transition: 'opacity 0.2s', width: '100%', justifyContent: 'center' }}>
                             <div style={{
-                                width: '10px', borderRadius: '3px', position: 'relative', overflow: 'hidden', border: '1px solid #0008',
+                                width: '6px', borderRadius: '2px', position: 'relative', overflow: 'hidden', border: '1px solid #0008',
                                 background: 'linear-gradient(to top, #c26915 0%, #e87b10 74%, #f4902c 78%, #f7a048 88%, #ffb44d 93%, #ffd494 100%)'
                             }}>
                                 <i ref={el => meterRefs.current[i] = el} style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b' }}></i>
                             </div>
                             <SvgFader 
-                                value={vol} color={color} width={50} height={225} 
+                                value={vol} color={color} width={36} height={180} 
                                 onChange={(v) => setTrackVol((prev) => { const n = [...prev]; n[i] = v; return n; })}
                             />
                         </div>
 
-                        <button 
-                            onClick={() => toggleMute(i)}
-                            style={{
-                                width: '66px', padding: '5px 0', textAlign: 'center', borderRadius: '5px',
-                                border: `1px solid ${!isMuted ? 'var(--on)' : '#444b57'}`,
-                                background: !isMuted ? '#6b3f14' : '#353b45',
-                                color: !isMuted ? '#ffe9d4' : 'var(--muted)',
-                                cursor: 'pointer', fontSize: '11px', fontWeight: '600', letterSpacing: '.5px'
-                            }}
-                        >
-                            ON
-                        </button>
-
-                        <button 
-                            onClick={() => toggleSolo(i)}
-                            style={{
-                                width: '66px', padding: '5px 0', textAlign: 'center', borderRadius: '5px',
-                                border: `1px solid ${isSolo ? 'var(--solo)' : '#444b57'}`,
-                                background: isSolo ? '#6b5014' : '#353b45',
-                                color: isSolo ? '#fff3c4' : 'var(--muted)',
-                                cursor: 'pointer', fontSize: '11px', fontWeight: '600', letterSpacing: '.5px'
-                            }}
-                        >
-                            SOLO
-                        </button>
-
-                        <div style={{ fontSize: '10px', color: color, fontWeight: '700', fontVariantNumeric: 'tabular-nums' }}>
-                            {String(i + 1).padStart(2, '0')}
-                        </div>
-                        <input 
-                            className="name"
-                            defaultValue={track.name || 'Track'} 
-                            readOnly
-                            style={{
-                                width: '70px', textAlign: 'center', fontSize: '11px',
-                                background: '#1b1e24', border: '1px solid #3a3f49', borderRadius: '4px', color: 'var(--text)', padding: '3px 2px'
-                            }}
-                        />
                     </div>
                 );
             })}
 
             {/* Master Strip */}
             <div style={{
-                background: '#30343d', borderColor: '#444b57', border: '1px solid #444b57', borderRadius: '8px',
-                width: '102px', flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center',
-                padding: '0 6px 8px', gap: '8px', overflow: 'hidden'
+                background: 'var(--strip)', border: `1px solid #555`, borderRadius: '6px',
+                width: '64px', flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center',
+                padding: '8px 5px 8px', gap: '8px'
             }}>
-                <div style={{ width: 'calc(100% + 12px)', margin: '0 -6px 4px', height: '8px', background: '#cdd3dd' }}></div>
-                <div style={{ fontSize: '10px', color: 'var(--muted)', letterSpacing: '.6px', textTransform: 'uppercase', marginTop: '4px' }}>Master</div>
+                <div style={{ fontSize: '10px', color: '#aaa', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px' }}>Master</div>
                 
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'stretch', height: '225px', marginTop: '14px' }}>
-                    <div style={{ width: '10px', borderRadius: '3px', position: 'relative', overflow: 'hidden', border: '1px solid #0008', background: 'linear-gradient(to top, #c26915 0%, #e87b10 74%, #f4902c 78%, #f7a048 88%, #ffb44d 93%, #ffd494 100%)' }}>
-                        <i ref={el => masterRefs.current[0] = el} style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b' }}></i>
+                <div style={{ display: 'flex', gap: '4px', alignItems: 'stretch', height: '180px' }}>
+                    {/* L Meter */}
+                    <div style={{
+                        width: '6px', borderRadius: '2px', position: 'relative', overflow: 'hidden', border: '1px solid #0008',
+                        background: 'linear-gradient(to top, #c26915 0%, #e87b10 74%, #f4902c 78%, #f7a048 88%, #ffb44d 93%, #ffd494 100%)'
+                    }}>
+                        <i ref={el => masterRefs.current[0] = el} style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b', transition: 'height 0.05s linear' }}></i>
                     </div>
-                    <div style={{ width: '10px', borderRadius: '3px', position: 'relative', overflow: 'hidden', border: '1px solid #0008', background: 'linear-gradient(to top, #c26915 0%, #e87b10 74%, #f4902c 78%, #f7a048 88%, #ffb44d 93%, #ffd494 100%)' }}>
-                        <i ref={el => masterRefs.current[1] = el} style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b' }}></i>
+                    {/* Master Fader */}
+                    <SvgFader value={1} color="#aaa" width={36} height={180} onChange={() => {}} />
+                    {/* R Meter */}
+                    <div style={{
+                        width: '6px', borderRadius: '2px', position: 'relative', overflow: 'hidden', border: '1px solid #0008',
+                        background: 'linear-gradient(to top, #c26915 0%, #e87b10 74%, #f4902c 78%, #f7a048 88%, #ffb44d 93%, #ffd494 100%)'
+                    }}>
+                        <i ref={el => masterRefs.current[1] = el} style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b', transition: 'height 0.05s linear' }}></i>
                     </div>
-                    {/* Dummy fader for Master since we don't have global master vol in sequencer yet, or we can just leave it as dummy UI */}
-                    <SvgFader value={1} color="#cdd3dd" width={50} height={225} onChange={() => {}} />
                 </div>
                 
-                <div style={{ fontSize: '9px', color: 'var(--muted)', fontVariantNumeric: 'tabular-nums' }}>L   R</div>
+                <div style={{ display: 'flex', gap: '22px', fontSize: '9px', color: '#777' }}>
+                    <span>L</span><span>R</span>
+                </div>
 
                 <button 
                     onClick={clearSolos}
                     style={{
-                        width: '70px', padding: '5px 0', textAlign: 'center', borderRadius: '5px',
+                        width: '56px', padding: '5px 0', textAlign: 'center', borderRadius: '5px',
                         border: `1px solid ${isAnySolo ? '#fff3c4' : '#5a4a14'}`,
                         background: isAnySolo ? 'var(--solo)' : '#2a2a2a',
                         color: isAnySolo ? '#3a2c00' : '#6a6a6a',
