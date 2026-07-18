@@ -51,7 +51,21 @@ window.SoundBrowser = ({ onClose, onChoose, onChooseOther, targetLabel, inline }
     const tbtn = (extra) => ({ background: '#333', color: '#fff', border: '1px solid #444', borderRadius: '3px', padding: '6px 12px', cursor: 'pointer', fontSize: '13px', ...extra });
 
     return (
-        <div onClick={inline ? undefined : onClose} style={inline ? { display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', width: '100%', height: '100%' } : { position: 'fixed', inset: 0, zIndex: 10000, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif' }}>
+        <div onClick={inline ? undefined : onClose} style={inline ? { display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', width: '100%', height: '100%' } : { position: 'fixed', inset: 0, zIndex: 10000, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', padding: '2vw', boxSizing: 'border-box' }}>
+            <style>{`
+                /* On a phone the folder tree would eat most of the dialog, so it
+                   becomes a short scrollable strip above the waveforms. */
+                @media (max-width: 800px) {
+                    .oa-browse-body { flex-direction: column !important; }
+                    .oa-browse-tree {
+                        width: 100% !important;
+                        max-height: 28% !important;
+                        border-right: none !important;
+                        border-bottom: 1px solid #333;
+                    }
+                    .oa-browse-bar { flex-wrap: wrap !important; row-gap: 6px; }
+                }
+            `}</style>
             {/* minWidth must yield to the viewport — a hard 760px pushed the
                 whole dialog off the side of a phone. */}
             <div className="oa-browse" onClick={(e) => inline ? undefined : e.stopPropagation()} style={{ width: inline ? '100%' : 'min(66vw, 95vw)', minWidth: 'min(760px, 96vw)', maxWidth: '96vw', height: inline ? '100%' : 'min(80vh, 92dvh)', display: 'flex', flexDirection: 'column', background: '#1c1c1c', border: '1px solid #f4902c', borderRadius: '6px', color: '#eee', boxShadow: inline ? 'none' : '0 10px 40px rgba(0,0,0,0.6)' }}>
@@ -87,8 +101,8 @@ window.SoundBrowser = ({ onClose, onChoose, onChooseOther, targetLabel, inline }
 
                 {err && <div style={{ padding: '6px 16px', color: '#f88', fontSize: '12px' }}>⚠️ {err}</div>}
 
-                <div style={{ flex: 1, display: 'flex', minHeight: 0 }}>
-                    <div style={{ width: '210px', flexShrink: 0, borderRight: '1px solid #333', overflowY: 'auto', padding: '6px 4px' }}>
+                <div className="oa-browse-body" style={{ flex: 1, display: 'flex', minHeight: 0 }}>
+                    <div className="oa-browse-tree" style={{ width: '210px', flexShrink: 0, borderRight: '1px solid #333', overflowY: 'auto', padding: '6px 4px' }}>
                         {rootHandle ? (
                             <SoundFolderNode name={rootHandle.name || 'root'} handle={rootHandle} depth={0} defaultOpen onSelectFolder={selectFolder} selectedFolder={selectedFolder} pathPrefix={rootHandle.name || 'root'} />
                         ) : (
