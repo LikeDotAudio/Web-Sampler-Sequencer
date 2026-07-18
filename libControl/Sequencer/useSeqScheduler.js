@@ -10,7 +10,7 @@ window.useSeqScheduler = (
     // Cushion. Audio already booked keeps playing while the main thread is busy,
     // so this is exactly how long a hiccup can last before you hear a gap.
     // Traded against edit latency: a step you toggle is heard within this window.
-    const scheduleAheadTime = 0.1; // s
+    const scheduleAheadTime = 0.4; // s
     const TICK_MS = 25;
 
     // The clock runs on a Worker thread, NOT requestAnimationFrame.
