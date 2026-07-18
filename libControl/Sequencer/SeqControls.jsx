@@ -11,6 +11,10 @@ window.SeqControls = ({
     const SeqButton = window.SeqButton;
     const SeqKnob = window.SeqKnob;
     const STEP_OPTIONS = [4, 8, 16, 32, 64];
+    const [footerNode, setFooterNode] = React.useState(null);
+    React.useEffect(() => {
+        setFooterNode(document.getElementById('seq-footer-slot'));
+    }, []);
 
     const playbackControls = (
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
@@ -51,8 +55,8 @@ window.SeqControls = ({
 
     return (
         <div style={{ display: 'flex', gap: '10px', marginBottom: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
-            {document.getElementById('seq-footer-slot') 
-                ? ReactDOM.createPortal(playbackControls, document.getElementById('seq-footer-slot'))
+            {footerNode 
+                ? ReactDOM.createPortal(playbackControls, footerNode)
                 : playbackControls}
 
             <div style={{ marginLeft: '15px', display: 'flex', alignItems: 'flex-start', gap: '5px' }}>

@@ -23,6 +23,13 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
     const rootRef = React.useRef(null);
     const [midiConfigOpen, setMidiConfigOpen] = React.useState(false);
     const [padsConfigOpen, setPadsConfigOpen] = React.useState(false);
+    
+    const [midiNode, setMidiNode] = React.useState(null);
+    const [padsNode, setPadsNode] = React.useState(null);
+    React.useEffect(() => {
+        setMidiNode(document.getElementById('midi-footer-slot'));
+        setPadsNode(document.getElementById('pads-footer-slot'));
+    }, []);
 
     const { hitPad, startGlow, triggerPadAt, triggerPadKey } = window.useSamplerPads(
         centerVelocity, edgeVelocity, onHit, toneRoot, midiBaseRef, 
@@ -148,7 +155,7 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
             )}
             
             {/* Web MIDI — map a connected controller's notes to the pads */}
-            {document.getElementById('midi-footer-slot') && ReactDOM.createPortal(
+            {midiNode && ReactDOM.createPortal(
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
                     <button 
                         onClick={() => setMidiConfigOpen(!midiConfigOpen)}
@@ -183,11 +190,11 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
                         </div>
                     )}
                 </div>,
-                document.getElementById('midi-footer-slot')
+                midiNode
             )}
             
             {/* SETS — moved to footer config drop-up */}
-            {document.getElementById('pads-footer-slot') && ReactDOM.createPortal(
+            {padsNode && ReactDOM.createPortal(
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
                     <button 
                         onClick={() => setPadsConfigOpen(!padsConfigOpen)}
@@ -250,7 +257,7 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
                         </div>
                     )}
                 </div>,
-                document.getElementById('pads-footer-slot')
+                padsNode
             )}
             {browsePad != null && window.SoundBrowser && (
                 <window.SoundBrowser
