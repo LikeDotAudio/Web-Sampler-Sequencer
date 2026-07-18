@@ -1,6 +1,21 @@
 window.SeqSong = ({ songPos, song, togglePlayback, playSong, setSongItems, setSongPos }) => {
     const SeqButton = window.SeqButton;
-    
+
+    // Arranging = ordering. Nudge a pattern along the chain without rebuilding it.
+    const move = (i, delta) => {
+        const j = i + delta;
+        if (j < 0 || j >= song.length) return;
+        const next = [...song];
+        [next[i], next[j]] = [next[j], next[i]];
+        setSongItems(next);
+        if (songPos === i) setSongPos(j);
+        else if (songPos === j) setSongPos(i);
+    };
+    const arrowStyle = (enabled) => ({
+        background: 'transparent', color: enabled ? '#8bc34a' : '#555', border: 'none',
+        padding: '4px 4px', cursor: enabled ? 'pointer' : 'default', fontSize: '11px', lineHeight: 1
+    });
+
     return (
         <div style={{ marginTop: '10px', borderTop: '1px solid #333', paddingTop: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
@@ -32,6 +47,14 @@ window.SeqSong = ({ songPos, song, togglePlayback, playSong, setSongItems, setSo
                         <React.Fragment key={i}>
                             {i > 0 && <span style={{ color: '#555', fontSize: '14px' }}>→</span>}
                             <div style={{ display: 'flex', alignItems: 'center', background: songPos === i ? '#1565c0' : '#222', borderRadius: '3px', border: songPos === i ? '1px solid #64b5f6' : '1px solid #444', overflow: 'hidden' }}>
+                                <button
+                                    onClick={() => move(i, -1)}
+                                    disabled={i === 0}
+                                    title="Move earlier in the song"
+                                    style={arrowStyle(i > 0)}
+                                >
+                                    ◀
+                                </button>
                                 <span
                                     title={`Play from this pattern`}
                                     onClick={() => { setSongPos(i); if (songPos === null) playSong(); }}
@@ -39,6 +62,14 @@ window.SeqSong = ({ songPos, song, togglePlayback, playSong, setSongItems, setSo
                                 >
                                     {name}
                                 </span>
+                                <button
+                                    onClick={() => move(i, 1)}
+                                    disabled={i === song.length - 1}
+                                    title="Move later in the song"
+                                    style={arrowStyle(i < song.length - 1)}
+                                >
+                                    ▶
+                                </button>
                                 <button
                                     onClick={() => setSongItems(song.filter((_, idx) => idx !== i))}
                                     title={`Remove from song`}

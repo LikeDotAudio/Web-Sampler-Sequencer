@@ -87,6 +87,12 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
     const { rendering, renderLoop } = window.useSeqRenderer(pattern, steps, mutes, bpm, safeLabel);
 
     const [configOpen, setConfigOpen] = React.useState(false);
+    // Sections portalled into the drop-up (e.g. Pads' Sets) close it this way.
+    React.useEffect(() => {
+        const close = () => setConfigOpen(false);
+        window.addEventListener('oa-close-config', close);
+        return () => window.removeEventListener('oa-close-config', close);
+    }, []);
 
     const configStyle = {
         display: configOpen ? 'flex' : 'none',
@@ -110,6 +116,9 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
 
     return (
         <div style={{ padding: '0', backgroundColor: 'transparent', borderRadius: '0', color: '#fff', border: 'none', width: '100%', boxSizing: 'border-box', marginTop: '10px' }}>
+                {/* Portalled to <body>: the drop-up must show even when this panel's
+                    tab is closed, since its footer controls are always live. */}
+                {ReactDOM.createPortal(
                 <div style={configStyle}>
                     <window.SeqControls
                         recording={recording}
@@ -132,12 +141,13 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
                         configOpen={configOpen}
                         setConfigOpen={setConfigOpen}
                     />
-                </div>
+                    {/* Pads portals its drum-kit Sets section in here when the PADS tab is open. */}
+                    <div id="config-dropup-slot" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}></div>
+                </div>, document.body)}
 
             {showSong && (
                 <>
                 {showSeq && <hr style={{borderColor: '#444', margin: '20px 0'}} />}
-                <h3 style={{ margin: '0 0 8px 0', fontSize: '15px', color: '#ccc' }}>Library & Song Mode</h3>
                 <window.SeqLibrary 
                     library={library} 
                     loadPattern={loadPattern} 

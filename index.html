@@ -311,7 +311,7 @@
                     
                     <main style={{ flex: 1, overflowY: 'auto', padding: isMobile ? '10px 0' : '10px 20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         <div style={{ ...panelStyle('PADS'), display: activeTabs.includes('PADS') ? 'flex' : 'none', justifyContent: 'center' }}>
-                            {window.Pads ? <window.Pads /> : <div>Loading PADS...</div>}
+                            {window.Pads ? <window.Pads showSets={activeTabs.includes('PADS')} /> : <div>Loading PADS...</div>}
                         </div>
 
                         <div style={panelStyle('SEQ', 'SONG')}>

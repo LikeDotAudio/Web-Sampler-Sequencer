@@ -21,8 +21,13 @@ const Mixer = () => {
     }, [trackVol, mutes, solos, isAnySolo, trackPan]);
 
     React.useEffect(() => {
+        // The meters follow every voice trigger, wherever it came from:
+        //   oa-drum-play — sequencer steps
+        //   oa-drum-hit  — pad strikes (mouse, keyboard, MIDI)
+        //   oa-tone-hit  — tone-mode strikes, metered on their root track
         const onPlay = (e) => {
-            const idx = e.detail && e.detail.idx;
+            const d = e.detail || {};
+            const idx = d.idx != null ? d.idx : d.rootIdx;
             if (idx == null) return;
             const el = meterRefs.current[idx];
             if (!el) return;
@@ -72,8 +77,9 @@ const Mixer = () => {
                 });
             }
         };
-        window.addEventListener('oa-drum-play', onPlay);
-        return () => window.removeEventListener('oa-drum-play', onPlay);
+        const EVENTS = ['oa-drum-play', 'oa-drum-hit', 'oa-tone-hit'];
+        EVENTS.forEach(name => window.addEventListener(name, onPlay));
+        return () => EVENTS.forEach(name => window.removeEventListener(name, onPlay));
     }, []);
 
     const panLabel = v => Math.abs(v) < 0.02 ? "C" : (v < 0 ? "L" + Math.round(-v * 100) : "R" + Math.round(v * 100));
@@ -95,17 +101,17 @@ const Mixer = () => {
                     <div key={i} style={{
                         // Strips butt up against each other — a single rule line is the only separator.
                         background: 'var(--strip)', border: 'none', borderRight: '1px solid #3a3f49', borderRadius: 0,
-                        width: '60px', flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center',
+                        width: '74px', flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center',
                         padding: '0 3px 8px', overflow: 'hidden'
                     }}>
                         
-                        {/* The channel name IS the ON button — lit means the track is live. */}
-                        <div style={{ display: 'flex', width: '100%', gap: '3px', marginTop: '6px', marginBottom: '8px' }}>
+                        {/* The channel name IS the ON button — lit means the track is live. Solo sits under it. */}
+                        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', gap: '3px', marginTop: '6px', marginBottom: '8px' }}>
                             <button
                                 onClick={() => toggleMute(i)}
                                 title={`${track.name || 'Track'} — click to ${isMuted ? 'unmute' : 'mute'}`}
                                 style={{
-                                    flex: 1, minWidth: 0, padding: '3px 2px', textAlign: 'center', borderRadius: '4px',
+                                    width: '100%', minWidth: 0, padding: '3px 2px', textAlign: 'center', borderRadius: '4px',
                                     border: `1px solid ${!isMuted ? 'var(--on)' : '#444b57'}`,
                                     background: !isMuted ? '#6b3f14' : '#353b45',
                                     cursor: 'pointer', fontSize: '9px', fontWeight: '700',
@@ -119,7 +125,7 @@ const Mixer = () => {
                             <button
                                 onClick={() => toggleSolo(i)}
                                 style={{
-                                    width: '18px', flex: '0 0 auto', padding: '3px 0', textAlign: 'center', borderRadius: '4px',
+                                    width: '100%', padding: '3px 0', textAlign: 'center', borderRadius: '4px',
                                     border: `1px solid ${isSolo ? 'var(--solo)' : '#444b57'}`,
                                     background: isSolo ? '#6b5014' : '#353b45',
                                     color: isSolo ? '#fff3c4' : 'var(--muted)',

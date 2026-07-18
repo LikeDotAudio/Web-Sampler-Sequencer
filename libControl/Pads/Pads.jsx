@@ -1,7 +1,7 @@
 const loadDrumSets = () => { try { return JSON.parse(window.localStorage.getItem('oaDrumSets')) || {}; } catch (e) { return {}; } };
 const midiNoteName = window.midiNoteName;
 const PadWave = window.PadWave;
-const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, onHit = null }) => {
+const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, onHit = null, showSets = true }) => {
     // Shared drum kit — the SAME 16 voices the Sequencer uses (DrumKit.js).
     const KIT = window.OA_DRUM_KIT || [];
     // Per-pad loaded-sample file name (for display); null = uses the synth voice.
@@ -22,14 +22,16 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
     const fileInputs = React.useRef([]);
     const rootRef = React.useRef(null);
     const [midiConfigOpen, setMidiConfigOpen] = React.useState(false);
-    const [padsConfigOpen, setPadsConfigOpen] = React.useState(false);
-    
+
     const [midiNode, setMidiNode] = React.useState(null);
-    const [padsNode, setPadsNode] = React.useState(null);
+    // Sets live inside the sequencer's ⚙ Config drop-up rather than owning a footer button.
+    const [setsNode, setSetsNode] = React.useState(null);
     React.useEffect(() => {
         setMidiNode(document.getElementById('midi-footer-slot'));
-        setPadsNode(document.getElementById('pads-footer-slot'));
+        setSetsNode(document.getElementById('config-dropup-slot'));
     }, []);
+    // The drop-up belongs to the Sequencer; ask it to close once a set is chosen.
+    const closeConfig = () => window.dispatchEvent(new CustomEvent('oa-close-config'));
 
     const { hitPad, startGlow, triggerPadAt, triggerPadKey } = window.useSamplerPads(
         centerVelocity, edgeVelocity, onHit, toneRoot, midiBaseRef, 
@@ -194,36 +196,20 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
                 midiNode
             )}
             
-            {/* SETS — moved to footer config drop-up */}
-            {padsNode && ReactDOM.createPortal(
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
-                    <window.SeqButton
-                        label={padsConfigOpen ? "✖ Close" : "⚙ Sets"}
-                        onClick={() => setPadsConfigOpen(!padsConfigOpen)}
-                        active={padsConfigOpen}
-                        color="#444" textColor="#fff"
-                        style={Object.assign({}, window.OA_FOOTER_BTN, { border: '1px solid #666' })}
-                    />
-                    {padsConfigOpen && (
+            {/* SETS — a section of the sequencer's ⚙ Config drop-up, shown on the PADS tab */}
+            {setsNode && showSets && ReactDOM.createPortal(
                         <div style={{
-                            position: 'absolute',
-                            bottom: '36px',
-                            left: '0',
-                            background: 'var(--panel)',
-                            padding: '16px',
-                            border: '1px solid #444',
-                            borderRadius: '8px',
-                            boxShadow: '0 -4px 16px rgba(0,0,0,0.6)',
+                            borderTop: '1px solid #444',
+                            paddingTop: '12px',
                             display: 'flex',
                             flexDirection: 'column',
                             gap: '12px',
-                            zIndex: 1000,
                             minWidth: '220px'
                         }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                                 <span style={{ fontSize: '11px', color: '#aaa', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Drum Kits:</span>
                                 {Object.keys(sets).map((n) => (
-                                    <button key={n} onClick={() => { loadSet(n); setPadsConfigOpen(false); }}
+                                    <button key={n} onClick={() => { loadSet(n); closeConfig(); }}
                                         style={{
                                             background: currentSet === n ? '#f4902c' : '#222',
                                             color: currentSet === n ? '#111' : '#ccc',
@@ -245,7 +231,7 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
                                     + NEW set
                                 </button>
                                 {window.PadBrowse && (
-                                    <button onClick={() => { setShowPadBrowse(true); setPadsConfigOpen(false); }} title="Browse a folder into all 16 pads at once"
+                                    <button onClick={() => { setShowPadBrowse(true); closeConfig(); }} title="Browse a folder into all 16 pads at once"
                                         style={{ background: '#fca858', color: '#111', border: 'none', borderRadius: '3px', padding: '5px 12px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', flex: 1 }}>
                                         🎛 Pad Browser
                                     </button>
@@ -256,10 +242,8 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
                                 <button onClick={() => deleteSet(currentSet)} title={`Delete "${currentSet}"`}
                                     style={{ background: '#d32f2f', color: '#fff', border: 'none', borderRadius: '3px', padding: '5px 8px', fontSize: '11px', cursor: 'pointer', alignSelf: 'flex-start', marginTop: '4px' }}>✕ Delete "{currentSet}"</button>
                             )}
-                        </div>
-                    )}
-                </div>,
-                padsNode
+                        </div>,
+                setsNode
             )}
             {browsePad != null && window.SoundBrowser && (
                 <window.SoundBrowser
