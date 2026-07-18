@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Sampler & Sequencer</title>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        #app-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        // --- Standalone Mocks for MQTT environment ---
+
+        // useMqttState: behaves like useState for a standalone environment
+        window.useMqttState = function(topic, defaultState) {
+            // Local storage persistence across reloads could be added, 
+            // but simple useState works for standalone.
+            return React.useState(defaultState);
+        };
+
+        // useMqttMessages: returns empty map, used for remembering samples
+        window.useMqttMessages = function() {
+            return {};
+        };
+
+        // useMqttPublish: no-op since there's no MQTT broker
+        window.useMqttPublish = function() {
+            return function(topic, payload) {
+                console.log('Mock publish:', topic, payload);
+            };
+        };
+    </script>
+
+    <script type="text/babel">
+        // --- Mock Components for Knob and OcaButton ---
+        
+        window.Knob = function Knob({ value, onChange, size, config }) {
+            const min = config?.min ?? 0;
+            const max = config?.max ?? 100;
+            const step = config?.step ?? 1;
+            const sz = size || 60;
+            
+            // A simple range input styled to look reasonably compact
+            return (
+                <input 
+                    type="range" 
+                    value={value}
+                    min={min}
+                    max={max}
+                    step={step}
+                    onChange={(e) => onChange(Number(e.target.value))}
+                    style={{ 
+                        width: `${sz}px`, 
+                        accentColor: config?.indicator_color || '#f4902c',
+                        margin: '5px 0'
+                    }}
+                />
+            );
+        };
+
+        window.OcaButton = function OcaButton({ label, onClick, title, disabled, color, style }) {
+            const defaultStyle = {
+                backgroundColor: color || '#333',
+                color: '#fff',
+                border: 'none',
+                cursor: disabled ? 'default' : 'pointer',
+                opacity: disabled ? 0.5 : 1,
+                ...style
+            };
+            return (
+                <button onClick={onClick} title={title} disabled={disabled} style={defaultStyle}>
+                    {label}
+                </button>
+            );
+        };
+    </script>
+
+    <!-- App files -->
+    <script src="./libControl/special/SamplerDrumkit/SamplerDrumkit.js"></script>
+    <script type="text/babel" data-type="module" src="./libControl/special/Sampler/Sampler.jsx"></script>
+    <script type="text/babel" data-type="module" src="./libControl/special/SamplerSequencer/SamplerSequencer.jsx"></script>
+    <script type="text/babel" data-type="module" src="./libControl/special/SamplerSoundBrowse/SamplerSoundBrowse.jsx"></script>
+
+    <!-- Mount App -->
+    <script type="text/babel">
+        function App() {
+            return (
+                <div id="app-container">
+                    <h1 style={{ textAlign: 'center', color: '#f4902c', margin: '0 0 10px 0' }}>Web Sampler & Sequencer</h1>
+                    <div className="flex-row" style={{ justifyContent: 'center' }}>
+                        {/* Render Sampler */}
+                        {window.Sampler ? <window.Sampler /> : <div>Loading Sampler...</div>}
+                    </div>
+                    <div>
+                        {/* Render Sequencer */}
+                        {window.Sequencer ? <window.Sequencer /> : <div>Loading Sequencer...</div>}
+                    </div>
+                </div>
+            );
+        }
+
+        // Wait a tick for Babel to process the external scripts before rendering
+        setTimeout(() => {
+            const root = ReactDOM.createRoot(document.getElementById('root'));
+            root.render(<App />);
+        }, 500);
+    </script>
+</body>
+</html>
