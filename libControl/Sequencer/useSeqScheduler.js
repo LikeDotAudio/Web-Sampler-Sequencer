@@ -37,10 +37,21 @@ window.useSeqScheduler = (
         songRef.current = null; setSongPos(null);   // nothing playable left
     };
 
+    // Notes are scheduled up to `scheduleAheadTime` early and the hardware adds
+    // its own output latency on top, so anything drawn the instant a note is
+    // scheduled runs ahead of what you hear. Everything visual is delayed by
+    // this instead, landing it on the sound.
+    const visualDelay = (ctx, time) => {
+        const latency = ctx.outputLatency || ctx.baseLatency || 0;
+        return Math.max(0, (time - ctx.currentTime + latency) * 1000);
+    };
+
     const scheduleNote = (stepNumber, time, setCurrentStep) => {
-        requestAnimationFrame(() => setCurrentStep(stepNumber));
         const ctx = getAudioCtx();
         const TRACKS = window.OA_DRUM_KIT || [];
+
+        // The playhead lands with the step it marks, not with its scheduling.
+        setTimeout(() => requestAnimationFrame(() => setCurrentStep(stepNumber)), visualDelay(ctx, time));
 
         const anySolo = solosRef && solosRef.current && solosRef.current.some(s => s);
         
@@ -56,8 +67,7 @@ window.useSeqScheduler = (
             if (vel > 0 && !isMuted && !justRecorded) {
                 const vol = (vel / 100) * (trackVolRef.current[trkIdx] == null ? 1 : trackVolRef.current[trkIdx]) * (masterVolRef && masterVolRef.current != null ? masterVolRef.current : 1);
                 const pan = trackPanRef.current[trkIdx] || 0;
-                const glowDelay = Math.max(0, (time - ctx.currentTime) * 1000);
-                setTimeout(() => window.dispatchEvent(new CustomEvent('oa-drum-play', { detail: { idx: trkIdx, velocity: vel } })), glowDelay);
+                setTimeout(() => window.dispatchEvent(new CustomEvent('oa-drum-play', { detail: { idx: trkIdx, velocity: vel } })), visualDelay(ctx, time));
 
                 const entry = window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[trkIdx];
                 if (entry && entry.buffer && window.oaPlayDrumSample) {
@@ -91,9 +101,8 @@ window.useSeqScheduler = (
             osc.start(time);
             osc.stop(time + 0.06);
             // Let the Mixer's CLICK meter flash in time with the audible click.
-            const clickDelay = Math.max(0, (time - ctx.currentTime) * 1000);
             const clickLevel = clickVolRef.current;
-            setTimeout(() => window.dispatchEvent(new CustomEvent('oa-click', { detail: { velocity: clickLevel * 100 } })), clickDelay);
+            setTimeout(() => window.dispatchEvent(new CustomEvent('oa-click', { detail: { velocity: clickLevel * 100 } })), visualDelay(ctx, time));
         }
 
         const tTrack = toneTrackRef.current;
@@ -103,8 +112,7 @@ window.useSeqScheduler = (
             if (vel > 0 && window.oaTriggerTone) {
                 const vol = (vel / 100) * (trackVolRef.current[tRoot] == null ? 1 : trackVolRef.current[tRoot]);
                 window.oaTriggerTone(tRoot, pitch, vol, time);
-                const glowDelay = Math.max(0, (time - ctx.currentTime) * 1000);
-                setTimeout(() => window.dispatchEvent(new CustomEvent('oa-drum-play', { detail: { idx: tRoot, velocity: vel } })), glowDelay);
+                setTimeout(() => window.dispatchEvent(new CustomEvent('oa-drum-play', { detail: { idx: tRoot, velocity: vel } })), visualDelay(ctx, time));
             }
         }
     };
