@@ -22,10 +22,13 @@ const Mixer = () => {
     };
 
     const meterRefs = React.useRef([]);
-    const stateRef = React.useRef({ trackVol, mutes, solos, isAnySolo });
+    const masterRefs = React.useRef([null, null]);
+    const masterPeaks = React.useRef({ L: 0, R: 0, pending: false });
+    
+    const stateRef = React.useRef({ trackVol, mutes, solos, isAnySolo, trackPan });
     React.useEffect(() => {
-        stateRef.current = { trackVol, mutes, solos, isAnySolo };
-    }, [trackVol, mutes, solos, isAnySolo]);
+        stateRef.current = { trackVol, mutes, solos, isAnySolo, trackPan };
+    }, [trackVol, mutes, solos, isAnySolo, trackPan]);
 
     React.useEffect(() => {
         const onPlay = (e) => {
@@ -45,14 +48,39 @@ const Mixer = () => {
             el.style.transition = 'none';
             el.style.height = `${targetHeight}%`;
             
-            requestAnimationFrame(() => {
+            // 1. Animate Individual Track Meter
+            el.style.transition = 'none';
+            el.style.height = `${targetHeight}%`;
+            void el.offsetHeight;
+            el.style.transition = 'height 0.3s cubic-bezier(0.2, 1, 0.3, 1)';
+            el.style.height = '100%';
+            
+            // 2. Accumulate Master Meter Peaks
+            const tPan = stateRef.current.trackPan[idx] || 0;
+            // Simple equal power panning approximation
+            const lFactor = Math.cos((tPan + 1) * Math.PI / 4);
+            const rFactor = Math.sin((tPan + 1) * Math.PI / 4);
+            const hitVol = ((e.detail.velocity || 0) / 100) * vol;
+            
+            masterPeaks.current.L = Math.min(1.05, masterPeaks.current.L + hitVol * lFactor * 0.9);
+            masterPeaks.current.R = Math.min(1.05, masterPeaks.current.R + hitVol * rFactor * 0.9);
+            
+            if (!masterPeaks.current.pending) {
+                masterPeaks.current.pending = true;
                 requestAnimationFrame(() => {
-                    if (el) {
-                        el.style.transition = 'height 0.3s cubic-bezier(0.2, 1, 0.3, 1)';
-                        el.style.height = '100%';
-                    }
+                    [masterRefs.current[0], masterRefs.current[1]].forEach((mel, c) => {
+                        if (!mel) return;
+                        const peak = c === 0 ? masterPeaks.current.L : masterPeaks.current.R;
+                        const mTarget = Math.max(0, (1 - peak) * 100);
+                        mel.style.transition = 'none';
+                        mel.style.height = `${mTarget}%`;
+                        void mel.offsetHeight;
+                        mel.style.transition = 'height 0.4s cubic-bezier(0.2, 1, 0.3, 1)';
+                        mel.style.height = '100%';
+                    });
+                    masterPeaks.current = { L: 0, R: 0, pending: false };
                 });
-            });
+            }
         };
         window.addEventListener('oa-drum-play', onPlay);
         return () => window.removeEventListener('oa-drum-play', onPlay);
@@ -159,10 +187,10 @@ const Mixer = () => {
                 
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'stretch', height: '225px', marginTop: '14px' }}>
                     <div style={{ width: '10px', borderRadius: '3px', position: 'relative', overflow: 'hidden', border: '1px solid #0008', background: 'linear-gradient(to top, #c26915 0%, #e87b10 74%, #f4902c 78%, #f7a048 88%, #ffb44d 93%, #ffd494 100%)' }}>
-                        <i style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b' }}></i>
+                        <i ref={el => masterRefs.current[0] = el} style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b' }}></i>
                     </div>
                     <div style={{ width: '10px', borderRadius: '3px', position: 'relative', overflow: 'hidden', border: '1px solid #0008', background: 'linear-gradient(to top, #c26915 0%, #e87b10 74%, #f4902c 78%, #f7a048 88%, #ffb44d 93%, #ffd494 100%)' }}>
-                        <i style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b' }}></i>
+                        <i ref={el => masterRefs.current[1] = el} style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b' }}></i>
                     </div>
                     {/* Dummy fader for Master since we don't have global master vol in sequencer yet, or we can just leave it as dummy UI */}
                     <SvgFader value={1} color="#cdd3dd" width={50} height={225} onChange={() => {}} />
