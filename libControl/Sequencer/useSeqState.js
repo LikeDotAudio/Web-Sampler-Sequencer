@@ -139,12 +139,27 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
         return audioCtxRef.current;
     };
     const currentStepRef = React.useRef(0);
+    // Snap a live strike to the nearest step rather than the one just passed, so a
+    // hit landing slightly early records where the player meant it, not a step late.
+    const quantizedStep = () => {
+        const steps = stepsRef.current;
+        const clock = window.OA_SEQ_CLOCK;
+        const cur = currentStepRef.current % steps;
+        if (!clock || !clock.stepDur) return cur;
+        const ctx = audioCtxRef.current;
+        if (!ctx) return cur;
+        // How far past the current step's start we are; over halfway rounds up.
+        const intoStep = clock.stepDur - (clock.nextNoteTime - ctx.currentTime);
+        return intoStep > clock.stepDur / 2 ? (cur + 1) % steps : cur;
+    };
     React.useEffect(() => {
         const onDrumHit = (e) => {
             if (!recordingRef.current || !playingRef.current) return;
             const idx = e.detail && e.detail.idx;
             if (idx == null || idx < 0 || idx >= TRACKS.length) return;
-            const step = currentStepRef.current % stepsRef.current;
+            const step = quantizedStep();
+            // The pad already made the sound; don't let the grid play it a second time.
+            if (window.OA_SEQ_SKIP) window.OA_SEQ_SKIP.add(`${idx}-${step}`);
             writeStepVel(idx, step, Math.max(1, (e.detail.velocity || 100)));
             setRecordedNotes(prev => {
                 const next = new Set(prev);
@@ -157,7 +172,7 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
             const { rootIdx, semitones, velocity } = e.detail;
             if (rootIdx == null || semitones == null) return;
             
-            const step = currentStepRef.current % stepsRef.current;
+            const step = quantizedStep();
             setSeqRef.current(prev => {
                 const tt = [...(prev.toneTrack || Array(prev.steps).fill(null))];
                 tt[step] = { vel: Math.max(1, (velocity || 100)), pitch: semitones };

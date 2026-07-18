@@ -8,10 +8,21 @@ window.useSeqScheduler = (
     const timerIDRef = React.useRef(null);
     const scheduleAheadTime = 0.1; // s
 
+    // Live recording needs the transport clock to quantise a pad strike to the
+    // nearest step, and a way to say "this note already sounded, don't play it
+    // again on the pass it was written into". Both ride on this shared clock.
+    window.OA_SEQ_CLOCK = window.OA_SEQ_CLOCK || { nextNoteTime: 0, step: 0, stepDur: 0.125 };
+    window.OA_SEQ_SKIP = window.OA_SEQ_SKIP || new Set();
+
     const nextNote = (songRef, setSongPos, applySongEntry, songItemsRef, libraryRef) => {
         const secondsPerBeat = 60.0 / bpmRef.current;
         nextNoteTimeRef.current += 0.25 * secondsPerBeat; // 16th note
         currentStepRef.current = (currentStepRef.current + 1) % stepsRef.current;
+        window.OA_SEQ_CLOCK = {
+            nextNoteTime: nextNoteTimeRef.current,
+            step: currentStepRef.current,
+            stepDur: 0.25 * secondsPerBeat
+        };
         if (currentStepRef.current === 0 && songRef.current) advanceSong(songRef, setSongPos, applySongEntry, songItemsRef, libraryRef);
     };
 
@@ -37,7 +48,12 @@ window.useSeqScheduler = (
             const vel = typeof track[stepNumber] === 'number' ? track[stepNumber] : (track[stepNumber] ? 100 : 0);
             const isMuted = mutesRef.current[trkIdx] || (anySolo && !solosRef.current[trkIdx]);
             
-            if (vel > 0 && !isMuted) {
+            // A note recorded live already sounded under the player's finger —
+            // let its first scheduled pass glow but stay silent.
+            const skipKey = `${trkIdx}-${stepNumber}`;
+            const justRecorded = window.OA_SEQ_SKIP.delete(skipKey);
+
+            if (vel > 0 && !isMuted && !justRecorded) {
                 const vol = (vel / 100) * (trackVolRef.current[trkIdx] == null ? 1 : trackVolRef.current[trkIdx]) * (masterVolRef && masterVolRef.current != null ? masterVolRef.current : 1);
                 const pan = trackPanRef.current[trkIdx] || 0;
                 const glowDelay = Math.max(0, (time - ctx.currentTime) * 1000);

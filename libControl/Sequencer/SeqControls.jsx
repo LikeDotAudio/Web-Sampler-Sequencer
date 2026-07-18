@@ -37,6 +37,7 @@ window.SeqControls = ({
                 color={isPlaying ? '#ffb300' : '#388e3c'} textColor="#fff"
                 style={Object.assign({}, FOOTER_BTN, { border: 'none' })}
             />
+            <SeqButton label="TAP" onClick={tapTempo} active={tapping} title="Tap to set tempo" style={Object.assign({}, FOOTER_BTN)} />
             <SeqButton
                 label="⭳ Save Pattern"
                 onClick={savePattern}
@@ -58,17 +59,24 @@ window.SeqControls = ({
     );
 
     return (
-        <div style={{ display: 'flex', gap: '10px', marginBottom: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '10px' }}>
             {footerNode
                 ? ReactDOM.createPortal(playbackControls, footerNode)
                 : playbackControls}
             {configBtnNode && ReactDOM.createPortal(configButton, configBtnNode)}
 
-            {/* Tempo — a configuration setting, so it lives in the drop-up, not the footer. */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '12px', color: '#aaa' }}>Tempo:</span>
-                <SeqKnob value={bpm} min={40} max={300} def={120} onChange={setBpm} label="BPM" flash={tapping} title="Drag up/down or scroll to change BPM" />
-                <SeqButton label="TAP" onClick={tapTempo} active={tapping} title="Tap to set tempo" style={Object.assign({}, FOOTER_BTN)} />
+            {/* Tempo heads the config panel — a full-width slider, not a thumbnail knob. */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <span style={{ fontSize: '12px', color: '#aaa' }}>Tempo</span>
+                <input
+                    type="range" min={40} max={300} step={1} value={bpm}
+                    onChange={(e) => setBpm(Number(e.target.value))}
+                    title="Drag to set the tempo"
+                    style={{ flex: 1, minWidth: '320px', accentColor: tapping ? '#fff' : '#f4902c', cursor: 'pointer' }}
+                />
+                <span style={{ fontSize: '14px', fontWeight: 'bold', color: tapping ? '#fff' : '#f4902c', fontVariantNumeric: 'tabular-nums', minWidth: '54px', textAlign: 'right' }}>
+                    {bpm} <span style={{ fontSize: '9px', color: '#888' }}>BPM</span>
+                </span>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: '5px' }}>
@@ -88,7 +96,7 @@ window.SeqControls = ({
                     </div>
                 ))}
             </div>
-            <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px' }}>
+            <div style={{ display: 'flex', gap: '6px' }}>
                 <SeqButton
                     label={rendering ? '…rendering' : '⭳ RENDER'}
                     onClick={renderLoop}

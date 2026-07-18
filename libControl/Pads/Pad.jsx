@@ -48,7 +48,14 @@ window.Pad = ({
                 }
             `}</style>
 
-            {(hasSample && !isToneMode) && <PadWave idx={idx} ver={sampleNames[idx]} />}
+            {/* In tone mode every pad plays the root pad's sample pitched, so show that wave. */}
+            {(() => {
+                const waveIdx = isToneMode ? toneRoot : idx;
+                const waveLoaded = isToneMode
+                    ? !!(window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[toneRoot] && window.OA_DRUM_SAMPLES[toneRoot].buffer)
+                    : hasSample;
+                return waveLoaded ? <PadWave idx={waveIdx} ver={sampleNames[waveIdx]} /> : null;
+            })()}
             <span style={{ position: 'relative', fontSize: '15px', lineHeight: 1.1, wordBreak: 'break-word', color: isToneMode ? '#fff' : 'inherit' }}>
                 {isToneMode ? noteName : name}
             </span>
