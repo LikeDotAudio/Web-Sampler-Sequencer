@@ -125,7 +125,6 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
                     renderLoop={renderLoop}
                     savePattern={savePattern}
                     clearPattern={clearPattern}
-                    isMobile={isMobile}
                     configOpen={configOpen}
                     setConfigOpen={setConfigOpen}
                 />

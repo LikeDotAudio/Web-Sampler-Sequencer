@@ -6,7 +6,7 @@ window.SeqControls = ({
     steps, setSteps, doubleTo,
     rendering, renderLoop,
     savePattern, clearPattern,
-    isMobile, configOpen, setConfigOpen
+    configOpen, setConfigOpen
 }) => {
     const SeqButton = window.SeqButton;
     const SeqKnob = window.SeqKnob;
