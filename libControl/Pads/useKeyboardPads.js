@@ -20,8 +20,9 @@ window.useKeyboardPads = (triggerPadKey) => {
     };
 
     // The number ROW is a straight line, not a grid, so it keeps running along
-    // the pads in order: 1-9 then 0 for pad 10.
-    const DIGIT_TO_PADNUM = { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, 0: 10 };
+    // the pads in order, starting from 0: 0 fires pad 1, 1 fires pad 2, on up
+    // to 9 firing pad 10.
+    const DIGIT_TO_PADNUM = { 0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 10 };
 
     React.useEffect(() => {
         const onKey = (e) => {
