@@ -40,6 +40,37 @@ const Mixer = () => {
         window.addEventListener('oa-reverb-changed', onRv);
         return () => window.removeEventListener('oa-reverb-changed', onRv);
     }, []);
+    // The reverb tail decays on its own schedule, so unlike the per-hit track
+    // meters these are polled from the bus's analysers each frame.
+    const rvMeterRefs = React.useRef([null, null]);
+    React.useEffect(() => {
+        let raf = null;
+        const buf = new Float32Array(1024);
+        const peaks = [0, 0];
+        const tick = () => {
+            const ctx = window.OA_AUDIO_CTX;
+            const bus = ctx && ctx.__oaReverb;
+            if (bus && bus.analysers) {
+                bus.analysers.forEach((an, ch) => {
+                    const el = rvMeterRefs.current[ch];
+                    if (!el) return;
+                    an.getFloatTimeDomainData(buf);
+                    let peak = 0;
+                    for (let i = 0; i < buf.length; i++) {
+                        const a = Math.abs(buf[i]);
+                        if (a > peak) peak = a;
+                    }
+                    // Fall away smoothly so the tail reads as a decay, not a flicker.
+                    peaks[ch] = Math.max(peak, peaks[ch] * 0.86);
+                    el.style.height = `${Math.max(0, (1 - Math.min(1, peaks[ch])) * 100)}%`;
+                });
+            }
+            raf = requestAnimationFrame(tick);
+        };
+        raf = requestAnimationFrame(tick);
+        return () => cancelAnimationFrame(raf);
+    }, []);
+
     const rv = window.OA_REVERB;
     const sends = rv.sends || [];
     const selStyle = {
@@ -292,7 +323,16 @@ const Mixer = () => {
                     ))}
                 </select>
 
-                <div style={{ display: 'flex', gap: '4px', alignItems: 'stretch', height: '140px', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', gap: '3px', alignItems: 'stretch', height: '140px', justifyContent: 'center' }}>
+                    {[0, 1].map((ch) => (
+                        <div key={ch} style={{
+                            width: '6px', borderRadius: '2px', position: 'relative', overflow: 'hidden', border: '1px solid #0008',
+                            background: 'linear-gradient(to top, #2f6f70 0%, #59a9ab 74%, #7fd4d6 88%, #b8ecee 100%)'
+                        }}>
+                            <i ref={(el) => { rvMeterRefs.current[ch] = el; }}
+                               style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b' }}></i>
+                        </div>
+                    ))}
                     <SvgFader
                         value={rv.ret} color="#5f9ea0" width={36} height={140}
                         onChange={(v) => window.oaSetReverb('ret', v)}

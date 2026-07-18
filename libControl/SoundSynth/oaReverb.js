@@ -87,7 +87,21 @@ window.oaReverbBus = function (ctx) {
         input.connect(convolver);
         convolver.connect(ret);
         ret.connect(ctx.destination);
-        ctx.__oaReverb = { input: input, convolver: convolver, ret: ret };
+
+        // Tap the wet output per side so the return strip can meter what is
+        // actually ringing, rather than guessing from the send levels.
+        let analysers = null;
+        if (ctx.createAnalyser && ctx.createChannelSplitter) {
+            const split = ctx.createChannelSplitter(2);
+            ret.connect(split);
+            analysers = [0, 1].map((ch) => {
+                const a = ctx.createAnalyser();
+                a.fftSize = 1024;
+                split.connect(a, ch);
+                return a;
+            });
+        }
+        ctx.__oaReverb = { input: input, convolver: convolver, ret: ret, analysers: analysers };
     }
     return ctx.__oaReverb;
 };

@@ -21,6 +21,7 @@ window.Pad = ({
             onPointerDown={onPointerDown}
             onPointerUp={onPointerUp}
             onPointerLeave={onPointerLeave}
+            className="oa-pad"
             style={{
                 position: 'relative',
                 width: '120px', height: '120px',
@@ -56,7 +57,7 @@ window.Pad = ({
                     : hasSample;
                 return waveLoaded ? <PadWave idx={waveIdx} ver={sampleNames[waveIdx]} /> : null;
             })()}
-            <span style={{ position: 'relative', fontSize: '15px', lineHeight: 1.1, wordBreak: 'break-word', color: isToneMode ? '#fff' : 'inherit' }}>
+            <span className="oa-pad-name" style={{ position: 'relative', fontSize: '15px', lineHeight: 1.1, wordBreak: 'break-word', color: isToneMode ? '#fff' : 'inherit' }}>
                 {isToneMode ? noteName : name}
             </span>
 

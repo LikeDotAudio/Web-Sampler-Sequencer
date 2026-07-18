@@ -71,8 +71,27 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
                         box-shadow: 0 0 0 0 rgba(244, 144, 44, 0);
                     }
                 }
+                /* On a phone the four columns must fit the viewport, so the pads
+                   stop being a fixed 120px and share the width evenly instead. */
+                @media (max-width: 800px) {
+                    .oa-pad-grid {
+                        grid-template-columns: repeat(4, 1fr) !important;
+                        gap: 1px !important;
+                        padding: 0 1px;
+                    }
+                    .oa-pad {
+                        width: 100% !important;
+                        height: auto !important;
+                        aspect-ratio: 1 / 1;
+                        min-width: 0;
+                    }
+                    .oa-pad-name { font-size: 12px !important; }
+                }
+                @media (max-width: 420px) {
+                    .oa-pad-name { font-size: 10px !important; }
+                }
             `}</style>
-            <div style={{ width: '100%', maxWidth: '800px', display: 'grid', gridTemplateColumns: 'repeat(4, max-content)', gap: '8px', justifyContent: 'center' }}>
+            <div className="oa-pad-grid" style={{ width: '100%', maxWidth: '800px', display: 'grid', gridTemplateColumns: 'repeat(4, max-content)', gap: '8px', justifyContent: 'center' }}>
                 {layout.map((padNum) => {
                     const idx = padNum - 1;
                     const name = (KIT[idx] && KIT[idx].name) || `Pad ${padNum}`;
