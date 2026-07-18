@@ -156,8 +156,10 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
                     song={song} 
                 />
 
-                <window.SeqSong 
-                    songPos={songPos} 
+                <window.SeqSong
+                    library={library}
+                    setLibraryItems={setLibraryItems}
+                    songPos={songPos}
                     song={song} 
                     togglePlayback={togglePlayback} 
                     playSong={playSong} 

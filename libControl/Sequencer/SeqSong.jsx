@@ -1,5 +1,36 @@
-window.SeqSong = ({ songPos, song, togglePlayback, playSong, setSongItems, setSongPos }) => {
+window.SeqSong = ({ songPos, song, togglePlayback, playSong, setSongItems, setSongPos, library, setLibraryItems }) => {
     const SeqButton = window.SeqButton;
+    const fileRef = React.useRef(null);
+
+    const exportSong = () => {
+        const name = (window.prompt('Name this export:', 'My Song') || '').trim();
+        if (!name) return;
+        window.oaExportSong(library, song, name);
+    };
+
+    const importFile = (file) => {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+            let parsed;
+            try {
+                parsed = window.oaParseSongFile(String(reader.result));
+            } catch (err) {
+                window.alert(`Could not import: ${err.message}`);
+                return;
+            }
+            const { library: merged, renamed } = window.oaMergePatterns(library, parsed.patterns);
+            setLibraryItems(merged);
+            // The imported arrangement follows its patterns' new names.
+            if (parsed.song.length) setSongItems(parsed.song.map((n) => renamed[n] || n));
+            const note = Object.keys(renamed).length
+                ? `\n\n${Object.keys(renamed).length} had name clashes and were added with a suffix.`
+                : '';
+            window.alert(`Imported ${parsed.patterns.length} pattern(s)` +
+                (parsed.song.length ? ` and a ${parsed.song.length}-part song.` : '.') + note);
+        };
+        reader.readAsText(file);
+    };
 
     // Arranging = ordering. Nudge a pattern along the chain without rebuilding it.
     const move = (i, delta) => {
@@ -35,6 +66,29 @@ window.SeqSong = ({ songPos, song, togglePlayback, playSong, setSongItems, setSo
                     onClick={() => { setSongItems([]); if (songPos !== null) togglePlayback(); }}
                     disabled={song.length === 0}
                     style={{ padding: '4px 10px', border: 'none' }}
+                />
+
+                <span style={{ width: '1px', height: '18px', background: '#444', margin: '0 4px' }} />
+
+                <SeqButton
+                    label="⭳ Export"
+                    onClick={exportSong}
+                    disabled={!library || library.length === 0}
+                    title="Download every saved pattern and the current arrangement as a .json file"
+                    style={{ padding: '4px 10px', border: 'none' }}
+                />
+                <SeqButton
+                    label="⭱ Import"
+                    onClick={() => fileRef.current && fileRef.current.click()}
+                    title="Load patterns and a song from a .json export"
+                    style={{ padding: '4px 10px', border: 'none' }}
+                />
+                <input
+                    ref={fileRef}
+                    type="file"
+                    accept="application/json,.json"
+                    style={{ display: 'none' }}
+                    onChange={(e) => { importFile(e.target.files && e.target.files[0]); e.target.value = ''; }}
                 />
             </div>
             {song.length === 0 ? (

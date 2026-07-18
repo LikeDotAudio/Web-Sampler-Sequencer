@@ -82,8 +82,12 @@ window.OA_SYNTH_ENGINES = {
             if (p.drive > 0.01) {
                 const shaper = ctx.createWaveShaper();
                 shaper.curve = window.oaDriveCurve(p.drive);
-                g.connect(shaper);
-                node = shaper;
+                // Drive adds gain as well as harmonics; trim it back so turning
+                // the knob up changes the tone, not the level.
+                const trim = ctx.createGain();
+                trim.gain.value = 1 / (1 + p.drive * 1.6);
+                g.connect(shaper); shaper.connect(trim);
+                node = trim;
             }
             osc.connect(g);
             node.connect(out);
@@ -168,6 +172,7 @@ window.OA_SYNTH_ENGINES = {
         },
         render(ctx, p, time, vol, out) {
             const dur = ms(p.decay);
+            vol *= 1.95;  // summing N oscillators at 1/N then filtering costs level
             const f = ctx.createBiquadFilter();
             f.type = p.filterType;
             f.frequency.value = p.filterFreq;
@@ -216,6 +221,7 @@ window.OA_SYNTH_ENGINES = {
         },
         render(ctx, p, time, vol, out) {
             const tail = ms(p.tailDecay);
+            vol *= 4;   // a narrow band-pass throws most of the noise away
             const f = ctx.createBiquadFilter();
             f.type = 'bandpass';
             f.frequency.value = p.filterFreq;
@@ -257,6 +263,7 @@ window.OA_SYNTH_ENGINES = {
         render(ctx, p, time, vol, out) {
             const a = ms(p.attack);
             const d = ms(p.decay);
+            vol *= 1.8;   // band-passed noise needs the make-up gain
             const nz = makeNoise(ctx, time, a + d);
             const f = ctx.createBiquadFilter();
             f.type = 'bandpass';
