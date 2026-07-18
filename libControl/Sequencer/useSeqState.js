@@ -58,7 +58,14 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
         const tt = [...th, ...th.map((c) => (c ? { ...c } : null))];
         setSeq({ grid, bpm, steps: n, toneTrack: tt, toneRoot });
     };
-    const [clickVol, setClickVol] = React.useState(0.8);
+    // Shared like the other mixer levels, so the Mixer's CLICK fader is the one
+    // control over the record click — not a second, independent copy of it.
+    const [clickVolState, setClickVolState] = window.useMqttState(`OpenAir/Gui/Sequencer/${safeLabel}/clickVol`, { value: 0.8 });
+    const clickVol = (clickVolState && clickVolState.value != null) ? clickVolState.value : 0.8;
+    const setClickVol = (update) => {
+        const next = typeof update === 'function' ? update(clickVol) : update;
+        setClickVolState({ value: next });
+    };
     const clickVolRef = React.useRef(clickVol); clickVolRef.current = clickVol;
     const [mutesState, setMutesState] = window.useMqttState(`OpenAir/Gui/Sequencer/${safeLabel}/mutes`, { items: Array(TRACKS.length).fill(false) });
     const mutes = (mutesState && mutesState.items) || Array(TRACKS.length).fill(false);

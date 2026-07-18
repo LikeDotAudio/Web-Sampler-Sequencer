@@ -276,13 +276,15 @@
             const MAX_TABS = 2;
             const toggleTab = (tab) => {
                 setActiveTabs(prev => {
-                    if (prev.includes(tab)) {
-                        if (prev.length === 1) return prev; // Keep at least one open
-                        return prev.filter(t => t !== tab);
-                    }
-                    return [tab, ...prev].slice(0, MAX_TABS);
+                    // Pressing an open tab promotes it to the top rather than closing it —
+                    // a panel only ever leaves by being pushed out by a third tab.
+                    if (prev[0] === tab) return prev;
+                    return [tab, ...prev.filter(t => t !== tab)].slice(0, MAX_TABS);
                 });
             };
+
+            // Explicit dismissal (e.g. the Editor's ✕) — the tab bar itself never closes.
+            const closeTab = (tab) => setActiveTabs(prev => prev.length > 1 ? prev.filter(t => t !== tab) : prev);
 
             // Panels stay mounted (audio + browser state survives a tab switch) and
             // are re-ordered with flex `order`; the newest one sticks under the header.
@@ -319,7 +321,7 @@
                         </div>
 
                         <div style={{ ...panelStyle('EDITOR'), display: activeTabs.includes('EDITOR') ? 'flex' : 'none', justifyContent: 'center', alignItems: 'center' }}>
-                            {window.SoundBrowser ? <window.SoundBrowser inline={true} onClose={() => toggleTab('EDITOR')} /> : <div>Loading EDITOR...</div>}
+                            {window.SoundBrowser ? <window.SoundBrowser inline={true} onClose={() => closeTab('EDITOR')} /> : <div>Loading EDITOR...</div>}
                         </div>
 
                         <div style={panelStyle('MIXER')}>
