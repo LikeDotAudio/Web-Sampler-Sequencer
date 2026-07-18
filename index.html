@@ -12,6 +12,13 @@
     <!-- Babel for JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+    <!-- Progressive Web App Settings -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#f4902c">
+    <link rel="icon" href="./ICON and LOGO/favicon.ico">
+    <link rel="apple-touch-icon" href="./ICON and LOGO/icon-192.png">
+    <link rel="apple-touch-startup-image" href="./ICON and LOGO/splash.png">
+
     <style>
         body {
             background-color: var(--bg, #1b1d22);
@@ -256,6 +263,16 @@
             const root = ReactDOM.createRoot(document.getElementById('root'));
             root.render(<App />);
         }, 500);
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').then(reg => {
+                    console.log('ServiceWorker registration successful');
+                }).catch(err => {
+                    console.error('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
     </script>
 </body>
 </html>
