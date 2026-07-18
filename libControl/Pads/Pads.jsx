@@ -21,14 +21,14 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
     const padButtons = React.useRef([]);
     const fileInputs = React.useRef([]);
     const rootRef = React.useRef(null);
-    const visibleRef = React.useRef(false);
+
     const { hitPad, startGlow, triggerPadAt, triggerPadKey } = window.useSamplerPads(
         centerVelocity, edgeVelocity, onHit, toneRoot, midiBaseRef, 
         setVelocities, setToneRoot, padButtons
     );
     const layout = [13, 14, 15, 16, 9, 10, 11, 12, 5, 6, 7, 8, 1, 2, 3, 4];
     const { midiStatus, midiNote } = window.useMidiPads(midiBase, toneRootRef, padButtons, triggerPadAt, setVelocities);
-    window.useKeyboardPads(triggerPadKey, visibleRef);
+    window.useKeyboardPads(triggerPadKey);
     // Glow a pad whenever the Sequencer plays that voice (intensity = step velocity).
     // Imperative only (no state) so 16th-note flashes don't churn React renders.
     React.useEffect(() => {
