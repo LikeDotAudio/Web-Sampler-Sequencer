@@ -78,6 +78,7 @@ window.oaSetDrumSample = function (idx, buffer, opts) {
     if (m) sampleRoot = parseInt(m[1], 10);
     
     const entry = {
+        idx: idx,                   // so a played copy can find its reverb send
         buffer: buffer,
         pitch: opts.pitch || 1,     // playbackRate multiplier (pitch + speed)
         sampleRoot: sampleRoot,     // MIDI note root parsed from filename

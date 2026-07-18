@@ -6,14 +6,25 @@ window.SeqTrack = ({
 }) => {
     const volAngle = -135 + tvol * 270;
     const velOf = (c) => (typeof c === 'number' ? c : (c ? 100 : 0));
-    
+
+    // With no sample loaded this track IS a synth voice, so its name opens the
+    // synth editor rather than the sample menu.
+    const hasSample = !!(window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[trkIdx] && window.OA_DRUM_SAMPLES[trkIdx].buffer);
+    const onNameClick = (e) => {
+        if (hasSample) return openMenu(e);
+        e.stopPropagation();
+        window.dispatchEvent(new CustomEvent('oa-open-synth', { detail: { idx: trkIdx } }));
+    };
+
     return (
         <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
             <div style={{ width: '70px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '5px', paddingRight: '6px', position: 'sticky', left: 0, background: '#161616', zIndex: 2 }}>
                 <span
-                    onClick={openMenu}
-                    title={`${trackName} — click to pick a sample / pitch / vol / pan`}
-                    style={{ fontSize: '11px', color: muted ? '#666' : '#ccc', textAlign: 'right', whiteSpace: 'nowrap', cursor: 'pointer' }}
+                    onClick={onNameClick}
+                    title={hasSample
+                        ? `${trackName} — click to pick a sample / pitch / vol / pan`
+                        : `${trackName} — no sample loaded; click to edit its synth voice`}
+                    style={{ fontSize: '11px', color: muted ? '#666' : (hasSample ? '#ccc' : '#9fb6c9'), textAlign: 'right', whiteSpace: 'nowrap', cursor: 'pointer' }}
                 >
                     {trackName}
                 </span>

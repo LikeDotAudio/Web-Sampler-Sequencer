@@ -20,10 +20,32 @@ const Mixer = () => {
     const [, forceSamples] = React.useReducer((n) => n + 1, 0);
     React.useEffect(() => {
         const onSample = () => forceSamples();
+        // The Sequencer's track names open the same editor — the Mixer hosts it
+        // because it is always mounted, and the panel portals to <body>.
+        const onOpen = (e) => { if (e.detail && e.detail.idx != null) setSynthPad(e.detail.idx); };
         window.addEventListener('oa-sample-changed', onSample);
-        return () => window.removeEventListener('oa-sample-changed', onSample);
+        window.addEventListener('oa-open-synth', onOpen);
+        return () => {
+            window.removeEventListener('oa-sample-changed', onSample);
+            window.removeEventListener('oa-open-synth', onOpen);
+        };
     }, []);
     const hasSample = (i) => !!(window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[i] && window.OA_DRUM_SAMPLES[i].buffer);
+
+    // Reverb lives outside React state (the audio graph reads it directly), so
+    // mirror its changes back into a render.
+    const [, forceReverb] = React.useReducer((n) => n + 1, 0);
+    React.useEffect(() => {
+        const onRv = () => forceReverb();
+        window.addEventListener('oa-reverb-changed', onRv);
+        return () => window.removeEventListener('oa-reverb-changed', onRv);
+    }, []);
+    const rv = window.OA_REVERB;
+    const sends = rv.sends || [];
+    const selStyle = {
+        width: '100%', background: '#222', color: '#7fd4d6', border: '1px solid #444',
+        borderRadius: '3px', fontSize: '10px', padding: '2px 3px', cursor: 'pointer'
+    };
     const masterRefs = React.useRef([null, null]);
     const masterPeaks = React.useRef({ L: 0, R: 0, pending: false });
     
@@ -203,6 +225,17 @@ const Mixer = () => {
                             <div style={{ fontSize: '8px', color: 'var(--muted)', fontVariantNumeric: 'tabular-nums' }}>{panLabel(pan)}</div>
                         </div>
 
+                        {/* Reverb send — how much of this channel feeds the shared tail. */}
+                        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', marginTop: '4px' }}>
+                            <SvgKnob
+                                value={sends[i] || 0} min={0} max={1} defaultVal={0} color="#5f9ea0" size={28}
+                                onChange={(v) => window.oaSetReverbSend(i, v)}
+                            />
+                            <div style={{ fontSize: '8px', color: (sends[i] || 0) > 0.001 ? '#7fd4d6' : 'var(--muted)', fontVariantNumeric: 'tabular-nums' }}>
+                                RV {Math.round((sends[i] || 0) * 100)}
+                            </div>
+                        </div>
+
                     </div>
                 );
             })}
@@ -227,6 +260,49 @@ const Mixer = () => {
                 </div>
                 
                 <div style={{ fontSize: '10px', color: 'var(--muted)', fontWeight: '700', fontVariantNumeric: 'tabular-nums', marginTop: '23px' }}>{Math.round(clickVol * 100)}</div>
+            </div>
+
+            {/* Reverb Return — the wet path everything sends into */}
+            <div style={{
+                background: 'var(--strip)', border: 'none', borderRight: '1px solid #3a3f49', borderRadius: 0,
+                width: '78px', flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center',
+                padding: '8px 4px 8px', gap: '8px'
+            }}>
+                <div style={{ fontSize: '10px', color: '#7fd4d6', letterSpacing: '1px', textTransform: 'uppercase' }}>Reverb</div>
+
+                <select
+                    value={rv.tone}
+                    onChange={(e) => window.oaSetReverb('tone', e.target.value)}
+                    title="Tone of the tail"
+                    style={selStyle}
+                >
+                    {Object.keys(window.OA_REVERB_TONES).map((k) => (
+                        <option key={k} value={k}>{window.OA_REVERB_TONES[k].label}</option>
+                    ))}
+                </select>
+
+                <select
+                    value={rv.size}
+                    onChange={(e) => window.oaSetReverb('size', e.target.value)}
+                    title="How long the tail rings"
+                    style={selStyle}
+                >
+                    {Object.keys(window.OA_REVERB_SIZES).map((k) => (
+                        <option key={k} value={k}>{window.OA_REVERB_SIZES[k].label}</option>
+                    ))}
+                </select>
+
+                <div style={{ display: 'flex', gap: '4px', alignItems: 'stretch', height: '140px', justifyContent: 'center' }}>
+                    <SvgFader
+                        value={rv.ret} color="#5f9ea0" width={36} height={140}
+                        onChange={(v) => window.oaSetReverb('ret', v)}
+                    />
+                </div>
+
+                <div style={{ fontSize: '10px', color: 'var(--muted)', fontWeight: '700', fontVariantNumeric: 'tabular-nums' }}>
+                    {Math.round(rv.ret * 100)}
+                </div>
+                <div style={{ fontSize: '9px', color: 'var(--muted)' }}>RETURN</div>
             </div>
 
             {/* Master Strip */}

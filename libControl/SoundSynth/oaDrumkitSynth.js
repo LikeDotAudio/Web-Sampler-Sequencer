@@ -11,15 +11,7 @@ window.oaPlayDrumVoice = function (ctx, track, time, volume, pan) {
     const ratio = track.pitchRatio || 1;
     const tuned = (ratio === 1) ? patch : window.oaTransposePatch(patch, ratio);
 
-    let out;
-    if (pan && ctx.createStereoPanner) {
-        const p = ctx.createStereoPanner();
-        p.pan.value = Math.max(-1, Math.min(1, pan));
-        p.connect(ctx.destination);
-        out = p;
-    } else {
-        out = ctx.destination;
-    }
+    const out = window.oaVoiceOut ? window.oaVoiceOut(ctx, idx, pan) : ctx.destination;
     engine.render(ctx, tuned, time, Math.max(0.0001, volume), out);
 };
 
@@ -59,8 +51,9 @@ window.oaPlayDrumSample = function (ctx, entry, time, volume, pan) {
     
     if (src.loop) { src.loopStart = offset; src.loopEnd = end; }
     src.connect(gain);
-    if (pan && ctx.createStereoPanner) { const p = ctx.createStereoPanner(); p.pan.value = Math.max(-1, Math.min(1, pan)); gain.connect(p); p.connect(ctx.destination); }
-    else gain.connect(ctx.destination);
+    // entry.idx is stamped on by oaSetDrumSample so the sample path finds its
+    // own reverb send, the same as a synth voice does.
+    gain.connect(window.oaVoiceOut ? window.oaVoiceOut(ctx, entry.idx, pan) : ctx.destination);
     
     const v = Math.max(0.0001, volume);
     if (entry.fade) {
