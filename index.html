@@ -14,22 +14,33 @@
 
     <style>
         body {
-            background-color: #000;
-            color: #fff;
-            font-family: sans-serif;
+            background-color: var(--bg, #1b1d22);
+            color: var(--text, #d7dce3);
+            font-family: "Segoe UI", system-ui, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            height: 100vh;
+            overflow: hidden;
         }
-        
+
+        /* Variables extracted from user's mixer */
+        :root {
+            --bg: #1b1d22;
+            --panel: #24272e;
+            --strip: #2c3038;
+            --accent: #46c2ff;
+            --text: #d7dce3;
+            --muted: #8a909b;
+            --on: #38d56b;
+            --solo: #ffcf3a;
+        }
+
         #app-container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            height: 100%;
             width: 100%;
         }
 
@@ -46,11 +57,33 @@
     <script>
         // --- Standalone Mocks for MQTT environment ---
 
-        // useMqttState: behaves like useState for a standalone environment
+        const globalStore = {};
+        const globalListeners = {};
+        
         window.useMqttState = function(topic, defaultState) {
-            // Local storage persistence across reloads could be added, 
-            // but simple useState works for standalone.
-            return React.useState(defaultState);
+            if (!(topic in globalStore)) {
+                globalStore[topic] = defaultState;
+            }
+            const [state, setState] = React.useState(globalStore[topic]);
+            
+            React.useEffect(() => {
+                if (!globalListeners[topic]) {
+                    globalListeners[topic] = new Set();
+                }
+                const listener = (newVal) => setState(newVal);
+                globalListeners[topic].add(listener);
+                return () => globalListeners[topic].delete(listener);
+            }, [topic]);
+
+            const setGlobalState = React.useCallback((newVal) => {
+                const nextVal = typeof newVal === 'function' ? newVal(globalStore[topic]) : newVal;
+                globalStore[topic] = nextVal;
+                if (globalListeners[topic]) {
+                    globalListeners[topic].forEach(l => l(nextVal));
+                }
+            }, [topic]);
+
+            return [state, setGlobalState];
         };
 
         // useMqttMessages: returns empty map, used for remembering samples
@@ -140,6 +173,7 @@
     <script type="text/babel" data-type="module" src="./libControl/SamplerSequencer/SeqFader.jsx"></script>
     <script type="text/babel" data-type="module" src="./libControl/SamplerSequencer/TrackSampleMenu.jsx"></script>
     <script type="text/babel" data-type="module" src="./libControl/SamplerSequencer/SamplerSequencer.jsx"></script>
+    <script type="text/babel" data-type="module" src="./libControl/Mixer/Mixer.jsx"></script>
     <script src="./libControl/SamplerSoundBrowse/drawWave.js"></script>
     <script type="text/babel" data-type="module" src="./libControl/SamplerSoundBrowse/WaveThumb.jsx"></script>
     <script type="text/babel" data-type="module" src="./libControl/SamplerSoundBrowse/SoundCloudView.jsx"></script>
@@ -155,17 +189,55 @@
     <!-- Mount App -->
     <script type="text/babel">
         function App() {
+            const [activeTab, setActiveTab] = React.useState('SEQ'); // default
+            
+            const btnStyle = (tab) => ({
+                padding: '8px 16px',
+                background: activeTab === tab ? 'var(--accent)' : 'var(--strip)',
+                color: activeTab === tab ? '#06222e' : 'var(--text)',
+                border: '1px solid #3a3f49',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontWeight: '600',
+                fontSize: '14px'
+            });
+
             return (
                 <div id="app-container">
-                    <h1 style={{ textAlign: 'center', color: '#f4902c', margin: '0 0 10px 0' }}>Web Sampler & Sequencer</h1>
-                    <div className="flex-row" style={{ justifyContent: 'center' }}>
-                        {/* Render Sampler */}
-                        {window.Sampler ? <window.Sampler /> : <div>Loading Sampler...</div>}
-                    </div>
-                    <div>
-                        {/* Render Sequencer */}
-                        {window.Sequencer ? <window.Sequencer /> : <div>Loading Sequencer...</div>}
-                    </div>
+                    <header style={{ 
+                        display: 'flex', alignItems: 'center', gap: '14px',
+                        padding: '10px 16px', background: 'var(--panel)',
+                        boxShadow: '0 2px 8px #0006', zIndex: 10, flexWrap: 'wrap',
+                        justifyContent: 'space-between'
+                    }}>
+                        <h1 style={{ fontSize: '18px', margin: 0, fontWeight: 600, letterSpacing: '2px', color: 'var(--accent)' }}>SAMPLER.LIKE.AUDIO</h1>
+                        
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                            <button onClick={() => setActiveTab('PADS')} style={btnStyle('PADS')}>PADS</button>
+                            <button onClick={() => setActiveTab('SEQ')} style={btnStyle('SEQ')}>SEQ</button>
+                            <button onClick={() => setActiveTab('EDITOR')} style={btnStyle('EDITOR')}>EDITOR</button>
+                            <button onClick={() => setActiveTab('MIXER')} style={btnStyle('MIXER')}>MIXER</button>
+                        </div>
+                    </header>
+                    
+                    <main style={{ flex: 1, overflowY: 'auto', padding: '20px', display: 'flex', flexDirection: 'column' }}>
+                        <div style={{ display: activeTab === 'PADS' ? 'flex' : 'none', width: '100%', justifyContent: 'center' }}>
+                            {window.Sampler ? <window.Sampler /> : <div>Loading PADS...</div>}
+                        </div>
+                        <div style={{ display: activeTab === 'SEQ' ? 'block' : 'none', width: '100%' }}>
+                            {window.Sequencer ? <window.Sequencer /> : <div>Loading SEQ...</div>}
+                        </div>
+                        <div style={{ display: activeTab === 'EDITOR' ? 'flex' : 'none', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                            {window.SoundBrowse ? <window.SoundBrowse inline={true} onClose={() => setActiveTab('SEQ')} /> : <div>Loading EDITOR...</div>}
+                        </div>
+                        <div style={{ display: activeTab === 'MIXER' ? 'block' : 'none', width: '100%', height: '100%' }}>
+                            {window.Mixer ? <window.Mixer /> : <div>Loading MIXER...</div>}
+                        </div>
+                    </main>
+
+                    <footer style={{ padding: '10px', backgroundColor: 'var(--panel)', borderTop: '1px solid #3a3f49', textAlign: 'center', fontSize: '12px', color: 'var(--muted)' }}>
+                        Created by Anthony Kuzub — for educational and experimental purposes
+                    </footer>
                 </div>
             );
         }

@@ -60,13 +60,31 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
     };
     const [clickVol, setClickVol] = React.useState(0.8);
     const clickVolRef = React.useRef(clickVol); clickVolRef.current = clickVol;
-    const [mutes, setMutes] = React.useState(() => Array(TRACKS.length).fill(false));
+    const [mutesState, setMutesState] = window.useMqttState(`OpenAir/Gui/Sequencer/${safeLabel}/mutes`, { items: Array(TRACKS.length).fill(false) });
+    const mutes = (mutesState && mutesState.items) || Array(TRACKS.length).fill(false);
+    const setMutes = (update) => {
+        const next = typeof update === 'function' ? update(mutes) : update;
+        setMutesState({ items: next });
+    };
     const mutesRef = React.useRef(mutes); mutesRef.current = mutes;
     const toggleMute = (trkIdx) => setMutes((prev) => { const n = [...prev]; n[trkIdx] = !n[trkIdx]; return n; });
-    const [trackVol, setTrackVol] = React.useState(() => Array(TRACKS.length).fill(1));
-    const [trackPan, setTrackPan] = React.useState(() => Array(TRACKS.length).fill(0));
+
+    const [trackVolState, setTrackVolState] = window.useMqttState(`OpenAir/Gui/Sequencer/${safeLabel}/trackVol`, { items: Array(TRACKS.length).fill(1) });
+    const trackVol = (trackVolState && trackVolState.items) || Array(TRACKS.length).fill(1);
+    const setTrackVol = (update) => {
+        const next = typeof update === 'function' ? update(trackVol) : update;
+        setTrackVolState({ items: next });
+    };
     const trackVolRef = React.useRef(trackVol); trackVolRef.current = trackVol;
+
+    const [trackPanState, setTrackPanState] = window.useMqttState(`OpenAir/Gui/Sequencer/${safeLabel}/trackPan`, { items: Array(TRACKS.length).fill(0) });
+    const trackPan = (trackPanState && trackPanState.items) || Array(TRACKS.length).fill(0);
+    const setTrackPan = (update) => {
+        const next = typeof update === 'function' ? update(trackPan) : update;
+        setTrackPanState({ items: next });
+    };
     const trackPanRef = React.useRef(trackPan); trackPanRef.current = trackPan;
+
     const [recording, setRecording] = React.useState(false);
     const recordingRef = React.useRef(recording); recordingRef.current = recording;
     const playingRef = React.useRef(isPlaying); playingRef.current = isPlaying;
