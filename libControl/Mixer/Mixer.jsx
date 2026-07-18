@@ -13,6 +13,17 @@ const Mixer = () => {
 
     const meterRefs = React.useRef([]);
     const clickMeterRef = React.useRef(null);
+
+    // Which channel's SYNTH panel is open, and a re-render when samples change
+    // so a channel that just got a sample loses its SYNTH button.
+    const [synthPad, setSynthPad] = React.useState(null);
+    const [, forceSamples] = React.useReducer((n) => n + 1, 0);
+    React.useEffect(() => {
+        const onSample = () => forceSamples();
+        window.addEventListener('oa-sample-changed', onSample);
+        return () => window.removeEventListener('oa-sample-changed', onSample);
+    }, []);
+    const hasSample = (i) => !!(window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[i] && window.OA_DRUM_SAMPLES[i].buffer);
     const masterRefs = React.useRef([null, null]);
     const masterPeaks = React.useRef({ L: 0, R: 0, pending: false });
     
@@ -166,8 +177,26 @@ const Mixer = () => {
                             />
                         </div>
 
+                        {/* No sample loaded means this voice is synthesized — let them shape it. */}
+                        {!hasSample(i) && (
+                            <button
+                                onClick={() => setSynthPad(synthPad === i ? null : i)}
+                                title={`Edit the ${track.name || 'Track'} synth voice`}
+                                style={{
+                                    width: '100%', padding: '3px 0', textAlign: 'center', borderRadius: '4px',
+                                    border: `1px solid ${synthPad === i ? '#f4902c' : '#444b57'}`,
+                                    background: synthPad === i ? '#6b3f14' : '#2a2f38',
+                                    color: synthPad === i ? '#ffe9d4' : '#9aa3ae',
+                                    cursor: 'pointer', fontSize: '9px', fontWeight: '700', letterSpacing: '.5px',
+                                    marginBottom: '4px'
+                                }}
+                            >
+                                SYNTH
+                            </button>
+                        )}
+
                         <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
-                            <SvgKnob 
+                            <SvgKnob
                                 value={pan} min={-1} max={1} defaultVal={0} bipolar={true} color={color} size={32} 
                                 onChange={(v) => setTrackPan((pprev) => { const n = [...pprev]; n[i] = v; return n; })}
                             />
@@ -245,6 +274,15 @@ const Mixer = () => {
                 </button>
                 <div style={{ fontSize: '10px', color: 'var(--muted)', fontWeight: '700', fontVariantNumeric: 'tabular-nums' }}>OUT</div>
             </div>
+
+            {synthPad != null && window.DrumSynthEditor && ReactDOM.createPortal(
+                <window.DrumSynthEditor
+                    idx={synthPad}
+                    name={(tracks[synthPad] && tracks[synthPad].name) || `Track ${synthPad + 1}`}
+                    onClose={() => setSynthPad(null)}
+                />,
+                document.body
+            )}
         </div>
     );
 };

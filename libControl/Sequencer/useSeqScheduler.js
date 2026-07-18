@@ -63,7 +63,7 @@ window.useSeqScheduler = (
                 if (entry && entry.buffer && window.oaPlayDrumSample) {
                     window.oaPlayDrumSample(ctx, Object.assign({}, entry, { loop: false }), time, vol, pan);
                 } else if (window.oaPlayDrumVoice) {
-                    window.oaPlayDrumVoice(ctx, TRACKS[trkIdx], time, vol, pan);
+                    window.oaPlayDrumVoice(ctx, { idx: trkIdx }, time, vol, pan);
                 } else {
                     const osc = ctx.createOscillator();
                     const gain = ctx.createGain();

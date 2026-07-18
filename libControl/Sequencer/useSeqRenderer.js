@@ -21,7 +21,7 @@ window.useSeqRenderer = (pattern, steps, mutes, bpm, safeLabel) => {
                         const vol = v / 100;
                         const entry = window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[trkIdx];
                         if (entry && entry.buffer && window.oaPlayDrumSample) window.oaPlayDrumSample(offline, Object.assign({}, entry, { loop: false }), t, vol);
-                        else if (window.oaPlayDrumVoice) window.oaPlayDrumVoice(offline, TRACKS[trkIdx], t, vol);
+                        else if (window.oaPlayDrumVoice) window.oaPlayDrumVoice(offline, { idx: trkIdx }, t, vol);
                     }
                 });
             }

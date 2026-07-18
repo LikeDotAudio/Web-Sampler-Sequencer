@@ -1,17 +1,34 @@
 // Synthesize a kit voice at `time` with `volume` (0..1). Used when no sample.
+// The voice is built by its engine from the patch in OA_DRUM_SYNTH — `track`
+// only carries the kit index and, in Tone Mode, a pitch ratio to apply.
 window.oaPlayDrumVoice = function (ctx, track, time, volume, pan) {
     if (!track) return;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.frequency.value = track.freq;
-    osc.type = track.type;
-    osc.connect(gain);
-    if (pan && ctx.createStereoPanner) { const p = ctx.createStereoPanner(); p.pan.value = Math.max(-1, Math.min(1, pan)); gain.connect(p); p.connect(ctx.destination); }
-    else gain.connect(ctx.destination);
-    gain.gain.setValueAtTime(Math.max(0.0001, volume), time);
-    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.15);
-    osc.start(time);
-    osc.stop(time + 0.15);
+    const idx = track.idx != null ? track.idx : (window.OA_DRUM_KIT || []).indexOf(track);
+    const patch = window.oaSynthPatch((window.OA_DRUM_SYNTH || {})[idx] || window.OA_SYNTH_FACTORY[idx]);
+    const engine = window.OA_SYNTH_ENGINES[patch.engine] || window.OA_SYNTH_ENGINES.membrane;
+
+    // Tone Mode hands us a ratio; shift every frequency-shaped parameter by it.
+    const ratio = track.pitchRatio || 1;
+    const tuned = (ratio === 1) ? patch : window.oaTransposePatch(patch, ratio);
+
+    let out;
+    if (pan && ctx.createStereoPanner) {
+        const p = ctx.createStereoPanner();
+        p.pan.value = Math.max(-1, Math.min(1, pan));
+        p.connect(ctx.destination);
+        out = p;
+    } else {
+        out = ctx.destination;
+    }
+    engine.render(ctx, tuned, time, Math.max(0.0001, volume), out);
+};
+
+// Frequency-valued parameters that should follow a Tone Mode transposition.
+const OA_PITCHED_PARAMS = ['pitchStart', 'pitchEnd', 'tone1', 'tone2', 'base', 'freq', 'carrier', 'filterFreq'];
+window.oaTransposePatch = function (patch, ratio) {
+    const out = Object.assign({}, patch);
+    OA_PITCHED_PARAMS.forEach((k) => { if (typeof out[k] === 'number') out[k] = out[k] * ratio; });
+    return out;
 };
 // Play a loaded sample ENTRY at `time` with `volume` (0..1); honours pitch,
 // loop and fade. Returns the BufferSource so a looping voice can be stopped.
@@ -92,7 +109,7 @@ window.oaTriggerDrum = function (idx, volume, time) {
         window.oaPlayDrumSample(ctx, entry, t, vol);
         return false;
     }
-    window.oaPlayDrumVoice(ctx, window.OA_DRUM_KIT[idx], t, vol);
+    window.oaPlayDrumVoice(ctx, { idx: idx }, t, vol);
     return false;
 };
 // Trigger a drum voice pitched by N semitones (Tone Mode)
@@ -118,11 +135,9 @@ window.oaTriggerTone = function(rootIdx, semitones, volume, time) {
         return true;
     }
     
-    // Fallback to pitched synth voice
-    const pitchRatio = Math.pow(2, semitones / 12);
-    const track = window.OA_DRUM_KIT[rootIdx];
-    if (track) {
-        window.oaPlayDrumVoice(ctx, Object.assign({}, track, { freq: track.freq * pitchRatio }), t, vol);
+    // Fallback to the synth voice, transposed
+    if (window.OA_DRUM_KIT[rootIdx]) {
+        window.oaPlayDrumVoice(ctx, { idx: rootIdx, pitchRatio: Math.pow(2, semitones / 12) }, t, vol);
         return true;
     }
     return false;

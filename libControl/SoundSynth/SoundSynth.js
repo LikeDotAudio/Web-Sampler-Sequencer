@@ -90,6 +90,8 @@ window.oaSetDrumSample = function (idx, buffer, opts) {
     };
     window.OA_DRUM_SAMPLES[idx] = entry;
     if (window.oaPrecachePad) window.oaPrecachePad(entry);
+    // A loaded sample takes over from the synth voice — the Mixer hides SYNTH.
+    window.dispatchEvent(new CustomEvent('oa-sample-changed', { detail: { idx: idx } }));
 };
 
 // Patch an existing pad's options (pitch/loop/fade) without re-decoding.

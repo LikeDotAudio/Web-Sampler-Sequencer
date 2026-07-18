@@ -1,17 +1,21 @@
 const Header = ({ activeTabs, toggleTab, deferredPrompt, installApp }) => {
-    const btnStyle = (tab, isLast = false) => ({
-        flex: 1,
-        padding: '8px 16px',
-        background: activeTabs.includes(tab) ? 'var(--accent)' : 'var(--strip)',
-        color: activeTabs.includes(tab) ? '#06222e' : 'var(--text)',
-        border: 'none',
-        borderRight: isLast ? 'none' : '1px solid #3a3f49',
-        borderRadius: 0,
-        cursor: 'pointer',
-        fontWeight: '600',
-        fontSize: '14px',
-        opacity: activeTabs.includes(tab) ? 1 : 0.6
-    });
+    const btnStyle = (tab, isLast = false) => {
+        const open = activeTabs.includes(tab);
+        const onTop = activeTabs[0] === tab;   // the panel stuck under the header
+        return {
+            flex: 1,
+            padding: '8px 16px',
+            background: open ? 'var(--accent)' : 'var(--strip)',
+            color: open ? '#06222e' : 'var(--text)',
+            border: 'none',
+            borderRight: isLast ? 'none' : '1px solid #3a3f49',
+            borderRadius: 0,
+            cursor: 'pointer',
+            fontWeight: onTop ? '900' : '600',
+            fontSize: '14px',
+            opacity: open ? 1 : 0.6
+        };
+    };
 
     return (
         <header className="app-header">

@@ -1,0 +1,76 @@
+/**
+ * Header: oaDrumSynthPatches.js
+ * Purpose: The factory patch for each of the 16 kit voices.
+ * Description: Which engine each voice uses and how it is tuned out of the box.
+ *   A user's edits are stored per index in OA_DRUM_SYNTH and persisted to
+ *   localStorage; these are the values a "Reset" returns to.
+ */
+
+window.OA_SYNTH_FACTORY = [
+    // 0 Kick — deep pitch drop, short beater click
+    { engine: 'membrane', wave: 'sine', pitchStart: 190, pitchEnd: 48, pitchDecay: 22, decay: 340, click: 0.3, clickDecay: 7, drive: 0.2 },
+    // 1 Snare — shell plus wires
+    { engine: 'snare', tone1: 175, tone2: 235, pitchDrop: 0.3, toneDecay: 80, filterType: 'highpass', filterFreq: 1800, q: 1.2, noiseDecay: 260, mix: 0.6 },
+    // 2 Hi-Hat — closed: bright and fast
+    { engine: 'metal', base: 245, spread: 1, voices: 6, filterType: 'highpass', filterFreq: 8000, q: 2, noise: 0.12, decay: 75 },
+    // 3 Perc — short FM blip
+    { engine: 'fm', carrier: 420, ratio: 3.1, index: 700, indexDecay: 45, pitchDrop: 0.2, decay: 160 },
+    // 4 Clap — three hands
+    { engine: 'clap', bursts: 3, spacing: 11, filterFreq: 1200, q: 3, burstDecay: 9, tailDecay: 220 },
+    // 5 Rim — resonant wooden crack, noise-led
+    { engine: 'click', freq: 1700, q: 16, decay: 30, noise: 0.6, wave: 'triangle' },
+    // 6 Tom Lo
+    { engine: 'membrane', wave: 'sine', pitchStart: 220, pitchEnd: 90, pitchDecay: 40, decay: 520, click: 0.18, clickDecay: 8, drive: 0.1 },
+    // 7 Tom Mid
+    { engine: 'membrane', wave: 'sine', pitchStart: 300, pitchEnd: 140, pitchDecay: 36, decay: 440, click: 0.18, clickDecay: 8, drive: 0.1 },
+    // 8 Tom Hi
+    { engine: 'membrane', wave: 'sine', pitchStart: 420, pitchEnd: 210, pitchDecay: 32, decay: 380, click: 0.2, clickDecay: 7, drive: 0.1 },
+    // 9 Cymbal — long, dense, sizzling
+    { engine: 'metal', base: 300, spread: 1.25, voices: 6, filterType: 'highpass', filterFreq: 5500, q: 1.4, noise: 0.35, decay: 1600 },
+    // 10 Ride — pingier than the crash, mid-length
+    { engine: 'metal', base: 420, spread: 0.9, voices: 6, filterType: 'bandpass', filterFreq: 6000, q: 2.5, noise: 0.2, decay: 900 },
+    // 11 Cowbell — two-tone metallic, short
+    { engine: 'metal', base: 540, spread: 0.35, voices: 2, filterType: 'bandpass', filterFreq: 2600, q: 3.5, noise: 0.02, decay: 210 },
+    // 12 Conga — membrane, rings longer than a tom
+    { engine: 'membrane', wave: 'sine', pitchStart: 360, pitchEnd: 195, pitchDecay: 28, decay: 480, click: 0.22, clickDecay: 6, drive: 0.05 },
+    // 13 Clave — pure brief resonance
+    { engine: 'click', freq: 2450, q: 12, decay: 40, noise: 0.15, wave: 'sine' },
+    // 14 Shaker — ramped attack
+    { engine: 'shaker', filterFreq: 7200, q: 2.5, attack: 20, decay: 130 },
+    // 15 FX — laser-ish FM sweep
+    { engine: 'fm', carrier: 220, ratio: 5.5, index: 1400, indexDecay: 220, pitchDrop: 0.6, decay: 600 },
+];
+
+// idx -> live patch. Seeded from the factory, overlaid with anything saved.
+window.OA_DRUM_SYNTH = window.OA_DRUM_SYNTH || {};
+
+window.oaLoadSynthPatches = function () {
+    let saved = {};
+    try { saved = JSON.parse(window.localStorage.getItem('oaDrumSynth')) || {}; } catch (e) {}
+    for (let i = 0; i < 16; i++) {
+        window.OA_DRUM_SYNTH[i] = window.oaSynthPatch(saved[i] || window.OA_SYNTH_FACTORY[i]);
+    }
+};
+
+window.oaSaveSynthPatches = function () {
+    try { window.localStorage.setItem('oaDrumSynth', JSON.stringify(window.OA_DRUM_SYNTH)); } catch (e) {}
+};
+
+window.oaSetSynthParam = function (idx, key, value) {
+    const patch = window.OA_DRUM_SYNTH[idx] || window.oaSynthPatch(window.OA_SYNTH_FACTORY[idx]);
+    // Switching engine starts from that engine's defaults rather than carrying
+    // over parameters that mean nothing to it.
+    window.OA_DRUM_SYNTH[idx] = key === 'engine'
+        ? window.oaSynthPatch({ engine: value })
+        : Object.assign({}, patch, { [key]: value });
+    window.oaSaveSynthPatches();
+    window.dispatchEvent(new CustomEvent('oa-synth-changed', { detail: { idx } }));
+};
+
+window.oaResetSynthPatch = function (idx) {
+    window.OA_DRUM_SYNTH[idx] = window.oaSynthPatch(window.OA_SYNTH_FACTORY[idx]);
+    window.oaSaveSynthPatches();
+    window.dispatchEvent(new CustomEvent('oa-synth-changed', { detail: { idx } }));
+};
+
+window.oaLoadSynthPatches();

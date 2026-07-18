@@ -129,7 +129,7 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
         const pan = trackPanRef.current[trkIdx] || 0;
         const entry = window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[trkIdx];
         if (entry && entry.buffer && window.oaPlayDrumSample) window.oaPlayDrumSample(ctx, Object.assign({}, entry, { loop: false }), ctx.currentTime, vol, pan);
-        else if (window.oaPlayDrumVoice) window.oaPlayDrumVoice(ctx, TRACKS[trkIdx], ctx.currentTime, vol, pan);
+        else if (window.oaPlayDrumVoice) window.oaPlayDrumVoice(ctx, { idx: trkIdx }, ctx.currentTime, vol, pan);
         window.dispatchEvent(new CustomEvent('oa-drum-play', { detail: { idx: trkIdx, velocity: vel } }));
     };
     const getAudioCtx = () => {
