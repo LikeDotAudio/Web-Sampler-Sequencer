@@ -1,6 +1,3 @@
-const SvgKnob = window.SvgKnob;
-const SvgFader = window.SvgFader;
-
 const Mixer = () => {
     const { trackVol, setTrackVol, trackPan, setTrackPan, mutes, toggleMute, solos, toggleSolo, clearSolos, masterVol, setMasterVol, clickVol, setClickVol, recording } = window.useSeqState('Pattern Sequencer', 16, window.OA_DRUM_KIT || []);
     const tracks = window.OA_DRUM_KIT || [];

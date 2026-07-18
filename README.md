@@ -29,9 +29,19 @@ This project strictly adheres to a modular, lightweight, and transparent design 
 - **No file over 200 lines**: The entire codebase is meticulously broken down into single-responsibility hooks and components, making the logic incredibly easy to read, audit, and modify for open-source contributors.
 - **No compilation steps**: Open source should be accessible. Anyone can right-click, "View Source", and immediately understand how the app works or tweak the code with a simple text editor. 
 
-## Open Source
+## Open Source — Free to Use, Fork, and Modify
 
-This project is 100% open-source. Whether you're a web developer interested in the Web Audio API or a beatmaker looking for a free, portable drum machine, you're encouraged to dive in, study the code, modify the UI, and contribute back.
+This project is 100% open-source and always will be. There is no paid tier, no license key, no account, no telemetry, and no server collecting your samples or your patterns. Everything runs locally in your browser.
+
+You are free to:
+
+- **Use it** — for anything, including commercial music production and paid releases. Beats you make with it are yours; you owe nothing.
+- **Download it** — clone the repo or grab a ZIP and run it offline, forever. No internet connection required after the first download.
+- **Fork it** — build your own version, rename it, redesign it, strip out what you don't need.
+- **Modify it** — there's no build step and no compilation, so you can edit the source in any text editor and reload the page to see the change. See [Philosophy & Architecture](#philosophy--architecture) for why the code is structured to make this easy.
+- **Redistribute it** — share it, host it, bundle it into your own project, under the terms of the MIT License.
+
+Contributions are welcome but never required. Whether you're a web developer curious about the Web Audio API or a beatmaker who just wants a free, portable drum machine, dive in.
 
 ## Browser Compatibility
 
