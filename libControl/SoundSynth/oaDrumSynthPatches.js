@@ -74,3 +74,61 @@ window.oaResetSynthPatch = function (idx) {
 };
 
 window.oaLoadSynthPatches();
+
+// ---------------------------------------------------------------------------
+// Rendered preview: a synth voice bounced to a real AudioBuffer, so it can be
+// drawn on the pad exactly like a loaded sample. Cached per voice and thrown
+// away whenever that voice's patch changes.
+// ---------------------------------------------------------------------------
+window.OA_SYNTH_RENDER = window.OA_SYNTH_RENDER || {};
+
+// How long to bounce. Long enough to catch the whole tail of the slowest patch
+// without rendering seconds of silence for a clave.
+const synthRenderSeconds = (patch) => {
+    const p = patch || {};
+    const longest = Math.max(
+        p.decay || 0,
+        p.noiseDecay || 0,
+        p.tailDecay || 0,
+        (p.attack || 0) + (p.decay || 0)
+    ) / 1000;
+    return Math.min(6, Math.max(0.25, longest * 1.15 + 0.05));
+};
+
+window.oaRenderSynthVoice = async function (idx) {
+    const patch = window.oaSynthPatch(window.OA_DRUM_SYNTH[idx]);
+    const key = JSON.stringify(patch);
+    const cached = window.OA_SYNTH_RENDER[idx];
+    if (cached && cached.key === key) return cached.buffer;
+
+    const OfflineCtx = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+    const engine = window.OA_SYNTH_ENGINES[patch.engine];
+    if (!OfflineCtx || !engine) return null;
+
+    const rate = (window.OA_AUDIO_CTX && window.OA_AUDIO_CTX.sampleRate) || 44100;
+    const seconds = synthRenderSeconds(patch);
+    try {
+        const off = new OfflineCtx(1, Math.ceil(rate * seconds), rate);
+        engine.render(off, patch, 0, 0.9, off.destination);
+        const buffer = await off.startRendering();
+        window.OA_SYNTH_RENDER[idx] = { key: key, buffer: buffer };
+        window.dispatchEvent(new CustomEvent('oa-synth-rendered', { detail: { idx: idx } }));
+        return buffer;
+    } catch (e) {
+        return null;
+    }
+};
+
+// Keep every voice's preview current: re-bounce on edit, and once at startup so
+// the pads show their waveforms without waiting to be touched.
+window.addEventListener('oa-synth-changed', (e) => {
+    const idx = e.detail && e.detail.idx;
+    if (idx != null) {
+        delete window.OA_SYNTH_RENDER[idx];
+        window.oaRenderSynthVoice(idx);
+    }
+});
+
+window.oaRenderAllSynthVoices = function () {
+    for (let i = 0; i < 16; i++) window.oaRenderSynthVoice(i);
+};

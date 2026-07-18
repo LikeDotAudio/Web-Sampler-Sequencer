@@ -49,13 +49,13 @@ window.Pad = ({
                 }
             `}</style>
 
-            {/* In tone mode every pad plays the root pad's sample pitched, so show that wave. */}
+            {/* In tone mode every pad plays the root pad's voice pitched, so show
+                that one. With no sample loaded the pad is a synth voice — draw
+                its rendered waveform just the same. */}
             {(() => {
                 const waveIdx = isToneMode ? toneRoot : idx;
-                const waveLoaded = isToneMode
-                    ? !!(window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[toneRoot] && window.OA_DRUM_SAMPLES[toneRoot].buffer)
-                    : hasSample;
-                return waveLoaded ? <PadWave idx={waveIdx} ver={sampleNames[waveIdx]} /> : null;
+                const sampled = !!(window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[waveIdx] && window.OA_DRUM_SAMPLES[waveIdx].buffer);
+                return <PadWave idx={waveIdx} ver={sampleNames[waveIdx]} synth={!sampled} />;
             })()}
             <span className="oa-pad-name" style={{ position: 'relative', fontSize: '15px', lineHeight: 1.1, wordBreak: 'break-word', color: isToneMode ? '#fff' : 'inherit' }}>
                 {isToneMode ? noteName : name}
