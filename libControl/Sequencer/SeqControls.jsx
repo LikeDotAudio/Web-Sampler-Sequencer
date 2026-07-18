@@ -45,6 +45,12 @@ window.SeqControls = ({
                     color="#444" textColor="#fff" 
                     style={{ padding: '4px 8px', marginLeft: '10px', border: '1px solid #666' }} 
                 />
+                <SeqButton
+                    label="⭳ Save Pattern"
+                    onClick={savePattern}
+                    color="#1565c0" textColor="#fff"
+                    style={{ padding: '4px 8px', marginLeft: '5px', border: 'none', fontSize: '12px', fontWeight: 'bold' }}
+                />
             </div>
         </div>
     );
@@ -80,12 +86,6 @@ window.SeqControls = ({
                     color="#7b1fa2" textColor="#fff"
                     title="Render this pattern to a loopable WAV file"
                     style={{ padding: '6px 12px', border: 'none', cursor: rendering ? 'wait' : 'pointer' }}
-                />
-                <SeqButton
-                    label="⭳ Save"
-                    onClick={savePattern}
-                    color="#1565c0" textColor="#fff"
-                    style={{ padding: '6px 12px', border: 'none' }}
                 />
                 <SeqButton
                     label="Clear"

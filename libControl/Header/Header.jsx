@@ -1,4 +1,4 @@
-const Header = ({ activeTabs, toggleTab }) => {
+const Header = ({ activeTabs, toggleTab, deferredPrompt, installApp }) => {
     const btnStyle = (tab, isLast = false) => ({
         flex: 1,
         padding: '8px 16px',
@@ -58,6 +58,11 @@ const Header = ({ activeTabs, toggleTab }) => {
                 <button onClick={() => toggleTab('EDITOR')} style={btnStyle('EDITOR')}>EDITOR</button>
                 <button onClick={() => toggleTab('MIXER')} style={btnStyle('MIXER', true)}>MIXER</button>
             </div>
+            {deferredPrompt && (
+                <button onClick={installApp} style={{ padding: '8px 16px', background: '#388e3c', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', fontSize: '12px', marginLeft: 'auto' }}>
+                    ⬇ INSTALL APP
+                </button>
+            )}
         </header>
     );
 };
