@@ -170,7 +170,7 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
             )}
             
             {showSeq && (
-            <div className="chunky-scrollbar" style={{ display: 'flex', flexDirection: 'column', gap: '3px', overflowX: 'auto', alignItems: 'safe center', paddingBottom: '6px' }}>
+            <div className="chunky-scrollbar" style={{ display: 'flex', flexDirection: 'column', gap: '2px', overflowX: 'auto', alignItems: 'safe center', paddingBottom: '6px' }}>
                 {TRACKS.map(({ name: trackName }, trkIdx) => {
                   const muted = mutes[trkIdx];
                   const tvol = trackVol[trkIdx] == null ? 1 : trackVol[trkIdx];

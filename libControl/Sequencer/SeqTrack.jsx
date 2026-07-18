@@ -29,7 +29,9 @@ window.SeqTrack = ({
                     {trackName}
                 </span>
             </div>
-            <div style={{ display: 'flex', gap: '3px', background: '#0a0a0a', padding: '4px', borderRadius: '4px', border: '1px solid #222', opacity: muted ? 0.4 : 1 }}>
+            {/* Half the vertical padding of the horizontal — rows sit tighter
+                together without crowding the steps side to side. */}
+            <div style={{ display: 'flex', gap: '3px', background: '#0a0a0a', padding: '2px 4px', borderRadius: '4px', border: '1px solid #222', opacity: muted ? 0.4 : 1 }}>
                 {[...Array(steps)].map((_, step) => {
                     const vel = velOf(pattern[trkIdx][step]);
                     const isLit = vel > 0;
