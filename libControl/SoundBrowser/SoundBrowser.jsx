@@ -1,5 +1,5 @@
 /**
- * SoundBrowse.jsx — custom "Sound Browse" window.
+ * SoundBrowser.jsx — custom "Sound Browse" window.
  * Two panes: a folder TREE on the left, and a grid of RENDERED WAVEFORM
  * thumbnails for the selected folder on the right. Click (or arrow-key) a
  * waveform to select + auto-play it; scrub / rewind / loop below; Load to pad.
@@ -24,7 +24,7 @@ const MAX_FILES = 4000;    // cap on rendered thumbnails
 const NAME_MAX = 60000;    // cap on the name-only scan
 const DEEP_MAX = 20000;
 
-window.SoundBrowse = ({ onClose, onChoose, onChooseOther, targetLabel, inline }) => {
+window.SoundBrowser = ({ onClose, onChoose, onChooseOther, targetLabel, inline }) => {
     const [buffer, setBuffer] = React.useState(null);
     const [autoPreview, setAutoPreview] = React.useState(true);
     const bigCanvasRef = React.useRef(null);
