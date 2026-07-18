@@ -256,134 +256,11 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
     const songRef = React.useRef(null);            // { idx } while a song plays
     const [songPos, setSongPos] = React.useState(null);
 
-    // Lookahead scheduling state
-    const nextNoteTimeRef = React.useRef(0);
-    const currentStepRef = React.useRef(0);
-    const timerIDRef = React.useRef(null);
-    const lookahead = 25.0; // ms
-    const scheduleAheadTime = 0.1; // s
-
-    const getAudioCtx = () => {
-        if (!audioCtxRef.current) {
-            // Use the SHARED context so buffers the Sampler decoded play here too.
-            audioCtxRef.current = window.oaAudioCtx
-                ? window.oaAudioCtx()
-                : new (window.AudioContext || window.webkitAudioContext)();
-        }
-        return audioCtxRef.current;
-    };
-
-    const nextNote = () => {
-        const secondsPerBeat = 60.0 / bpmRef.current;
-        nextNoteTimeRef.current += 0.25 * secondsPerBeat; // 16th note
-        currentStepRef.current = (currentStepRef.current + 1) % stepsRef.current;
-        // Song mode: when the current pattern wraps, chain to the next one.
-        if (currentStepRef.current === 0 && songRef.current) advanceSong();
-    };
-
-    // Load a library entry into the LIVE refs synchronously (the scheduler can
-    // fire again before React re-renders) and push it to state/MQTT for the UI.
-    const applySongEntry = (entry) => {
-        const s = (entry.data[0] && entry.data[0].length) || entry.steps || DEFAULT_STEPS;
-        patternRef.current = clonePattern(entry.data);
-        stepsRef.current = s;
-        if (entry.bpm) bpmRef.current = entry.bpm;
-        toneTrackRef.current = entry.toneTrack || Array(s).fill(null);
-        toneRootRef.current = entry.toneRoot !== undefined ? entry.toneRoot : null;
-        setSeqRef.current({ grid: patternRef.current, bpm: bpmRef.current, steps: s, toneTrack: toneTrackRef.current, toneRoot: toneRootRef.current });
-    };
-
-    // Step to the next playable pattern in the song (skipping names whose
-    // library entry was deleted); loops back to the start when it runs off the end.
-    const advanceSong = () => {
-        const names = songItemsRef.current || [];
-        const libItems = libraryRef.current || [];
-        for (let hop = 1; hop <= names.length; hop++) {
-            const idx = (songRef.current.idx + hop) % names.length;
-            const entry = libItems.find((p) => p.name === names[idx]);
-            if (entry) { songRef.current = { idx }; setSongPos(idx); applySongEntry(entry); return; }
-        }
-        songRef.current = null; setSongPos(null);   // nothing playable left
-    };
-
-    const scheduleNote = (stepNumber, time) => {
-        // Only update UI if we're roughly at that time (sync UI to audio)
-        requestAnimationFrame(() => setCurrentStep(stepNumber));
-        
-        const ctx = getAudioCtx();
-        // Here we'd normally trigger sounds from the Sampler state.
-        // For this demo, we'll synthesize simple beeps based on active tracks.
-        patternRef.current.forEach((track, trkIdx) => {
-            const vel = velOf(track[stepNumber]);
-            if (vel > 0 && !mutesRef.current[trkIdx]) {
-                const vol = (vel / 100) * (trackVolRef.current[trkIdx] == null ? 1 : trackVolRef.current[trkIdx]);
-                const pan = trackPanRef.current[trkIdx] || 0;
-                // Flash the matching Sampler pad's glow at this intensity, timed
-                // to when the note actually sounds (the scheduler runs ahead).
-                const glowDelay = Math.max(0, (time - ctx.currentTime) * 1000);
-                setTimeout(() => window.dispatchEvent(new CustomEvent('oa-drum-play', { detail: { idx: trkIdx, velocity: vel } })), glowDelay);
-                // Play the shared voice: the Sampler's loaded sample for this
-                // track if present (with its pitch/fade), otherwise the synth voice.
-                const entry = window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[trkIdx];
-                if (entry && entry.buffer && window.oaPlayDrumSample) {
-                    // One-shot per step (never loop in the sequence), but keep cut-off/pitch/fade.
-                    window.oaPlayDrumSample(ctx, Object.assign({}, entry, { loop: false }), time, vol, pan);
-                } else if (window.oaPlayDrumVoice) {
-                    window.oaPlayDrumVoice(ctx, TRACKS[trkIdx], time, vol, pan);
-                } else {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.frequency.value = TRACKS[trkIdx].freq;
-                    osc.type = TRACKS[trkIdx].type;
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    gain.gain.setValueAtTime(vol, time);
-                    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.1);
-                    osc.start(time);
-                    osc.stop(time + 0.1);
-                }
-            }
-        });
-
-        // Metronome click — sounds only while RECORDING: a short blip on every
-        // beat (each 4 steps), accented on the pattern's downbeat.
-        if (recordingRef.current && clickVolRef.current > 0 && stepNumber % 4 === 0) {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'square';
-            osc.frequency.value = stepNumber === 0 ? 1568 : 1046;
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            gain.gain.setValueAtTime(0.5 * clickVolRef.current, time);
-            gain.gain.exponentialRampToValueAtTime(0.001, time + 0.05);
-            osc.start(time);
-            osc.stop(time + 0.06);
-        }
-
-        // Play tone track
-        const tTrack = toneTrackRef.current;
-        const tRoot = toneRootRef.current;
-        if (tTrack && tRoot !== null && tTrack[stepNumber]) {
-            const { vel, pitch } = tTrack[stepNumber];
-            if (vel > 0 && window.oaTriggerTone) {
-                const vol = (vel / 100) * (trackVolRef.current[tRoot] == null ? 1 : trackVolRef.current[tRoot]);
-                window.oaTriggerTone(tRoot, pitch, vol, time);
-                // Flash pad (we fake a drum play for the root pad so it glows)
-                const glowDelay = Math.max(0, (time - ctx.currentTime) * 1000);
-                setTimeout(() => window.dispatchEvent(new CustomEvent('oa-drum-play', { detail: { idx: tRoot, velocity: vel } })), glowDelay);
-            }
-        }
-    };
-
-    const scheduler = () => {
-        const ctx = getAudioCtx();
-        // While there are notes that will need to play before the next interval, schedule them
-        while (nextNoteTimeRef.current < ctx.currentTime + scheduleAheadTime) {
-            scheduleNote(currentStepRef.current, nextNoteTimeRef.current);
-            nextNote();
-        }
-        timerIDRef.current = requestAnimationFrame(scheduler);
-    };
+    const { timerIDRef, nextNoteTimeRef, scheduler } = window.useSeqScheduler(
+        bpmRef, stepsRef, mutesRef, trackVolRef, trackPanRef, 
+        recordingRef, clickVolRef, toneTrackRef, toneRootRef,
+        patternRef, currentStepRef, setRecordedNotes, setSeqRef, getAudioCtx
+    );
 
     const togglePlayback = () => {
         const ctx = getAudioCtx();
@@ -402,7 +279,7 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
             setIsPlaying(true);
             currentStepRef.current = 0;
             nextNoteTimeRef.current = ctx.currentTime + 0.05; // start shortly
-            scheduler();
+            scheduler(setCurrentStep, songRef, setSongPos, applySongEntry, songItemsRef, libraryRef);
         }
     };
 
@@ -421,7 +298,7 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
         setIsPlaying(true);
         currentStepRef.current = 0;
         nextNoteTimeRef.current = ctx.currentTime + 0.05;
-        scheduler();
+        scheduler(setCurrentStep, songRef, setSongPos, applySongEntry, songItemsRef, libraryRef);
     };
 
     // Click a step = toggle on(100)/off. Click-and-HOLD (or drag) = it becomes a
@@ -514,49 +391,7 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
 
     const clearPattern = () => setSeq({ grid: emptyPattern(steps), bpm, steps, toneTrack: Array(steps).fill(null), toneRoot: null });
 
-    // RENDER: bounce one loop of the pattern to a loopable WAV and download it.
-    // Rendered with a tail; the tail is folded back onto the start so decays that
-    // ring past the loop boundary overlap the next loop seamlessly.
-    const [rendering, setRendering] = React.useState(false);
-    const renderLoop = async () => {
-        setRendering(true);
-        try {
-            const secPerStep = 0.25 * 60 / (bpm || 120);   // 16th note
-            const dur = steps * secPerStep;
-            const rate = (window.OA_AUDIO_CTX && window.OA_AUDIO_CTX.sampleRate) || 44100;
-            const Offline = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-            const tailSec = 2.0;
-            const offline = new Offline(2, Math.max(1, Math.ceil((dur + tailSec) * rate)), rate);
-            for (let step = 0; step < steps; step++) {
-                const t = step * secPerStep;
-                pattern.forEach((track, trkIdx) => {
-                    const v = velOf(track[step]);
-                    if (v > 0 && !mutes[trkIdx]) {
-                        const vol = v / 100;
-                        const entry = window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[trkIdx];
-                        if (entry && entry.buffer && window.oaPlayDrumSample) window.oaPlayDrumSample(offline, Object.assign({}, entry, { loop: false }), t, vol);
-                        else if (window.oaPlayDrumVoice) window.oaPlayDrumVoice(offline, TRACKS[trkIdx], t, vol);
-                    }
-                });
-            }
-            const rendered = await offline.startRendering();
-            const loopLen = Math.max(1, Math.round(dur * rate));
-            const loopBuf = window.oaAudioCtx().createBuffer(2, loopLen, rate);
-            for (let ch = 0; ch < 2; ch++) {
-                const src = rendered.getChannelData(ch);
-                const dst = loopBuf.getChannelData(ch);
-                for (let i = 0; i < loopLen; i++) dst[i] = src[i] || 0;
-                for (let j = 0; j + loopLen < src.length && j < loopLen; j++) dst[j] += src[loopLen + j]; // wrap tail
-            }
-            const blob = new Blob([window.oaEncodeWav(loopBuf)], { type: 'audio/wav' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url; a.download = `${safeLabel}_${bpm}bpm_${steps}steps.wav`;
-            document.body.appendChild(a); a.click(); a.remove();
-            setTimeout(() => URL.revokeObjectURL(url), 2000);
-        } catch (e) { console.error('🛑 [Sequencer] render failed:', e); }
-        setRendering(false);
-    };
+    const { rendering, renderLoop } = window.useSeqRenderer(pattern, steps, mutes, bpm, safeLabel);
 
     return (
         <div style={{ padding: '12px', backgroundColor: 'rgba(18,18,18,0.28)', borderRadius: '4px', color: '#fff', border: '1px solid #333', width: '100%', boxSizing: 'border-box', marginTop: '10px' }}>
@@ -634,201 +469,62 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
                   const volAngle = -135 + tvol * 270;   // knob indicator reflects the track volume
                   const openMenu = (e) => { e.stopPropagation(); setTrackMenu({ trkIdx, x: e.clientX, y: e.clientY }); };
                   return (
-                    <div key={trackName} style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                        <div style={{ width: '110px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '5px', paddingRight: '6px', position: 'sticky', left: 0, background: '#161616', zIndex: 2 }}>
-                            <button
-                                onClick={() => toggleMute(trkIdx)}
-                                title={muted ? `Unmute ${trackName}` : `Mute ${trackName}`}
-                                style={{ width: '17px', height: '17px', flexShrink: 0, padding: 0, fontSize: '9px', fontWeight: 'bold', lineHeight: 1, cursor: 'pointer', borderRadius: '3px', border: `1px solid ${muted ? '#d32f2f' : '#444'}`, background: muted ? '#d32f2f' : '#2a2a2a', color: muted ? '#fff' : '#888' }}
-                            >
-                                M
-                            </button>
-                            <button
-                                onClick={openMenu}
-                                title={`${trackName} — vol ${Math.round(tvol * 100)} · click for sample / pitch / vol / pan`}
-                                style={{ width: '17px', height: '17px', flexShrink: 0, padding: 0, borderRadius: '50%', border: '1px solid #555', background: 'radial-gradient(circle at 50% 35%, #555, #222)', cursor: 'pointer', position: 'relative' }}
-                            >
-                                <span style={{ position: 'absolute', inset: 0, transform: `rotate(${volAngle}deg)` }}>
-                                    <span style={{ position: 'absolute', left: '50%', top: '1px', width: '2px', height: '6px', background: '#f4902c', transform: 'translateX(-50%)', borderRadius: '1px' }} />
-                                </span>
-                            </button>
-                            <span
-                                onClick={openMenu}
-                                title={`${trackName} — click to pick a sample / pitch / vol / pan`}
-                                style={{ fontSize: '11px', color: muted ? '#666' : '#ccc', textAlign: 'left', whiteSpace: 'nowrap', cursor: 'pointer' }}
-                            >
-                                {trackName}
-                            </span>
-                        </div>
-                        <div style={{ display: 'flex', gap: '3px', background: '#0a0a0a', padding: '4px', borderRadius: '4px', border: '1px solid #222', opacity: muted ? 0.4 : 1 }}>
-                            {[...Array(steps)].map((_, step) => {
-                                const vel = velOf(pattern[trkIdx][step]);
-                                const isLit = vel > 0;
-                                const isBeat = step % 4 === 0;
-                                const isCurrent = isPlaying && currentStep === step;
-                                const isFading = activeFader && activeFader.trkIdx === trkIdx && activeFader.step === step;
-                                const isNewlyRecorded = recordedNotes.has(`${trkIdx}-${step}`);
-
-                                return (
-                                    <div key={step}
-                                        data-oa-trk={trkIdx} data-oa-step={step}
-                                        onPointerDown={(e) => onStepPointerDown(e, trkIdx, step)}
-                                        title={isLit ? `Velocity ${vel} — ALT+drag to adjust` : 'Click/drag to paint · ALT+drag to set intensity'}
-                                        style={{
-                                            position: 'relative', overflow: 'hidden',
-                                            width: '18px', height: '20px',
-                                            backgroundColor: isCurrent ? '#fff' : (isBeat && !isLit ? '#333' : '#1a1a1a'),
-                                            border: isFading ? '1px solid #fff' : (isLit ? (isNewlyRecorded ? '1px solid #ff5252' : '1px solid #ffa726') : '1px solid #111'),
-                                            cursor: 'pointer', borderRadius: '2px', touchAction: 'none',
-                                            boxShadow: isLit ? (isNewlyRecorded ? `0 0 4px rgba(211, 47, 47, ${0.2 + 0.4 * (vel / 100)})` : `0 0 4px rgba(244, 144, 44, ${0.2 + 0.4 * (vel / 100)})`) : 'none',
-                                        }}>
-                                        {isLit && !isCurrent && (
-                                            <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: `${Math.max(14, vel)}%`, background: isNewlyRecorded ? `rgba(211, 47, 47, ${0.4 + 0.6 * (vel / 100)})` : `rgba(244, 144, 44, ${0.4 + 0.6 * (vel / 100)})`, pointerEvents: 'none' }} />
-                                        )}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
+                    <window.SeqTrack 
+                        key={trackName}
+                        trackName={trackName}
+                        trkIdx={trkIdx}
+                        muted={muted}
+                        tvol={tvol}
+                        toggleMute={toggleMute}
+                        openMenu={openMenu}
+                        steps={steps}
+                        pattern={pattern}
+                        isPlaying={isPlaying}
+                        currentStep={currentStep}
+                        activeFader={activeFader}
+                        recordedNotes={recordedNotes}
+                        onStepPointerDown={onStepPointerDown}
+                    />
                   );
                 })}
             </div>
 
             {toneRoot !== null && (
-                <div style={{ display: 'flex', gap: '6px', alignItems: 'center', marginTop: '10px', paddingTop: '10px', borderTop: '1px dashed #1976d2', paddingBottom: '8px' }}>
-                    <div style={{ width: '110px', flexShrink: 0, paddingRight: '6px' }}>
-                        <span style={{ fontSize: '11px', color: '#64b5f6', fontWeight: 'bold' }}>
-                            TONE: {(TRACKS[toneRoot] && TRACKS[toneRoot].name) || `Pad ${toneRoot+1}`}
-                        </span>
-                    </div>
-                    <div style={{ display: 'flex', gap: '3px', background: '#001a33', padding: '4px', borderRadius: '4px', border: '1px solid #003366' }}>
-                        {[...Array(steps)].map((_, step) => {
-                            const noteData = toneTrack[step];
-                            const isLit = noteData && noteData.vel > 0;
-                            const isBeat = step % 4 === 0;
-                            const isCurrent = isPlaying && currentStep === step;
-                            const isNewlyRecorded = recordedNotes.has(`tone-${step}`);
-                            
-                            const pitch = isLit ? noteData.pitch : 0;
-                            const pitchPercent = (pitch / 15) * 100;
-                            
-                            return (
-                                <div key={`tone-${step}`}
-                                    onPointerDown={(e) => {
-                                        e.preventDefault();
-                                        const current = toneTrackRef.current[step];
-                                        const nextVel = current && current.vel > 0 ? 0 : 100;
-                                        // Default to root pitch (0) if none
-                                        const nextPitch = current ? current.pitch : 0;
-                                        
-                                        const newTrack = [...toneTrackRef.current];
-                                        newTrack[step] = nextVel > 0 ? { vel: nextVel, pitch: nextPitch } : null;
-                                        if (recordingRef.current && nextVel > 0) {
-                                            setRecordedNotes(prev => { const next = new Set(prev); next.add(`tone-${step}`); return next; });
-                                        }
-                                        setSeqRef.current({ grid: patternRef.current, bpm: bpmRef.current, steps: stepsRef.current, toneTrack: newTrack, toneRoot: toneRootRef.current });
-                                        if (nextVel > 0 && window.oaTriggerTone) window.oaTriggerTone(toneRootRef.current, nextPitch, 1);
-                                    }}
-                                    title={isLit ? `Pitch: +${pitch} st · Vel: ${noteData.vel}` : 'Click to add/remove note'}
-                                    style={{
-                                        position: 'relative', overflow: 'hidden',
-                                        width: '18px', height: '20px',
-                                        backgroundColor: isCurrent ? '#fff' : (isBeat && !isLit ? '#00264d' : '#0a1929'),
-                                        border: isLit ? (isNewlyRecorded ? '1px solid #ff5252' : '1px solid #42a5f5') : '1px solid #001122',
-                                        cursor: 'pointer', borderRadius: '2px', touchAction: 'none',
-                                        boxShadow: isLit ? (isNewlyRecorded ? `0 0 4px rgba(211,47,47,0.6)` : `0 0 4px rgba(66,165,245,0.6)`) : 'none',
-                                    }}>
-                                    {isLit && !isCurrent && (
-                                        <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: `${Math.max(14, noteData.vel)}%`, background: isNewlyRecorded ? `rgba(211,47,47,0.7)` : `rgba(66,165,245,0.7)`, pointerEvents: 'none' }} />
-                                    )}
-                                    {isLit && (
-                                        <div style={{ position: 'absolute', left: 0, right: 0, bottom: `${Math.min(90, pitchPercent)}%`, height: '2px', background: '#fff', pointerEvents: 'none' }} />
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
+                <window.SeqToneTrack 
+                    toneRoot={toneRoot}
+                    steps={steps}
+                    toneTrack={toneTrack}
+                    toneTrackRef={toneTrackRef}
+                    toneRootRef={toneRootRef}
+                    isPlaying={isPlaying}
+                    currentStep={currentStep}
+                    recordedNotes={recordedNotes}
+                    setSeqRef={setSeqRef}
+                    patternRef={patternRef}
+                    bpmRef={bpmRef}
+                    stepsRef={stepsRef}
+                    recordingRef={recordingRef}
+                    setRecordedNotes={setRecordedNotes}
+                    trackVolRef={trackVolRef}
+                />
             )}
 
-            <div style={{ marginTop: '10px', borderTop: '1px solid #333', paddingTop: '8px' }}>
-                <div style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px' }}>
-                    Patterns Library
-                </div>
-                {library.length === 0 ? (
-                    <div style={{ fontSize: '12px', color: '#666', fontStyle: 'italic' }}>
-                        No saved patterns yet — build a beat and hit Save.
-                    </div>
-                ) : (
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                        {library.map((entry) => (
-                            <div key={entry.name} style={{ display: 'flex', alignItems: 'center', background: '#2a2a2a', borderRadius: '3px', border: '1px solid #444', overflow: 'hidden' }}>
-                                <button
-                                    onClick={() => loadPattern(entry)}
-                                    onContextMenu={(e) => { e.preventDefault(); if (window.confirm(`Delete pattern "${entry.name}"?`)) deletePattern(entry.name); }}
-                                    title={`Load "${entry.name}"${entry.bpm ? ` @ ${entry.bpm} BPM` : ''} · right-click to delete`}
-                                    style={{ background: 'transparent', color: '#f4902c', border: 'none', padding: '5px 10px', cursor: 'pointer', fontSize: '12px' }}
-                                >
-                                    {entry.name}
-                                </button>
-                                <button
-                                    onClick={() => setSongItems([...song, entry.name])}
-                                    title={`Append "${entry.name}" to the song`}
-                                    style={{ background: 'transparent', color: '#8bc34a', border: 'none', borderLeft: '1px solid #444', padding: '5px 8px', cursor: 'pointer', fontSize: '12px', fontWeight: 'bold' }}
-                                >
-                                    ＋
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
+            <window.SeqLibrary 
+                library={library} 
+                loadPattern={loadPattern} 
+                deletePattern={deletePattern} 
+                setSongItems={setSongItems} 
+                song={song} 
+            />
 
-            <div style={{ marginTop: '10px', borderTop: '1px solid #333', paddingTop: '8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-                    <span style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                        Song
-                    </span>
-                    <SeqButton
-                        label={songPos !== null ? '■ Stop Song' : '► Play Song'}
-                        onClick={songPos !== null ? togglePlayback : playSong}
-                        color={songPos !== null ? '#ffb300' : '#388e3c'} textColor="#fff"
-                        disabled={songPos === null && song.length === 0}
-                        title="Play the song: each pattern in order, looping the whole song"
-                        style={{ padding: '4px 12px', border: 'none' }}
-                    />
-                    <SeqButton
-                        label="Clear Song"
-                        onClick={() => setSongItems([])}
-                        disabled={!song.length}
-                        style={{ border: 'none' }}
-                    />
-                </div>
-                {song.length === 0 ? (
-                    <div style={{ fontSize: '12px', color: '#666', fontStyle: 'italic' }}>
-                        Empty — press ＋ on a library pattern to append it to the song.
-                    </div>
-                ) : (
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', alignItems: 'center' }}>
-                        {song.map((name, i) => {
-                            const exists = library.some((p) => p.name === name);
-                            const isNow = songPos === i;
-                            return (
-                                <React.Fragment key={`${name}-${i}`}>
-                                    {i > 0 && <span style={{ color: '#555', fontSize: '11px' }}>→</span>}
-                                    <button
-                                        onClick={() => setSongItems(song.filter((_, j) => j !== i))}
-                                        title={exists ? `${name} — click to remove from song` : `${name} (deleted pattern — skipped) — click to remove`}
-                                        style={{ background: isNow ? '#f4902c' : '#2a2a2a', color: isNow ? '#111' : (exists ? '#f4902c' : '#666'), textDecoration: exists ? 'none' : 'line-through', border: '1px solid #444', borderRadius: '3px', padding: '4px 10px', cursor: 'pointer', fontSize: '12px', fontWeight: isNow ? 'bold' : 'normal' }}
-                                    >
-                                        {i + 1}. {name}
-                                    </button>
-                                </React.Fragment>
-                            );
-                        })}
-                    </div>
-                )}
-            </div>
+            <window.SeqSong 
+                songPos={songPos} 
+                song={song} 
+                togglePlayback={togglePlayback} 
+                playSong={playSong} 
+                setSongItems={setSongItems} 
+                setSongPos={setSongPos} 
+            />
 
             {activeFader && (
                 <div style={{ position: 'fixed', zIndex: 10000, pointerEvents: 'none',

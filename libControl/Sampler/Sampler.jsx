@@ -56,40 +56,7 @@ const Sampler = ({ label = "Drum Sampler", centerVelocity = 100, edgeVelocity = 
         setTimeout(() => setRestoreMsg(''), 2500);
     };
 
-    // ---- SETS: named snapshots of the whole pad kit --------------------------
-    const [setsState, setSetsState] = window.useMqttState('OpenAir/Gui/DrumSets', { items: loadDrumSets() });
-    const sets = (setsState && setsState.items) || {};
-    const [currentSet, setCurrentSet] = React.useState('');
-    React.useEffect(() => { try { localStorage.setItem('oaDrumSets', JSON.stringify(sets)); } catch (e) {} }, [setsState]);
-
-    const snapshotPads = () => {
-        const arr = [];
-        for (let i = 0; i < 16; i++) {
-            const e = window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[i];
-            arr.push(e && e.buffer ? { name: e.name || '', folder: e.folder || '', pitch: e.pitch || 1, loop: !!e.loop, fade: !!e.fade, offset: e.offset || 0 } : null);
-        }
-        return arr;
-    };
-    const newSet = () => {
-        const name = (window.prompt('Name this set:', `Set ${Object.keys(sets).length + 1}`) || '').trim();
-        if (!name) return;
-        setSetsState({ items: Object.assign({}, sets, { [name]: snapshotPads() }) });
-        setCurrentSet(name);
-    };
-    const deleteSet = (name) => {
-        const next = Object.assign({}, sets); delete next[name];
-        setSetsState({ items: next });
-        if (currentSet === name) setCurrentSet('');
-    };
-    const loadSet = async (name) => {
-        setCurrentSet(name);
-        const set = sets[name]; if (!set) return;
-        const metaByIdx = {};
-        set.forEach((e, i) => { if (e && e.name) { metaByIdx[i] = { name: e.name, folder: e.folder }; publishSample(i, e.name, e.folder); } });
-        if (window.oaRestoreKit) { try { await window.oaRestoreKit(metaByIdx); } catch (err) {} }
-        set.forEach((e, i) => { if (e && window.OA_DRUM_SAMPLES[i]) window.oaUpdateDrumSample(i, { pitch: e.pitch, loop: e.loop, fade: e.fade, offset: e.offset }); });
-        setSampleNames((prev) => { const n = [...prev]; for (let i = 0; i < 16; i++) { const loaded = window.OA_DRUM_SAMPLES[i]; n[i] = loaded ? (loaded.name || '(loaded)') : (metaByIdx[i] ? metaByIdx[i].name : n[i]); } return n; });
-    };
+    const { sets, currentSet, newSet, deleteSet, loadSet } = window.useSamplerSets(setSampleNames, publishSample);
 
     // The standard MPC layout is bottom-left to top-right:
     // 13 14 15 16
@@ -101,11 +68,7 @@ const Sampler = ({ label = "Drum Sampler", centerVelocity = 100, edgeVelocity = 
     // Load a sample onto a pad: decode to an AudioBuffer in the SHARED store so
     // both this pad and the Sequencer's matching track play it.
     const mqttPublish = window.useMqttPublish ? window.useMqttPublish() : null;
-    // Persist which sample (name + source folder) is on a kit voice, retained.
-    const publishSample = (idx, name, folder) => {
-        if (mqttPublish) mqttPublish(`OpenAir/Gui/DrumKit/${idx}/sample`, { name: name || '', folder: folder || '' });
-    };
-
+    
     const handleFile = async (index, file, meta) => {
         if (!file) return;
         try {
@@ -220,87 +183,12 @@ const Sampler = ({ label = "Drum Sampler", centerVelocity = 100, edgeVelocity = 
     };
 
     // ---- Web MIDI: map a connected controller's notes to the pads -----------
-    const [midiStatus, setMidiStatus] = React.useState('');
-    const [midiNote, setMidiNote] = React.useState(null);
     const [midiBase, setMidiBase] = React.useState(36);   // MPC pads default to note 36
     const midiBaseRef = React.useRef(36); midiBaseRef.current = midiBase;
-    const triggerRef = React.useRef(triggerPadAt); triggerRef.current = triggerPadAt;
     React.useEffect(() => { window.OA_MIDI_BASE = midiBase; }, [midiBase]);   // shared with Pad Browser
-    React.useEffect(() => {
-        if (!navigator.requestMIDIAccess) { setMidiStatus('Web MIDI not supported (use Chrome/Edge)'); return; }
-        let access = null;
-        const onMsg = (e) => {
-            if (window.OA_MIDI_CAPTURED) return;   // Pad Browser (or other modal) owns MIDI right now
-            const status = e.data[0], note = e.data[1], vel = e.data[2];
-            if ((status & 0xf0) === 0xe0) {                   // pitch-bend wheel → retune sounding voices
-                const val = ((e.data[2] << 7) | e.data[1]) - 8192;   // 14-bit, centered at 0
-                if (window.oaSetPitchBend) window.oaSetPitchBend((val / 8192) * 200);  // ±2 semitones
-                return;
-            }
-            if ((status & 0xf0) === 0x90 && vel > 0) {        // note-on
-                setMidiNote(note);
-                const idx = note - midiBaseRef.current;
-                const velocity = Math.max(1, Math.round(vel / 127 * 100));
-                
-                if (toneRootRef.current !== null) {
-                    // In Tone Mode, map ANY note to a pitch relative to midiBase or sampleRoot
-                    const entry = window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[toneRootRef.current];
-                    let semitones = idx; // idx is (note - midiBase)
-                    if (entry && entry.sampleRoot != null) {
-                        semitones = note - entry.sampleRoot;
-                    }
-                    if (window.oaTriggerTone) window.oaTriggerTone(toneRootRef.current, semitones, velocity / 100);
-                    window.dispatchEvent(new CustomEvent('oa-tone-hit', { detail: { rootIdx: toneRootRef.current, semitones, velocity } }));
-                    
-                    // Flash the pad if it falls within the 16 visual pads
-                    if (idx >= 0 && idx < 16) {
-                        setVelocities((prev) => { const n = [...prev]; n[idx] = velocity; return n; });
-                        const el = padButtons.current[idx];
-                        if (el) {
-                            el.style.transform = 'scale(0.95)';
-                            el.style.filter = `brightness(1.4)`;
-                            startGlow(el, idx, velocity / 100);
-                            setTimeout(() => { if (el) { el.style.transform = 'scale(1)'; el.style.filter = 'none'; } }, 90);
-                        }
-                    }
-                } else {
-                    if (idx >= 0 && idx < 16) triggerRef.current(idx, velocity);
-                }
-            }
-        };
-        const attach = (a) => { const names = []; a.inputs.forEach((inp) => { inp.onmidimessage = onMsg; names.push(inp.name); }); setMidiStatus(names.length ? names.join(', ') : 'No MIDI inputs'); };
-        navigator.requestMIDIAccess().then((a) => { access = a; attach(a); a.onstatechange = () => attach(a); }).catch(() => setMidiStatus('MIDI access denied'));
-        return () => { if (access) access.inputs.forEach((inp) => { inp.onmidimessage = null; }); };
-    }, []);
 
-    // Number-pad → pad mapping (only while this Sampler is on screen). The 3×3
-    // numpad maps spatially to the bottom-left 3×3 of the MPC pads:
-    //   1 2 3 → pads 1 2 3   ·   4 5 6 → pads 5 6 7   ·   7 8 9 → pads 9 10 11
-    const NUMKEY_TO_PADNUM = { 1: 1, 2: 2, 3: 3, 4: 5, 5: 6, 6: 7, 7: 9, 8: 10, 9: 11 };
-
-    React.useEffect(() => {
-        const el = rootRef.current;
-        if (!el || typeof IntersectionObserver === 'undefined') return;
-        const io = new IntersectionObserver(([en]) => { visibleRef.current = en.isIntersecting; }, { threshold: 0.3 });
-        io.observe(el);
-        return () => io.disconnect();
-    }, []);
-
-    React.useEffect(() => {
-        const onKey = (e) => {
-            if (!visibleRef.current) return;
-            const t = e.target;
-            if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return;
-            const m = /^(?:Numpad|Digit)([1-9])$/.exec(e.code || '');
-            if (!m) return;
-            const padNum = NUMKEY_TO_PADNUM[parseInt(m[1], 10)];
-            if (!padNum) return;
-            e.preventDefault();
-            triggerPadKey(padNum - 1, padNum);
-        };
-        window.addEventListener('keydown', onKey);
-        return () => window.removeEventListener('keydown', onKey);
-    }, []);
+    const { midiStatus, midiNote } = window.useMidiPads(midiBase, toneRootRef, padButtons, triggerPadAt, setVelocities);
+    window.useKeyboardPads(triggerPadKey, visibleRef);
 
     // Glow a pad whenever the Sequencer plays that voice (intensity = step velocity).
     // Imperative only (no state) so 16th-note flashes don't churn React renders.
@@ -350,26 +238,20 @@ const Sampler = ({ label = "Drum Sampler", centerVelocity = 100, edgeVelocity = 
                     const hasSample = !!(window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[idx] && window.OA_DRUM_SAMPLES[idx].buffer);
                     const remembered = kitMeta[idx];        // known from MQTT but not (yet) loaded
                     const vel = velocities[idx];            // side-car value (0-100)
-                    const intensity = vel / 100;
-
+                    
                     const isToneMode = toneRoot !== null;
                     const padNote = midiBase + padNum - 1;
                     const noteName = midiNoteName(padNote);
 
-                    // Every pad plays a sound; a loaded custom sample reads brighter
-                    // orange, a synth-voice pad reads darker. Resting glow reflects
-                    // the last hit's velocity.
-                    const baseColor = isToneMode ? '#1565c0' : (hasSample ? '#f4902c' : '#3a3a3a');
-                    // Resting shadow only — the velocity glow is a transient CSS
-                    // animation (oaPadGlow) that lasts exactly as long as the sound
-                    // plays, then fades to this dark resting state.
-                    const restShadow = (hasSample || isToneMode) ? '0 4px 8px rgba(0,0,0,0.4)' : 'inset 0 1px 3px rgba(0,0,0,0.6)';
-
                     return (
                         <div key={padNum} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <button
-                                ref={(el) => { padButtons.current[idx] = el; }}
-                                title={isToneMode ? `${noteName} — (Tone Mode for Pad ${toneRoot + 1})` : (hasSample ? `${name} — sample: ${(window.OA_DRUM_SAMPLES[idx] && window.OA_DRUM_SAMPLES[idx].name) || sampleNames[idx]}\nALT+click to replace` : (remembered ? `${name} — remembered: ${remembered.name}\n(Restore to re-load, or ALT+click to pick)` : `${name} — synth voice\nALT+click to load a sample`))}
+                            <window.Pad 
+                                padNum={padNum} idx={idx} name={name} 
+                                isToneMode={isToneMode} toneRoot={toneRoot} hasSample={hasSample} 
+                                remembered={remembered} vel={vel} sampleNames={sampleNames}
+                                midiNote={midiNote} noteName={noteName}
+                                PadWave={window.PadWave}
+                                setPadButtonRef={(el) => { padButtons.current[idx] = el; }}
                                 onPointerDown={(e) => {
                                     if (e.ctrlKey) {
                                         e.preventDefault();
@@ -379,15 +261,12 @@ const Sampler = ({ label = "Drum Sampler", centerVelocity = 100, edgeVelocity = 
                                         window.dispatchEvent(new CustomEvent('oa-tone-mode', { detail: { rootIdx: newRoot } }));
                                         return;
                                     }
-                                    // "Load to other pad": this click assigns the pending sample here.
                                     if (pendingAssign) {
                                         e.preventDefault();
                                         handleFile(idx, pendingAssign.file, pendingAssign.meta);
                                         setPendingAssign(null);
                                         return;
                                     }
-                                    // ALT+press opens Sound Browse (or the native
-                                    // picker as a fallback) instead of playing.
                                     if (e.altKey) {
                                         e.preventDefault();
                                         if (window.SoundBrowse) setBrowsePad(idx);
@@ -409,70 +288,8 @@ const Sampler = ({ label = "Drum Sampler", centerVelocity = 100, edgeVelocity = 
                                     e.currentTarget.style.transform = 'scale(1)';
                                     e.currentTarget.style.filter = 'none';
                                 }}
-                                style={{
-                                    position: 'relative',
-                                    width: '120px', height: '120px',
-                                    backgroundColor: baseColor,
-                                    border: '1px solid #000',
-                                    borderTop: '1px solid #555',
-                                    borderLeft: '1px solid #444',
-                                    borderRadius: '6px',
-                                    cursor: 'pointer',
-                                    boxShadow: restShadow,
-                                    color: hasSample ? '#000' : '#ccc',
-                                    fontWeight: 'bold',
-                                    display: 'flex', flexDirection: 'column',
-                                    alignItems: 'center', justifyContent: 'center',
-                                    textAlign: 'center', padding: '4px',
-                                    transition: 'transform 0.05s, background-color 0.05s, filter 0.05s',
-                                    outline: 'none',
-                                    touchAction: 'none'
-                                }}
-                            >
-                                
-                                <style>{`
-                                    @keyframes oaPadGlowBlue {
-                                        from { box-shadow: 0 0 calc(12px + var(--gi, 0.5) * 48px) calc(3px + var(--gi, 0.5) * 16px) rgba(66, 165, 245, calc(0.5 + var(--gi, 0.5) * 0.5)); }
-                                        to { box-shadow: 0 0 0 0 rgba(66, 165, 245, 0); }
-                                    }
-                                `}</style>
-
-                                {/* Faint waveform of the loaded sample behind the label */}
-                                {(hasSample && !isToneMode) && <PadWave idx={idx} ver={sampleNames[idx]} />}
-                                {/* Pad name = shared kit / Sequencer track name, or Note name if Tone Mode */}
-                                <span style={{ position: 'relative', fontSize: '15px', lineHeight: 1.1, wordBreak: 'break-word', color: isToneMode ? '#fff' : 'inherit' }}>
-                                    {isToneMode ? noteName : name}
-                                </span>
-
-                                {/* Tiny pad number, corner */}
-                                <span style={{ position: 'absolute', bottom: '4px', left: '6px', fontSize: '9px', fontWeight: 'bold', opacity: 0.5 }}>
-                                    {padNum}
-                                </span>
-
-                                {/* MIDI note (MPC Chromatic C1 mapping) */}
-                                <span title={`MIDI note ${midiNote}`} style={{ position: 'absolute', top: '4px', left: '6px', fontSize: '8px', fontWeight: 'bold', opacity: 0.6, color: hasSample ? '#3a1f00' : '#8ab4f8' }}>
-                                    {midiNoteName(midiNote)}
-                                </span>
-
-                                {/* SMP badge when a custom sample is loaded; ○ when only remembered (from MQTT) */}
-                                {hasSample ? (
-                                    <span style={{ position: 'absolute', bottom: '4px', right: '6px', fontSize: '8px', fontWeight: 'bold', opacity: 0.7, letterSpacing: '0.5px' }}>
-                                        SMP
-                                    </span>
-                                ) : (remembered && (
-                                    <span title={`Remembered: ${remembered.name}`} style={{ position: 'absolute', bottom: '3px', right: '5px', fontSize: '10px', fontWeight: 'bold', color: '#8ab4f8', opacity: 0.8 }}>
-                                        ○
-                                    </span>
-                                ))}
-
-                                {/* Side-car velocity readout */}
-                                {vel > 0 && (
-                                    <span style={{ position: 'absolute', top: '4px', right: '6px', fontSize: '10px', fontWeight: 'bold', color: hasSample ? '#3a1f00' : '#f4902c', opacity: 0.9 }}>
-                                        {vel}
-                                    </span>
-                                )}
-                            </button>
-
+                                />
+                            
                             {/* Hidden per-pad file input — only reachable via ALT+press */}
                             <input
                                 ref={(el) => { fileInputs.current[idx] = el; }}
