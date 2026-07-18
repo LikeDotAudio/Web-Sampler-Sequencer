@@ -1,7 +1,7 @@
 window.useSeqLibrary = (
     library, setLibraryItems, pattern, bpm, steps, toneTrack, toneRoot, 
     setSeq, DEFAULT_STEPS, getAudioCtx, isPlaying, timerIDRef, songRef, setSongPos,
-    currentStepRef, nextNoteTimeRef, scheduler, songItemsRef, libraryRef,
+    currentStepRef, nextNoteTimeRef, scheduler, stopScheduler, songItemsRef, libraryRef,
     setCurrentStep, setIsPlaying,
     patternRef, stepsRef, bpmRef, toneTrackRef, toneRootRef, setSeqRef
 ) => {
@@ -53,7 +53,7 @@ window.useSeqLibrary = (
         if (startIdx === -1) return;
         const ctx = getAudioCtx();
         if (ctx.state === 'suspended') ctx.resume();
-        if (isPlaying) cancelAnimationFrame(timerIDRef.current);
+        if (isPlaying) stopScheduler();
         songRef.current = { idx: startIdx };
         setSongPos(startIdx);
         applySongEntry(libraryRef.current.find((p) => p.name === names[startIdx]));

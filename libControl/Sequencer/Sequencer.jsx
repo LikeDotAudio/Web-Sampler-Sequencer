@@ -44,7 +44,7 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
 
     const { trackMenu, setTrackMenu, browseTrack, setBrowseTrack, trackVer, setTrackVer, loadTrackSample } = window.useSeqMenus();
 
-    const { timerIDRef, nextNoteTimeRef, scheduler } = window.useSeqScheduler(
+    const { timerIDRef, nextNoteTimeRef, scheduler, stopScheduler } = window.useSeqScheduler(
         bpmRef, stepsRef, mutesRef, trackVolRef, trackPanRef, 
         recordingRef, clickVolRef, toneTrackRef, toneRootRef,
         patternRef, currentStepRef, setRecordedNotes, setSeqRef, getAudioCtx,
@@ -56,7 +56,7 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
     const { savePattern, loadPattern, deletePattern, playSong, applySongEntry } = window.useSeqLibrary(
         library, setLibraryItems, pattern, bpm, steps, toneTrack, toneRoot, 
         setSeq, DEFAULT_STEPS, getAudioCtx, isPlaying, timerIDRef, songRef, setSongPos,
-        currentStepRef, nextNoteTimeRef, scheduler, songItemsRef, libraryRef,
+        currentStepRef, nextNoteTimeRef, scheduler, stopScheduler, songItemsRef, libraryRef,
         setCurrentStep, setIsPlaying,
         patternRef, stepsRef, bpmRef, toneTrackRef, toneRootRef, setSeqRef
     );
@@ -66,7 +66,7 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
     const togglePlayback = () => {
         const ctx = getAudioCtx();
         if (isPlaying) {
-            cancelAnimationFrame(timerIDRef.current);
+            stopScheduler();
             setIsPlaying(false);
             setCurrentStep(0);
             songRef.current = null;

@@ -6,7 +6,26 @@ window.useSeqScheduler = (
 ) => {
     const nextNoteTimeRef = React.useRef(0);
     const timerIDRef = React.useRef(null);
+    const workerRef = React.useRef(null);
+    // Cushion. Audio already booked keeps playing while the main thread is busy,
+    // so this is exactly how long a hiccup can last before you hear a gap.
+    // Traded against edit latency: a step you toggle is heard within this window.
     const scheduleAheadTime = 0.1; // s
+    const TICK_MS = 25;
+
+    // The clock runs on a Worker thread, NOT requestAnimationFrame.
+    // rAF is starved by anything busy on the main thread — a big React render, a
+    // GC pause, a repaint — and pauses outright when the tab is hidden. When it
+    // stops, nothing books new notes and playback simply stops.
+    const makeTicker = () => {
+        const src = 'let id=null;onmessage=function(e){' +
+            'if(e.data.cmd==="start"){clearInterval(id);id=setInterval(function(){postMessage(0)},e.data.ms)}' +
+            'else{clearInterval(id);id=null}};';
+        const url = URL.createObjectURL(new Blob([src], { type: 'application/javascript' }));
+        const w = new Worker(url);
+        URL.revokeObjectURL(url);
+        return w;
+    };
 
     // Live recording needs the transport clock to quantise a pad strike to the
     // nearest step, and a way to say "this note already sounded, don't play it
@@ -117,14 +136,55 @@ window.useSeqScheduler = (
         }
     };
 
-    const scheduler = (setCurrentStep, songRef, setSongPos, applySongEntry, songItemsRef, libraryRef) => {
+    // One scheduling pass: book every note that falls inside the lookahead.
+    const pass = (setCurrentStep, songRef, setSongPos, applySongEntry, songItemsRef, libraryRef) => {
         const ctx = getAudioCtx();
-        while (nextNoteTimeRef.current < ctx.currentTime + scheduleAheadTime) {
+
+        // The context can be suspended out from under us (tab backgrounded, OS
+        // audio change). Without this, currentTime freezes and nothing advances.
+        if (ctx.state === 'suspended') { try { ctx.resume(); } catch (e) {} }
+
+        // Only resync after a genuinely long freeze. A short overrun should be
+        // caught up note-by-note, not discarded — dropping notes to "catch up"
+        // is itself audible.
+        if (nextNoteTimeRef.current < ctx.currentTime - 1.0) {
+            nextNoteTimeRef.current = ctx.currentTime + 0.02;
+        }
+
+        let guard = 0;
+        while (nextNoteTimeRef.current < ctx.currentTime + scheduleAheadTime && guard++ < 128) {
             scheduleNote(currentStepRef.current, nextNoteTimeRef.current, setCurrentStep);
             nextNote(songRef, setSongPos, applySongEntry, songItemsRef, libraryRef);
         }
-        timerIDRef.current = requestAnimationFrame(() => scheduler(setCurrentStep, songRef, setSongPos, applySongEntry, songItemsRef, libraryRef));
     };
 
-    return { timerIDRef, nextNoteTimeRef, scheduler };
+    const scheduler = (setCurrentStep, songRef, setSongPos, applySongEntry, songItemsRef, libraryRef) => {
+        const tick = () => pass(setCurrentStep, songRef, setSongPos, applySongEntry, songItemsRef, libraryRef);
+        tick();   // book the first notes immediately
+
+        if (typeof Worker !== 'undefined') {
+            if (!workerRef.current) workerRef.current = makeTicker();
+            workerRef.current.onmessage = tick;
+            workerRef.current.postMessage({ cmd: 'start', ms: TICK_MS });
+        } else {
+            // No Worker (very old browser): fall back to a main-thread timer,
+            // still better than rAF because it is not tied to painting.
+            const loop = () => { tick(); timerIDRef.current = setTimeout(loop, TICK_MS); };
+            timerIDRef.current = setTimeout(loop, TICK_MS);
+        }
+    };
+
+    const stopScheduler = () => {
+        if (workerRef.current) {
+            workerRef.current.postMessage({ cmd: 'stop' });
+            workerRef.current.onmessage = null;
+        }
+        if (timerIDRef.current != null) {
+            clearTimeout(timerIDRef.current);
+            cancelAnimationFrame(timerIDRef.current);   // harmless if it was a timeout
+            timerIDRef.current = null;
+        }
+    };
+
+    return { timerIDRef, nextNoteTimeRef, scheduler, stopScheduler };
 };
