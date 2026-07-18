@@ -19,6 +19,7 @@ const Sampler = ({ label = "Drum Sampler", centerVelocity = 100, edgeVelocity = 
     } = window.useSamplerState(setSampleNames);
     const { sets, currentSet, newSet, deleteSet, loadSet } = window.useSamplerSets(setSampleNames, publishSample);
     const padButtons = React.useRef([]);
+    const fileInputs = React.useRef([]);
     const rootRef = React.useRef(null);
     const visibleRef = React.useRef(false);
     const { hitPad, startGlow, triggerPadAt, triggerPadKey } = window.useSamplerPads(
