@@ -1,6 +1,6 @@
 // Per-track sample menu: waveform + pitch + time-shift, opened by clicking a
 // track name. Edits the shared kit entry (OA_DRUM_SAMPLES[trkIdx]) directly.
-window.TrackSampleMenu = ({ trkIdx, trackName, anchor, version, onBrowse, onClose, onChange, vol, pan, onVol, onPan }) => {
+window.TrackSampleMenu = ({ trkIdx, trackName, anchor, version, onBrowse, onClose, onChange }) => {
     const entry = (window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[trkIdx]) || null;
     const hasBuf = !!(entry && entry.buffer);
     const canvasRef = React.useRef(null);
@@ -81,9 +81,6 @@ window.TrackSampleMenu = ({ trkIdx, trackName, anchor, version, onBrowse, onClos
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#aaa', marginTop: '6px' }}><span style={{ color: '#e57373' }}>END / CUT-OFF</span><span style={{ color: '#f4902c' }}>{Number(end || 0).toFixed(3)}s{dur && Math.abs((end || 0) - dur) < 0.0005 ? ' (EOF)' : ''}</span></div>
                     <input type="range" min="0.01" max={dur ? Number(dur.toFixed(3)) : 0} step="0.001" value={Math.min(end || 0, dur || 0)} disabled={!hasBuf} onChange={(e) => applyEnd(Math.max(offset + 0.01, Number(e.target.value)))} style={{ width: '100%' }} />
                 </div>
-                <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginTop: '12px', borderTop: '1px solid #333', paddingTop: '10px' }}>
-                    <window.SeqKnob value={Math.round((vol == null ? 1 : vol) * 100)} min={0} max={100} def={100} label="VOL" display={`${Math.round((vol == null ? 1 : vol) * 100)}`} onChange={(v) => onVol && onVol(v / 100)} />
-                    <window.SeqKnob value={Math.round((pan || 0) * 100)} min={-100} max={100} def={0} label="PAN" display={`${Math.round((pan || 0) * 100)}`} onChange={(v) => onPan && onPan(v / 100)} />
                 </div>
             </div>
         </React.Fragment>

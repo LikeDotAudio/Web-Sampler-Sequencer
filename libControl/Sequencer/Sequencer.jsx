@@ -215,10 +215,6 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
                     trackName={(TRACKS[trackMenu.trkIdx] && TRACKS[trackMenu.trkIdx].name) || ''}
                     anchor={{ x: trackMenu.x, y: trackMenu.y }}
                     version={trackVer}
-                    vol={trackVol[trackMenu.trkIdx]}
-                    pan={trackPan[trackMenu.trkIdx]}
-                    onVol={(v) => setTrackVol((prev) => { const n = [...prev]; n[trackMenu.trkIdx] = v; return n; })}
-                    onPan={(v) => setTrackPan((prev) => { const n = [...prev]; n[trackMenu.trkIdx] = v; return n; })}
                     onChange={() => setTrackVer((v) => v + 1)}
                     onBrowse={() => setBrowseTrack(trackMenu.trkIdx)}
                     onClose={() => setTrackMenu(null)}
