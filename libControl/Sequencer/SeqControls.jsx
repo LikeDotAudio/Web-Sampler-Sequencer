@@ -22,12 +22,6 @@ window.SeqControls = ({
                 title="Record: while playing, hit the Sampler pads to write them into the pattern at their velocity"
                 style={{ padding: '4px 12px', fontSize: '13px', border: recording ? '1px solid #ff8a80' : '1px solid #722', boxShadow: recording ? '0 0 8px rgba(211,47,47,0.85)' : 'none' }}
             />
-            <SeqKnob
-                value={Math.round(clickVol * 100)} min={0} max={100} def={80}
-                onChange={(v) => setClickVol(v / 100)}
-                label="CLICK" display={`${Math.round(clickVol * 100)}`} color="#d32f2f"
-                title="Metronome click volume — the click sounds on every beat while recording"
-            />
             <SeqButton
                 label={isPlaying ? '■ Stop' : '► Play'}
                 onClick={togglePlayback}

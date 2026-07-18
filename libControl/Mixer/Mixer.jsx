@@ -2,7 +2,7 @@ const SvgKnob = window.SvgKnob;
 const SvgFader = window.SvgFader;
 
 const Mixer = () => {
-    const { trackVol, setTrackVol, trackPan, setTrackPan, mutes, toggleMute, solos, toggleSolo, clearSolos, masterVol, setMasterVol } = window.useSeqState('Pattern Sequencer', 16, window.OA_DRUM_KIT || []);
+    const { trackVol, setTrackVol, trackPan, setTrackPan, mutes, toggleMute, solos, toggleSolo, clearSolos, masterVol, setMasterVol, clickVol, setClickVol, recording } = window.useSeqState('Pattern Sequencer', 16, window.OA_DRUM_KIT || []);
     const tracks = window.OA_DRUM_KIT || [];
 
     const PALETTE = ["#f4902c", "#f7a048", "#f08018", "#f4902c", "#faa552", "#e67300",
@@ -154,6 +154,22 @@ const Mixer = () => {
                     </div>
                 );
             })}
+
+            {/* Click Strip */}
+            <div style={{
+                background: 'var(--strip)', border: recording ? '1px solid #d32f2f' : '1px solid #555', borderRadius: '6px',
+                width: '60px', flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center',
+                padding: '8px 5px 8px', gap: '8px',
+                boxShadow: recording ? '0 0 10px rgba(211,47,47,0.5)' : 'none'
+            }}>
+                <div style={{ fontSize: '10px', color: recording ? '#ff8a80' : '#aaa', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px', fontWeight: recording ? 'bold' : 'normal' }}>Click</div>
+                
+                <div style={{ display: 'flex', gap: '4px', alignItems: 'stretch', height: '180px', justifyContent: 'center' }}>
+                    <SvgFader value={clickVol} color={recording ? "#d32f2f" : "#aaa"} width={36} height={180} onChange={(v) => setClickVol(v)} />
+                </div>
+                
+                <div style={{ fontSize: '10px', color: 'var(--muted)', fontWeight: '700', fontVariantNumeric: 'tabular-nums', marginTop: '23px' }}>{Math.round(clickVol * 100)}</div>
+            </div>
 
             {/* Master Strip */}
             <div style={{
