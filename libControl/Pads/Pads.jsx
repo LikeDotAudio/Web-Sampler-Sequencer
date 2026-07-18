@@ -1,7 +1,7 @@
 const loadDrumSets = () => { try { return JSON.parse(window.localStorage.getItem('oaDrumSets')) || {}; } catch (e) { return {}; } };
 const midiNoteName = window.midiNoteName;
 const PadWave = window.PadWave;
-const Sampler = ({ label = "Drum Sampler", centerVelocity = 100, edgeVelocity = 10, onHit = null }) => {
+const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, onHit = null }) => {
     // Shared drum kit — the SAME 16 voices the Sequencer uses (DrumKit.js).
     const KIT = window.OA_DRUM_KIT || [];
     // Per-pad loaded-sample file name (for display); null = uses the synth voice.
@@ -104,7 +104,7 @@ const Sampler = ({ label = "Drum Sampler", centerVelocity = 100, edgeVelocity = 
                                     }
                                     if (e.altKey) {
                                         e.preventDefault();
-                                        if (window.SoundBrowse) setBrowsePad(idx);
+                                        if (window.SoundBrowser) setBrowsePad(idx);
                                         else { const input = fileInputs.current[idx]; if (input) input.click(); }
                                         return;
                                     }
@@ -149,11 +149,14 @@ const Sampler = ({ label = "Drum Sampler", centerVelocity = 100, edgeVelocity = 
                 Velocity: centre {centerVelocity}% · edge {edgeVelocity}% (sets volume) · <b>ALT+click</b> to browse · <b>CTRL+click</b> for Tone Mode
             </div>
             {/* Web MIDI — map a connected controller's notes to the pads */}
-            <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center', flexWrap: 'wrap', fontSize: '11px', color: '#888' }}>
-                <span>🎹 MIDI: <b style={{ color: (midiStatus && !/not supported|denied|No MIDI/i.test(midiStatus)) ? '#4caf50' : '#f55' }}>{midiStatus || 'connecting…'}</b></span>
-                <span>· pad 1 = note <input type="number" value={midiBase} onChange={(e) => setMidiBase(Number(e.target.value))} title="MIDI note number that triggers pad 1 (pads are consecutive from here)" style={{ width: '50px', background: '#000', color: '#f4902c', border: '1px solid #444', textAlign: 'center', borderRadius: '3px' }} /></span>
-                {midiNote != null && <span>· last note <b style={{ color: '#f4902c' }}>{midiNote}</b></span>}
-            </div>
+            {document.getElementById('midi-footer-slot') && ReactDOM.createPortal(
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', fontSize: '11px', color: '#888' }}>
+                    <span>🎹 MIDI: <b style={{ color: (midiStatus && !/not supported|denied|No MIDI/i.test(midiStatus)) ? '#4caf50' : '#f55' }}>{midiStatus || 'connecting…'}</b></span>
+                    <span>· pad 1 = note <input type="number" value={midiBase} onChange={(e) => setMidiBase(Number(e.target.value))} title="MIDI note number that triggers pad 1 (pads are consecutive from here)" style={{ width: '50px', background: '#000', color: '#f4902c', border: '1px solid #444', textAlign: 'center', borderRadius: '3px' }} /></span>
+                    {midiNote != null && <span>· last note <b style={{ color: '#f4902c' }}>{midiNote}</b></span>}
+                </div>,
+                document.getElementById('midi-footer-slot')
+            )}
             {/* SETS — named snapshots of the whole kit */}
             <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <span style={{ fontSize: '11px', color: '#aaa', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Sets</span>
@@ -177,8 +180,8 @@ const Sampler = ({ label = "Drum Sampler", centerVelocity = 100, edgeVelocity = 
                         style={{ background: 'none', color: '#888', border: '1px solid #444', borderRadius: '3px', padding: '5px 8px', fontSize: '11px', cursor: 'pointer' }}>✕</button>
                 )}
             </div>
-            {browsePad != null && window.SoundBrowse && (
-                <window.SoundBrowse
+            {browsePad != null && window.SoundBrowser && (
+                <window.SoundBrowser
                     targetLabel={(KIT[browsePad] && KIT[browsePad].name) || `Pad ${browsePad + 1}`}
                     onClose={() => setBrowsePad(null)}
                     onChoose={(file, meta) => { handleFile(browsePad, file, meta); setBrowsePad(null); }}
@@ -196,4 +199,4 @@ const Sampler = ({ label = "Drum Sampler", centerVelocity = 100, edgeVelocity = 
         </div>
     );
 };
-window.Sampler = Sampler;
+window.Pads = Pads;

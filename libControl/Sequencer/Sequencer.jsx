@@ -187,8 +187,8 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
                     onClose={() => setTrackMenu(null)}
                 />
             )}
-            {browseTrack != null && window.SoundBrowse && (
-                <window.SoundBrowse
+            {browseTrack != null && window.SoundBrowser && (
+                <window.SoundBrowser
                     targetLabel={(TRACKS[browseTrack] && TRACKS[browseTrack].name) || ''}
                     onClose={() => setBrowseTrack(null)}
                     onChoose={(file, meta) => { loadTrackSample(browseTrack, file, meta); setBrowseTrack(null); }}
