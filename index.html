@@ -226,22 +226,22 @@
                     {window.Header ? <window.Header activeTabs={activeTabs} toggleTab={toggleTab} /> : <header>Loading HEADER...</header>}
                     
                     <main style={{ flex: 1, overflowY: 'auto', padding: '10px 20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        <div style={{ display: activeTabs.includes('PADS') ? 'flex' : 'none', flex: 1, width: '100%', justifyContent: 'center', minHeight: '300px' }}>
+                        <div style={{ display: activeTabs.includes('PADS') ? 'flex' : 'none', flex: '0 0 auto', width: '100%', justifyContent: 'center' }}>
                             {window.Pads ? <window.Pads /> : <div>Loading PADS...</div>}
                         </div>
                         {activeTabs.includes('PADS') && activeTabs.length > 1 && <hr style={{width: '100%', borderColor: '#333'}}/>}
                         
-                        <div style={{ display: activeTabs.includes('SEQ') ? 'block' : 'none', flex: 1, width: '100%', minHeight: '300px' }}>
+                        <div style={{ display: activeTabs.includes('SEQ') ? 'block' : 'none', flex: '0 0 auto', width: '100%' }}>
                             {window.Sequencer ? <window.Sequencer /> : <div>Loading SEQ...</div>}
                         </div>
                         {activeTabs.includes('SEQ') && activeTabs.length > 1 && (activeTabs.includes('EDITOR') || activeTabs.includes('MIXER')) && <hr style={{width: '100%', borderColor: '#333'}}/>}
                         
-                        <div style={{ display: activeTabs.includes('EDITOR') ? 'flex' : 'none', flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center', minHeight: '300px' }}>
+                        <div style={{ display: activeTabs.includes('EDITOR') ? 'flex' : 'none', flex: '0 0 auto', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                             {window.SoundBrowser ? <window.SoundBrowser inline={true} onClose={() => toggleTab('EDITOR')} /> : <div>Loading EDITOR...</div>}
                         </div>
                         {activeTabs.includes('EDITOR') && activeTabs.length > 1 && activeTabs.includes('MIXER') && <hr style={{width: '100%', borderColor: '#333'}}/>}
                         
-                        <div style={{ display: activeTabs.includes('MIXER') ? 'block' : 'none', flex: 1, width: '100%', minHeight: '300px' }}>
+                        <div style={{ display: activeTabs.includes('MIXER') ? 'block' : 'none', flex: '0 0 auto', width: '100%' }}>
                             {window.Mixer ? <window.Mixer /> : <div>Loading MIXER...</div>}
                         </div>
                     </main>

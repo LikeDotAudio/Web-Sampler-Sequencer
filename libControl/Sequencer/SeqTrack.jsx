@@ -47,7 +47,7 @@ window.SeqTrack = ({
                         <div key={step}
                             data-oa-trk={trkIdx} data-oa-step={step}
                             onPointerDown={(e) => onStepPointerDown(e, trkIdx, step)}
-                            title={isLit ? `Velocity ${vel} — ALT+drag to adjust` : 'Click/drag to paint · ALT+drag to set intensity'}
+                            title={isLit ? `Velocity ${vel} — Drag up/down to adjust intensity` : 'Click/drag horizontally to paint · Drag vertically for intensity'}
                             style={{
                                 position: 'relative', overflow: 'hidden',
                                 width: '18px', height: '20px',

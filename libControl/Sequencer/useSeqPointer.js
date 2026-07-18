@@ -4,28 +4,63 @@ window.useSeqPointer = (patternRef, writeStepVel, recordingRef, setRecordedNotes
     const onStepPointerDown = (e, trkIdx, step) => {
         e.preventDefault();
         if (!e.altKey) {
-            const paintVel = velOf(patternRef.current[trkIdx][step]) > 0 ? 0 : 100;
+            const startX = e.clientX;
+            const startY = e.clientY;
+            const startVel = velOf(patternRef.current[trkIdx][step]);
+            const paintVel = startVel > 0 ? 0 : 100;
+            
             writeStepVel(trkIdx, step, paintVel);
             if (recordingRef.current && paintVel > 0) {
                 setRecordedNotes(prev => { const next = new Set(prev); next.add(`${trkIdx}-${step}`); return next; });
             }
             if (paintVel > 0) previewVoice(trkIdx, paintVel);
+            
             const painted = new Set([step]);
+            let mode = null;
+            let currentFaderVel = paintVel;
+            
             const move = (ev) => {
-                const el = document.elementFromPoint(ev.clientX, ev.clientY);
-                if (el && el.dataset && el.dataset.oaTrk !== undefined && Number(el.dataset.oaTrk) === trkIdx) {
-                    const s = Number(el.dataset.oaStep);
-                    if (!painted.has(s)) { 
-                        painted.add(s); 
-                        writeStepVel(trkIdx, s, paintVel); 
-                        if (recordingRef.current && paintVel > 0) {
-                            setRecordedNotes(prev => { const next = new Set(prev); next.add(`${trkIdx}-${s}`); return next; });
+                const dx = ev.clientX - startX;
+                const dy = ev.clientY - startY;
+
+                if (!mode) {
+                    if (Math.abs(dy) > 5 && Math.abs(dy) > Math.abs(dx)) {
+                        mode = 'fader';
+                        if (paintVel === 0) {
+                            currentFaderVel = Math.max(1, startVel);
                         }
-                        if (paintVel > 0) previewVoice(trkIdx, paintVel); 
+                        setActiveFader({ trkIdx, step, vel: currentFaderVel, x: startX, y: startY });
+                    } else if (Math.abs(dx) > 5 && Math.abs(dx) > Math.abs(dy)) {
+                        mode = 'paint';
                     }
                 }
+
+                if (mode === 'paint') {
+                    const el = document.elementFromPoint(ev.clientX, ev.clientY);
+                    if (el && el.dataset && el.dataset.oaTrk !== undefined && Number(el.dataset.oaTrk) === trkIdx) {
+                        const s = Number(el.dataset.oaStep);
+                        if (!painted.has(s)) { 
+                            painted.add(s); 
+                            writeStepVel(trkIdx, s, paintVel); 
+                            if (recordingRef.current && paintVel > 0) {
+                                setRecordedNotes(prev => { const next = new Set(prev); next.add(`${trkIdx}-${s}`); return next; });
+                            }
+                            if (paintVel > 0) previewVoice(trkIdx, paintVel); 
+                        }
+                    }
+                } else if (mode === 'fader') {
+                    const vel = Math.max(0, Math.min(100, currentFaderVel + (startY - ev.clientY) * 0.8));
+                    writeStepVel(trkIdx, step, vel);
+                    setActiveFader((f) => (f ? { ...f, vel: Math.round(vel) } : f));
+                }
             };
-            const up = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
+
+            const up = () => { 
+                window.removeEventListener('pointermove', move); 
+                window.removeEventListener('pointerup', up); 
+                if (mode === 'fader') setActiveFader(null);
+            };
+            
             window.addEventListener('pointermove', move);
             window.addEventListener('pointerup', up);
             return;
