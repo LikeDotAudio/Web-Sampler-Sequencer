@@ -84,15 +84,8 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
     const { rendering, renderLoop } = window.useSeqRenderer(pattern, steps, mutes, bpm, safeLabel);
 
     const [configOpen, setConfigOpen] = React.useState(false);
-    const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 1000);
 
-    React.useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth <= 1000);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    const configStyle = isMobile ? {
+    const configStyle = {
         display: configOpen ? 'flex' : 'none',
         flexDirection: 'column',
         position: 'fixed',
@@ -106,10 +99,6 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
         boxShadow: '0 -4px 16px rgba(0,0,0,0.6)',
         maxHeight: '75vh',
         overflowY: 'auto',
-        gap: '12px'
-    } : {
-        display: 'flex',
-        flexDirection: 'column',
         gap: '12px'
     };
 

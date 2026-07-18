@@ -21,6 +21,7 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
     const padButtons = React.useRef([]);
     const fileInputs = React.useRef([]);
     const rootRef = React.useRef(null);
+    const [midiConfigOpen, setMidiConfigOpen] = React.useState(false);
 
     const { hitPad, startGlow, triggerPadAt, triggerPadKey } = window.useSamplerPads(
         centerVelocity, edgeVelocity, onHit, toneRoot, midiBaseRef, 
@@ -149,10 +150,39 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
             </div>
             {/* Web MIDI — map a connected controller's notes to the pads */}
             {document.getElementById('midi-footer-slot') && ReactDOM.createPortal(
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', fontSize: '11px', color: '#888' }}>
-                    <span>🎹 MIDI: <b style={{ color: (midiStatus && !/not supported|denied|No MIDI/i.test(midiStatus)) ? '#4caf50' : '#f55' }}>{midiStatus || 'connecting…'}</b></span>
-                    <span>· pad 1 = note <input type="number" value={midiBase} onChange={(e) => setMidiBase(Number(e.target.value))} title="MIDI note number that triggers pad 1 (pads are consecutive from here)" style={{ width: '50px', background: '#000', color: '#f4902c', border: '1px solid #444', textAlign: 'center', borderRadius: '3px' }} /></span>
-                    {midiNote != null && <span>· last note <b style={{ color: '#f4902c' }}>{midiNote}</b></span>}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
+                    <button 
+                        onClick={() => setMidiConfigOpen(!midiConfigOpen)}
+                        style={{ background: midiConfigOpen ? '#333' : 'transparent', color: midiConfigOpen ? '#fff' : '#888', border: '1px solid #444', padding: '4px 8px', borderRadius: '3px', cursor: 'pointer', fontSize: '11px', fontWeight: 'bold' }}
+                    >
+                        {midiConfigOpen ? "✖ Close" : "🎹 MIDI"}
+                    </button>
+                    {midiConfigOpen && (
+                        <div style={{
+                            position: 'absolute',
+                            bottom: '36px',
+                            right: '0',
+                            background: 'var(--panel)',
+                            padding: '12px',
+                            border: '1px solid #444',
+                            borderRadius: '8px',
+                            boxShadow: '0 -4px 16px rgba(0,0,0,0.6)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '8px',
+                            zIndex: 1000,
+                            minWidth: '180px'
+                        }}>
+                            <span style={{ fontSize: '11px', color: '#ccc' }}>
+                                Status: <b style={{ color: (midiStatus && !/not supported|denied|No MIDI/i.test(midiStatus)) ? '#4caf50' : '#f55' }}>{midiStatus || 'connecting…'}</b>
+                            </span>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <span style={{ fontSize: '11px', color: '#888' }}>Pad 1 Note:</span>
+                                <input type="number" value={midiBase} onChange={(e) => setMidiBase(Number(e.target.value))} title="MIDI note number that triggers pad 1" style={{ width: '50px', background: '#000', color: '#f4902c', border: '1px solid #444', textAlign: 'center', borderRadius: '3px', fontSize: '11px' }} />
+                            </div>
+                            {midiNote != null && <span style={{ fontSize: '11px', color: '#888' }}>Last Note: <b style={{ color: '#f4902c' }}>{midiNote}</b></span>}
+                        </div>
+                    )}
                 </div>,
                 document.getElementById('midi-footer-slot')
             )}
