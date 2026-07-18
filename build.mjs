@@ -49,21 +49,26 @@ let jsx = 0, plain = 0, bytesIn = 0;
 for (const file of SOURCES) {
   const code = readFileSync(file, 'utf8');
   bytesIn += code.length;
-  parts.push(`\n/* ---- ${file} ---- */`);
+  let out = code;
   if (file.endsWith('.jsx')) {
-    const out = transformSync(code, {
+    out = transformSync(code, {
       filename: file,
       presets: [['@babel/preset-react', { runtime: 'classic' }]],
       compact: false,
       babelrc: false,
       configFile: false,
-    });
-    parts.push(out.code);
+    }).code;
     jsx++;
   } else {
-    parts.push(code);
     plain++;
   }
+  // Each file gets its own scope, exactly as the separate <script> tags gave
+  // it. Without this, top-level `const`s in different files collide — several
+  // declare the same helper names. Cross-file sharing is via window.* only.
+  parts.push(`\n/* ---- ${file} ---- */`);
+  parts.push('(function(){');
+  parts.push(out);
+  parts.push('})();');
 }
 parts.push('})();');
 

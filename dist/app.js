@@ -3,6 +3,7 @@ window.OA_BUILD_STAMP="0d9b85a49bf53508";
 (function(){"use strict";
 
 /* ---- libControl/App/mqttMock.js ---- */
+(function(){
 // Extracted from index.html so the whole app compiles into one bundle.
 // Standalone stand-ins for the MQTT-backed state used in the OpenAir rig.
         // --- Standalone Mocks for MQTT environment ---
@@ -57,8 +58,10 @@ window.OA_BUILD_STAMP="0d9b85a49bf53508";
             };
         };
 
+})();
 
 /* ---- libControl/App/Mocks.jsx ---- */
+(function(){
 // Extracted from index.html: stand-in Knob and OcaButton primitives.
 // --- Mock Components for Knob and OcaButton ---
 
@@ -111,8 +114,10 @@ window.OcaButton = function OcaButton({
     style: defaultStyle
   }, label);
 };
+})();
 
 /* ---- libControl/Header/Header.jsx ---- */
+(function(){
 const Header = ({
   activeTabs,
   toggleTab,
@@ -214,8 +219,10 @@ const Header = ({
   }, "⬇ INSTALL APP"));
 };
 window.Header = Header;
+})();
 
 /* ---- libControl/Footer/Footer.jsx ---- */
+(function(){
 const Footer = () => {
   const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 800);
   React.useEffect(() => {
@@ -265,8 +272,10 @@ const Footer = () => {
   })));
 };
 window.Footer = Footer;
+})();
 
 /* ---- libControl/SoundSynth/oaDrumSynthEngines.js ---- */
+(function(){
 /**
  * Header: oaDrumSynthEngines.js
  * Purpose: The drum synthesis engine — every kit voice built from scratch.
@@ -660,8 +669,10 @@ window.oaSynthPatch = function (patch) {
     return Object.assign(window.oaSynthDefaults(engine), patch || {}, { engine });
 };
 
+})();
 
 /* ---- libControl/SoundSynth/oaDrumSynthPatches.js ---- */
+(function(){
 /**
  * Header: oaDrumSynthPatches.js
  * Purpose: The factory patch for each of the 16 kit voices.
@@ -739,8 +750,10 @@ window.oaResetSynthPatch = function (idx) {
 
 window.oaLoadSynthPatches();
 
+})();
 
 /* ---- libControl/SoundSynth/oaReverb.js ---- */
+(function(){
 /**
  * Header: oaReverb.js
  * Purpose: A single shared reverb bus for the whole kit.
@@ -898,8 +911,10 @@ window.oaVoiceOut = function (ctx, idx, pan) {
     return node;
 };
 
+})();
 
 /* ---- libControl/SoundSynth/oaDrumkitAudio.js ---- */
+(function(){
 // ---- Audio decode (with an AIFF/AIFC fallback) ------------------------------
 // Chromium's decodeAudioData frequently can't decode AIFF, so parse it by hand.
 // Reads an 80-bit IEEE extended float (AIFF sample rate).
@@ -1002,8 +1017,10 @@ window.oaEncodeWav = function (audioBuffer) {
     return buffer;
 };
 
+})();
 
 /* ---- libControl/SoundSynth/oaDrumkitStorage.js ---- */
+(function(){
 // ---- Sample persistence (revert samples on reload) --------------------------
 // A tiny IndexedDB kv-store to keep the last-picked directory handle (File
 // System Access handles are structured-cloneable), so samples can be re-loaded
@@ -1079,8 +1096,10 @@ window.oaResolveFile = async function (folderPath, name) {
     try { const fh = await oaNavigateToFile(root, folderPath, name); return await fh.getFile(); } catch (e) { return null; }
 };
 
+})();
 
 /* ---- libControl/SoundSynth/oaDrumkitSynth.js ---- */
+(function(){
 // Synthesize a kit voice at `time` with `volume` (0..1). Used when no sample.
 // The voice is built by its engine from the patch in OA_DRUM_SYNTH — `track`
 // only carries the kit index and, in Tone Mode, a pitch ratio to apply.
@@ -1286,8 +1305,10 @@ window.oaPrecachePad = async function(entry) {
     }
 };
 
+})();
 
 /* ---- libControl/SoundSynth/SoundSynth.js ---- */
+(function(){
 /**
  * Header: DrumKit.js
  * Purpose: Shared 16-voice drum kit for the Sampler + Sequencer.
@@ -1399,15 +1420,19 @@ window.oaUpdateDrumSample = function (idx, patch) {
 
 
 
+})();
 
 /* ---- libControl/Pads/midiNoteName.js ---- */
+(function(){
 window.midiNoteName = (n) => {
     const MIDI_NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     return `${MIDI_NOTE_NAMES[((n % 12) + 12) % 12]}${Math.floor(n / 12) - 2}`;
 };
 
+})();
 
 /* ---- libControl/Pads/PadWave.jsx ---- */
+(function(){
 // Faint waveform of a pad's loaded sample, drawn behind the pad label.
 window.PadWave = ({
   idx,
@@ -1453,8 +1478,10 @@ window.PadWave = ({
     }
   });
 };
+})();
 
 /* ---- libControl/Pads/Pad.jsx ---- */
+(function(){
 window.Pad = ({
   padNum,
   idx,
@@ -1581,8 +1608,10 @@ window.Pad = ({
     }
   }, vel));
 };
+})();
 
 /* ---- libControl/Pads/useSamplerSets.js ---- */
+(function(){
 const FACTORY_SETS = {
   "Oberheim DMX": [
     {
@@ -2122,8 +2151,10 @@ window.useSamplerSets = (setSampleNames, publishSample) => {
     return { sets, currentSet, newSet, deleteSet, loadSet, isFactorySet };
 };
 
+})();
 
 /* ---- libControl/Pads/useSamplerState.js ---- */
+(function(){
 window.useSamplerState = (setSampleNames) => {
     const [toneRoot, setToneRoot] = React.useState(null);
     const toneRootRef = React.useRef(toneRoot); toneRootRef.current = toneRoot;
@@ -2187,8 +2218,10 @@ window.useSamplerState = (setSampleNames) => {
     };
 };
 
+})();
 
 /* ---- libControl/Pads/useSamplerPads.js ---- */
+(function(){
 window.useSamplerPads = (
     centerVelocity, edgeVelocity, onHit, toneRoot, midiBaseRef, 
     setVelocities, setToneRoot, padButtons
@@ -2282,8 +2315,10 @@ window.useSamplerPads = (
     return { hitPad, startGlow, triggerPadAt, triggerPadKey };
 };
 
+})();
 
 /* ---- libControl/Pads/useMidiPads.js ---- */
+(function(){
 window.useMidiPads = (midiBase, toneRootRef, padButtons, triggerPadAt, setVelocities) => {
     const [midiStatus, setMidiStatus] = React.useState('');
     const [midiNote, setMidiNote] = React.useState(null);
@@ -2350,8 +2385,10 @@ window.useMidiPads = (midiBase, toneRootRef, padButtons, triggerPadAt, setVeloci
     return { midiStatus, midiNote };
 };
 
+})();
 
 /* ---- libControl/Pads/useKeyboardPads.js ---- */
+(function(){
 window.useKeyboardPads = (triggerPadKey) => {
     // Number row/pad mapping: keys 1-9 map to pads 1-9, key 0 maps to pad 10.
     const NUMKEY_TO_PADNUM = { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, 0: 10 };
@@ -2372,8 +2409,10 @@ window.useKeyboardPads = (triggerPadKey) => {
     }, [triggerPadKey]);
 };
 
+})();
 
 /* ---- libControl/Pads/Pads.jsx ---- */
+(function(){
 const loadDrumSets = () => {
   try {
     return JSON.parse(window.localStorage.getItem('oaDrumSets')) || {};
@@ -2813,8 +2852,10 @@ const Pads = ({
   }, "👆 Click a pad to assign \"", pendingAssign.meta && pendingAssign.meta.name, "\" — Esc to cancel"));
 };
 window.Pads = Pads;
+})();
 
 /* ---- libControl/Sequencer/SeqKnob.jsx ---- */
+(function(){
 // Sequencer knob — a label/readout wrapper around the SHARED window.Knob
 // (libControl/Knobs/Knob). Face, caps, drag/wheel/ALT-to-default behavior all
 // come from the shared component, so a style change there restyles this too.
@@ -2866,8 +2907,10 @@ window.SeqKnob = ({
     letterSpacing: '0.5px'
   }
 }, label));
+})();
 
 /* ---- libControl/Sequencer/SeqButton.jsx ---- */
+(function(){
 // Shared footprint for every button in the app footer (Rec/Play/TAP/Config/
 // Save Pattern/Sets/MIDI) so the row reads as one evenly sized set of controls.
 window.OA_FOOTER_BTN = {
@@ -2904,8 +2947,10 @@ window.SeqButton = ({
     color: textColor || (active ? '#111' : '#ccc')
   }, style)
 });
+})();
 
 /* ---- libControl/Sequencer/useSeqState.js ---- */
+(function(){
 window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
     const audioCtxRef = React.useRef(null);
     const [isPlaying, setIsPlaying] = React.useState(false);
@@ -3152,8 +3197,10 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
     };
 };
 
+})();
 
 /* ---- libControl/Sequencer/useSeqMenus.js ---- */
+(function(){
 window.useSeqMenus = () => {
     const [trackMenu, setTrackMenu] = React.useState(null);
     const [browseTrack, setBrowseTrack] = React.useState(null);
@@ -3174,8 +3221,10 @@ window.useSeqMenus = () => {
     return { trackMenu, setTrackMenu, browseTrack, setBrowseTrack, trackVer, setTrackVer, loadTrackSample };
 };
 
+})();
 
 /* ---- libControl/Sequencer/useSeqPointer.js ---- */
+(function(){
 window.useSeqPointer = (patternRef, writeStepVel, recordingRef, setRecordedNotes, previewVoice, setActiveFader) => {
     const velOf = (c) => (typeof c === 'number' ? c : (c ? 100 : 0));
 
@@ -3267,8 +3316,10 @@ window.useSeqPointer = (patternRef, writeStepVel, recordingRef, setRecordedNotes
     return { onStepPointerDown };
 };
 
+})();
 
 /* ---- libControl/Sequencer/oaSongFile.js ---- */
+(function(){
 /**
  * Header: oaSongFile.js
  * Purpose: Export/import the pattern library and song arrangement as a file.
@@ -3332,8 +3383,10 @@ window.oaMergePatterns = function (library, incoming) {
     return { library: out, renamed };
 };
 
+})();
 
 /* ---- libControl/Sequencer/useSeqLibrary.js ---- */
+(function(){
 window.useSeqLibrary = (
     library, setLibraryItems, pattern, bpm, steps, toneTrack, toneRoot, 
     setSeq, DEFAULT_STEPS, getAudioCtx, isPlaying, timerIDRef, songRef, setSongPos,
@@ -3402,8 +3455,10 @@ window.useSeqLibrary = (
     return { savePattern, loadPattern, deletePattern, playSong, applySongEntry };
 };
 
+})();
 
 /* ---- libControl/Sequencer/useSeqScheduler.js ---- */
+(function(){
 window.useSeqScheduler = (
     bpmRef, stepsRef, mutesRef, trackVolRef, trackPanRef, 
     recordingRef, clickVolRef, toneTrackRef, toneRootRef,
@@ -3535,8 +3590,10 @@ window.useSeqScheduler = (
     return { timerIDRef, nextNoteTimeRef, scheduler };
 };
 
+})();
 
 /* ---- libControl/Sequencer/useSeqRenderer.js ---- */
+(function(){
 window.useSeqRenderer = (pattern, steps, mutes, bpm, safeLabel) => {
     const [rendering, setRendering] = React.useState(false);
     const velOf = (c) => (typeof c === 'number' ? c : (c ? 100 : 0));
@@ -3586,8 +3643,10 @@ window.useSeqRenderer = (pattern, steps, mutes, bpm, safeLabel) => {
     return { rendering, renderLoop };
 };
 
+})();
 
 /* ---- libControl/Sequencer/SeqToneTrack.jsx ---- */
+(function(){
 window.SeqToneTrack = ({
   toneRoot,
   steps,
@@ -3710,8 +3769,10 @@ window.SeqToneTrack = ({
     }));
   })));
 };
+})();
 
 /* ---- libControl/Sequencer/SeqTrack.jsx ---- */
+(function(){
 window.SeqTrack = ({
   trackName,
   trkIdx,
@@ -3820,8 +3881,10 @@ window.SeqTrack = ({
     }));
   })));
 };
+})();
 
 /* ---- libControl/Sequencer/SeqControls.jsx ---- */
+(function(){
 window.SeqControls = ({
   recording,
   toggleRecording,
@@ -4016,8 +4079,10 @@ window.SeqControls = ({
     }
   })));
 };
+})();
 
 /* ---- libControl/Sequencer/SeqLibrary.jsx ---- */
+(function(){
 window.SeqLibrary = ({
   library,
   loadPattern,
@@ -4099,8 +4164,10 @@ window.SeqLibrary = ({
     }
   }, "＋")))));
 };
+})();
 
 /* ---- libControl/Sequencer/SeqSong.jsx ---- */
+(function(){
 window.SeqSong = ({
   songPos,
   song,
@@ -4303,8 +4370,10 @@ window.SeqSong = ({
     }
   }, "×"))))));
 };
+})();
 
 /* ---- libControl/Sequencer/SeqFader.jsx ---- */
+(function(){
 window.SeqFader = ({
   activeFader
 }) => {
@@ -4371,8 +4440,10 @@ window.SeqFader = ({
     }
   }, "VELOCITY"));
 };
+})();
 
 /* ---- libControl/Sequencer/TrackSampleMenu.jsx ---- */
+(function(){
 // Per-track sample menu: waveform + pitch + time-shift, opened by clicking a
 // track name. Edits the shared kit entry (OA_DRUM_SAMPLES[trkIdx]) directly.
 window.TrackSampleMenu = ({
@@ -4678,8 +4749,10 @@ window.TrackSampleMenu = ({
     }
   }))));
 };
+})();
 
 /* ---- libControl/Sequencer/Sequencer.jsx ---- */
+(function(){
 // The 16-voice drum kit is shared with the Sampler (DrumKit.js) so a Sampler pad
 // and the matching Sequencer track are the SAME voice — including any sample
 // loaded onto that pad.
@@ -4987,8 +5060,10 @@ const Sequencer = ({
   }));
 };
 window.Sequencer = Sequencer;
+})();
 
 /* ---- libControl/Mixer/SvgKnob.jsx ---- */
+(function(){
 const SvgKnob = ({
   value = 0,
   min = 0,
@@ -5129,8 +5204,10 @@ const SvgKnob = ({
   }));
 };
 window.SvgKnob = SvgKnob;
+})();
 
 /* ---- libControl/Mixer/SvgFader.jsx ---- */
+(function(){
 const DB_MIN = -60,
   DB_MAX = 12;
 const MAX_GAIN = Math.pow(10, DB_MAX / 20);
@@ -5246,8 +5323,10 @@ const SvgFader = ({
   })));
 };
 window.SvgFader = SvgFader;
+})();
 
 /* ---- libControl/Mixer/DrumSynthEditor.jsx ---- */
+(function(){
 // The SYNTH panel for one mixer channel. Every control is generated from the
 // engine's parameter schema, so adding a knob to an engine adds it here too.
 window.DrumSynthEditor = ({
@@ -5444,8 +5523,10 @@ window.DrumSynthEditor = ({
     }, " ", spec.unit) : null));
   })));
 };
+})();
 
 /* ---- libControl/Mixer/Mixer.jsx ---- */
+(function(){
 const SvgKnob = window.SvgKnob;
 const SvgFader = window.SvgFader;
 const Mixer = () => {
@@ -6103,8 +6184,10 @@ const Mixer = () => {
   }), document.body));
 };
 window.Mixer = Mixer;
+})();
 
 /* ---- libControl/SoundBrowser/drawWave.js ---- */
+(function(){
 window.drawWave = (canvas, buffer, color) => {
     if (!canvas) return;
     canvas.width = canvas.clientWidth || 120;
@@ -6124,8 +6207,10 @@ window.drawWave = (canvas, buffer, color) => {
     cx.stroke();
 };
 
+})();
 
 /* ---- libControl/SoundBrowser/WaveThumb.jsx ---- */
+(function(){
 // A single waveform thumbnail — decodes its file to render the wave, but only
 // once it scrolls into view (a recursive folder scan can yield thousands).
 window.WaveThumb = ({
@@ -6200,8 +6285,10 @@ window.WaveThumb = ({
     }
   }, entry.name));
 };
+})();
 
 /* ---- libControl/SoundBrowser/SoundCloudView.jsx ---- */
+(function(){
 window.SoundCloudView = ({
   data,
   rootHandle,
@@ -6592,8 +6679,10 @@ window.SoundCloudView = ({
     }
   }, "Click a point to see its details and play it.")));
 };
+})();
 
 /* ---- libControl/SoundBrowser/gatherAll.js ---- */
+(function(){
 window.gatherAll = async (handle, prefix, files, names, builder, onEmit, depth) => {
     const AUDIO_RE = /\.(mp3|wav|wave|aif|aiff|aac|m4a|ogg|oga|flac|opus)$/i;
     const MAX_FILES = 4000;
@@ -6613,8 +6702,10 @@ window.gatherAll = async (handle, prefix, files, names, builder, onEmit, depth) 
     for (const [n, h] of subdirs) { if (names.length >= NAME_MAX) break; await window.gatherAll(h, prefix ? `${prefix}/${n}` : n, files, names, builder, onEmit, depth + 1); }
 };
 
+})();
 
 /* ---- libControl/SoundBrowser/gatherMatching.js ---- */
+(function(){
 window.gatherMatching = async (handle, prefix, out, term, depth) => {
     const AUDIO_RE = /\.(mp3|wav|wave|aif|aiff|aac|m4a|ogg|oga|flac|opus)$/i;
     const DEEP_MAX = 20000;
@@ -6628,8 +6719,10 @@ window.gatherMatching = async (handle, prefix, out, term, depth) => {
     for (const [n, h] of subdirs) { if (out.length >= DEEP_MAX) break; await window.gatherMatching(h, prefix ? `${prefix}/${n}` : n, out, term, depth + 1); }
 };
 
+})();
 
 /* ---- libControl/SoundBrowser/makeChipBuilder.js ---- */
+(function(){
 window.makeChipBuilder = () => {
     const map = new Map(); // lowerToken -> { display, count, folders:Set }
     return {
@@ -6653,8 +6746,10 @@ window.makeChipBuilder = () => {
     };
 };
 
+})();
 
 /* ---- libControl/SoundBrowser/SoundFolderNode.jsx ---- */
+(function(){
 // Folders-only tree node (files live in the right-hand grid).
 window.SoundFolderNode = ({
   name,
@@ -6723,8 +6818,10 @@ window.SoundFolderNode = ({
     pathPrefix: `${pathPrefix}/${d.name}`
   })));
 };
+})();
 
 /* ---- libControl/SoundBrowser/useSoundBrowseState.js ---- */
+(function(){
 const AUDIO_RE = /\.(mp3|wav|wave|aif|aiff|aac|m4a|ogg|oga|flac|opus)$/i;
 const MAX_FILES = 4000;
 const NAME_MAX = 60000;
@@ -6869,8 +6966,10 @@ window.useSoundBrowseState = () => {
     };
 };
 
+})();
 
 /* ---- libControl/SoundBrowser/useSoundBrowseAudio.js ---- */
+(function(){
 window.useSoundBrowseAudio = (buffer, autoPreview) => {
     const [playing, setPlaying] = React.useState(false);
     const [loop, setLoop] = React.useState(false);
@@ -6933,8 +7032,10 @@ window.useSoundBrowseAudio = (buffer, autoPreview) => {
     return { playing, loop, setLoop, pos, setPos, duration, togglePlay, rewind, scrub };
 };
 
+})();
 
 /* ---- libControl/SoundBrowser/useSoundBrowseKeys.js ---- */
+(function(){
 window.useSoundBrowseKeys = (shown, selectedIndex, selectFileByIndex, chooseIt, onClose, gridScrollRef, selectedThumbRef) => {
     // Keep the selected thumbnail centered in the grid as you browse.
     React.useEffect(() => {
@@ -6968,8 +7069,10 @@ window.useSoundBrowseKeys = (shown, selectedIndex, selectFileByIndex, chooseIt, 
     }, [shown, selectedIndex, selectFileByIndex, chooseIt, onClose]);
 };
 
+})();
 
 /* ---- libControl/SoundBrowser/SoundBrowser.jsx ---- */
+(function(){
 /**
  * SoundBrowser.jsx — custom "Sound Browse" window.
  * Two panes: a folder TREE on the left, and a grid of RENDERED WAVEFORM
@@ -7528,8 +7631,10 @@ window.SoundBrowser = ({
     })
   }, "⭳ Load to other pad")))));
 };
+})();
 
 /* ---- libControl/App/App.jsx ---- */
+(function(){
 // Extracted from index.html: the root component and its mount.
 function App() {
   const [activeTabs, setActiveTabs] = React.useState(['PADS']); // default
@@ -7663,4 +7768,5 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+})();
 })();
