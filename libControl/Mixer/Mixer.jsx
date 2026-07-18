@@ -80,7 +80,7 @@ const Mixer = () => {
 
 
     return (
-        <div className="chunky-scrollbar" style={{ display: 'flex', gap: '6px', padding: '16px', overflowX: 'auto', alignItems: 'stretch', backgroundColor: 'var(--bg)' }}>
+        <div className="chunky-scrollbar" style={{ display: 'flex', gap: 0, padding: 0, overflowX: 'auto', alignItems: 'stretch', backgroundColor: 'var(--bg)' }}>
             {tracks.map((track, i) => {
                 const color = PALETTE[i % PALETTE.length];
                 const isMuted = mutes[i];
@@ -93,33 +93,33 @@ const Mixer = () => {
 
                 return (
                     <div key={i} style={{
-                        background: 'var(--strip)', border: `1px solid ${color}`, borderRadius: '6px',
+                        // Strips butt up against each other — a single rule line is the only separator.
+                        background: 'var(--strip)', border: 'none', borderRight: '1px solid #3a3f49', borderRadius: 0,
                         width: '60px', flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center',
-                        padding: '0 5px 8px', overflow: 'hidden'
+                        padding: '0 3px 8px', overflow: 'hidden'
                     }}>
                         
-                        <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', gap: '3px', marginTop: '6px', marginBottom: '6px' }}>
-                            <span style={{ fontSize: '10px', color: color, fontWeight: '700' }}>{String(i + 1).padStart(2, '0')}:</span>
-                            <span style={{ fontSize: '10px', color: '#ccc', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{track.name || 'Track'}</span>
-                        </div>
-
-                        <div style={{ display: 'flex', width: '100%', gap: '4px', marginBottom: '8px' }}>
-                            <button 
+                        {/* The channel name IS the ON button — lit means the track is live. */}
+                        <div style={{ display: 'flex', width: '100%', gap: '3px', marginTop: '6px', marginBottom: '8px' }}>
+                            <button
                                 onClick={() => toggleMute(i)}
+                                title={`${track.name || 'Track'} — click to ${isMuted ? 'unmute' : 'mute'}`}
                                 style={{
-                                    flex: 1, padding: '3px 0', textAlign: 'center', borderRadius: '4px',
+                                    flex: 1, minWidth: 0, padding: '3px 2px', textAlign: 'center', borderRadius: '4px',
                                     border: `1px solid ${!isMuted ? 'var(--on)' : '#444b57'}`,
                                     background: !isMuted ? '#6b3f14' : '#353b45',
-                                    color: !isMuted ? '#ffe9d4' : 'var(--muted)',
-                                    cursor: 'pointer', fontSize: '9px', fontWeight: '600', letterSpacing: '.5px'
+                                    cursor: 'pointer', fontSize: '9px', fontWeight: '700',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px',
+                                    overflow: 'hidden'
                                 }}
                             >
-                                ON
+                                <span style={{ color: !isMuted ? color : 'var(--muted)' }}>{String(i + 1).padStart(2, '0')}</span>
+                                <span style={{ color: !isMuted ? '#ffe9d4' : 'var(--muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{track.name || 'Track'}</span>
                             </button>
-                            <button 
+                            <button
                                 onClick={() => toggleSolo(i)}
                                 style={{
-                                    width: '18px', padding: '3px 0', textAlign: 'center', borderRadius: '4px',
+                                    width: '18px', flex: '0 0 auto', padding: '3px 0', textAlign: 'center', borderRadius: '4px',
                                     border: `1px solid ${isSolo ? 'var(--solo)' : '#444b57'}`,
                                     background: isSolo ? '#6b5014' : '#353b45',
                                     color: isSolo ? '#fff3c4' : 'var(--muted)',
@@ -129,7 +129,7 @@ const Mixer = () => {
                                 S
                             </button>
                         </div>
-                        
+
                         <div style={{ display: 'flex', gap: '4px', alignItems: 'stretch', height: '180px', opacity: mutedBySolo ? 0.4 : 1, transition: 'opacity 0.2s', width: '100%', justifyContent: 'center', marginBottom: '6px' }}>
                             <div style={{
                                 width: '6px', borderRadius: '2px', position: 'relative', overflow: 'hidden', border: '1px solid #0008',
@@ -157,9 +157,9 @@ const Mixer = () => {
 
             {/* Click Strip */}
             <div style={{
-                background: 'var(--strip)', border: recording ? '1px solid #d32f2f' : '1px solid #555', borderRadius: '6px',
+                background: 'var(--strip)', border: 'none', borderRight: '1px solid #3a3f49', borderRadius: 0,
                 width: '60px', flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center',
-                padding: '8px 5px 8px', gap: '8px',
+                padding: '8px 3px 8px', gap: '8px',
                 boxShadow: recording ? '0 0 10px rgba(211,47,47,0.5)' : 'none'
             }}>
                 <div style={{ fontSize: '10px', color: recording ? '#ff8a80' : '#aaa', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px', fontWeight: recording ? 'bold' : 'normal' }}>Click</div>
@@ -173,9 +173,9 @@ const Mixer = () => {
 
             {/* Master Strip */}
             <div style={{
-                background: 'var(--strip)', border: `1px solid #555`, borderRadius: '6px',
+                background: 'var(--strip)', border: 'none', borderRadius: 0,
                 width: '64px', flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center',
-                padding: '8px 5px 8px', gap: '8px'
+                padding: '8px 3px 8px', gap: '8px'
             }}>
                 <div style={{ fontSize: '10px', color: '#aaa', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px' }}>Master</div>
                 

@@ -16,6 +16,9 @@ window.SeqControls = ({
         setFooterNode(document.getElementById('seq-footer-slot'));
     }, []);
 
+    // Every footer button shares this footprint so the row reads as one set of controls.
+    const FOOTER_BTN = window.OA_FOOTER_BTN;
+
     const playbackControls = (
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             <SeqButton
@@ -24,32 +27,29 @@ window.SeqControls = ({
                 active={recording}
                 color="#5a1f1f" activeColor="#d32f2f" textColor="#fff"
                 title="Record: while playing, hit the Sampler pads to write them into the pattern at their velocity"
-                style={{ padding: '4px 12px', fontSize: '13px', border: recording ? '1px solid #ff8a80' : '1px solid #722', boxShadow: recording ? '0 0 8px rgba(211,47,47,0.85)' : 'none' }}
+                style={Object.assign({}, FOOTER_BTN, { border: recording ? '1px solid #ff8a80' : '1px solid #722', boxShadow: recording ? '0 0 8px rgba(211,47,47,0.85)' : 'none' })}
             />
             <SeqButton
                 label={isPlaying ? '■ Stop' : '► Play'}
                 onClick={togglePlayback}
                 color={isPlaying ? '#ffb300' : '#388e3c'} textColor="#fff"
-                style={{ padding: '4px 12px', fontSize: '13px', border: 'none' }}
+                style={Object.assign({}, FOOTER_BTN, { border: 'none' })}
             />
-            <div style={{ marginLeft: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '12px', color: '#aaa' }}>Tempo:</span>
-                <SeqKnob value={bpm} min={40} max={300} def={120} onChange={setBpm} label="BPM" flash={tapping} title="Drag up/down or scroll to change BPM" />
-                <SeqButton label="TAP" onClick={tapTempo} active={tapping} title="Tap to set tempo" style={{ padding: '4px 8px', fontSize: '12px' }} />
-                <SeqButton 
-                    label={configOpen ? "✖ Close" : "⚙ Config"} 
-                    onClick={() => setConfigOpen(!configOpen)} 
-                    active={configOpen} 
-                    color="#444" textColor="#fff" 
-                    style={{ padding: '4px 8px', marginLeft: '10px', border: '1px solid #666' }} 
-                />
-                <SeqButton
-                    label="⭳ Save Pattern"
-                    onClick={savePattern}
-                    color="#1565c0" textColor="#fff"
-                    style={{ padding: '4px 8px', marginLeft: '5px', border: 'none', fontSize: '12px', fontWeight: 'bold' }}
-                />
-            </div>
+            <SeqKnob value={bpm} min={40} max={300} def={120} onChange={setBpm} label="BPM" flash={tapping} title="Drag up/down or scroll to change BPM" />
+            <SeqButton label="TAP" onClick={tapTempo} active={tapping} title="Tap to set tempo" style={Object.assign({}, FOOTER_BTN)} />
+            <SeqButton
+                label={configOpen ? "✖ Close" : "⚙ Config"}
+                onClick={() => setConfigOpen(!configOpen)}
+                active={configOpen}
+                color="#444" textColor="#fff"
+                style={Object.assign({}, FOOTER_BTN, { border: '1px solid #666' })}
+            />
+            <SeqButton
+                label="⭳ Save Pattern"
+                onClick={savePattern}
+                color="#1565c0" textColor="#fff"
+                style={Object.assign({}, FOOTER_BTN, { border: 'none' })}
+            />
         </div>
     );
 

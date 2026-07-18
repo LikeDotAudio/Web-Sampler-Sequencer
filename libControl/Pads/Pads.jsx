@@ -17,7 +17,7 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
         pendingAssign, setPendingAssign, showPadBrowse, setShowPadBrowse, midiBase, setMidiBase, midiBaseRef,
         kitMeta, restoreMsg, missingCount, restoreSounds, handleFile, publishSample
     } = window.useSamplerState(setSampleNames);
-    const { sets, currentSet, newSet, deleteSet, loadSet } = window.useSamplerSets(setSampleNames, publishSample);
+    const { sets, currentSet, newSet, deleteSet, loadSet, isFactorySet } = window.useSamplerSets(setSampleNames, publishSample);
     const padButtons = React.useRef([]);
     const fileInputs = React.useRef([]);
     const rootRef = React.useRef(null);
@@ -157,12 +157,13 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
             {/* Web MIDI — map a connected controller's notes to the pads */}
             {midiNode && ReactDOM.createPortal(
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
-                    <button 
+                    <window.SeqButton
+                        label={midiConfigOpen ? "✖ Close" : "🎹 MIDI"}
                         onClick={() => setMidiConfigOpen(!midiConfigOpen)}
-                        style={{ background: midiConfigOpen ? '#333' : 'transparent', color: midiConfigOpen ? '#fff' : '#888', border: '1px solid #444', padding: '4px 8px', borderRadius: '3px', cursor: 'pointer', fontSize: '11px', fontWeight: 'bold' }}
-                    >
-                        {midiConfigOpen ? "✖ Close" : "🎹 MIDI"}
-                    </button>
+                        active={midiConfigOpen}
+                        color="#444" textColor="#fff"
+                        style={Object.assign({}, window.OA_FOOTER_BTN, { border: '1px solid #666' })}
+                    />
                     {midiConfigOpen && (
                         <div style={{
                             position: 'absolute',
@@ -196,12 +197,13 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
             {/* SETS — moved to footer config drop-up */}
             {padsNode && ReactDOM.createPortal(
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
-                    <button 
+                    <window.SeqButton
+                        label={padsConfigOpen ? "✖ Close" : "⚙ Sets"}
                         onClick={() => setPadsConfigOpen(!padsConfigOpen)}
-                        style={{ background: padsConfigOpen ? '#333' : 'transparent', color: padsConfigOpen ? '#fff' : '#888', border: '1px solid #444', padding: '4px 8px', borderRadius: '3px', cursor: 'pointer', fontSize: '11px', fontWeight: 'bold' }}
-                    >
-                        {padsConfigOpen ? "✖ Close" : "⚙ Sets"}
-                    </button>
+                        active={padsConfigOpen}
+                        color="#444" textColor="#fff"
+                        style={Object.assign({}, window.OA_FOOTER_BTN, { border: '1px solid #666' })}
+                    />
                     {padsConfigOpen && (
                         <div style={{
                             position: 'absolute',
@@ -221,7 +223,7 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                                 <span style={{ fontSize: '11px', color: '#aaa', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Drum Kits:</span>
                                 {Object.keys(sets).map((n) => (
-                                    <button key={n} onClick={() => loadSet(n)} 
+                                    <button key={n} onClick={() => { loadSet(n); setPadsConfigOpen(false); }}
                                         style={{
                                             background: currentSet === n ? '#f4902c' : '#222',
                                             color: currentSet === n ? '#111' : '#ccc',
@@ -250,7 +252,7 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
                                 )}
                             </div>
                             
-                            {currentSet && (
+                            {currentSet && !isFactorySet(currentSet) && (
                                 <button onClick={() => deleteSet(currentSet)} title={`Delete "${currentSet}"`}
                                     style={{ background: '#d32f2f', color: '#fff', border: 'none', borderRadius: '3px', padding: '5px 8px', fontSize: '11px', cursor: 'pointer', alignSelf: 'flex-start', marginTop: '4px' }}>✕ Delete "{currentSet}"</button>
                             )}

@@ -271,37 +271,58 @@
                 }
             };
 
+            // activeTabs is ordered most-recently-pressed FIRST, and at most two
+            // panels are open at once — pressing a third drops the older one.
+            const MAX_TABS = 2;
             const toggleTab = (tab) => {
                 setActiveTabs(prev => {
                     if (prev.includes(tab)) {
                         if (prev.length === 1) return prev; // Keep at least one open
                         return prev.filter(t => t !== tab);
                     }
-                    return [...prev, tab];
+                    return [tab, ...prev].slice(0, MAX_TABS);
                 });
             };
-            
+
+            // Panels stay mounted (audio + browser state survives a tab switch) and
+            // are re-ordered with flex `order`; the newest one sticks under the header.
+            const panelStyle = (...tabs) => {
+                const idxs = tabs.map(t => activeTabs.indexOf(t)).filter(i => i >= 0);
+                if (!idxs.length) return { display: 'none' };
+                const order = Math.min(...idxs);
+                return {
+                    order,
+                    flex: '0 0 auto',
+                    width: '100%',
+                    ...(order === 0 && activeTabs.length > 1 ? {
+                        position: 'sticky',
+                        top: 0,
+                        zIndex: 5,
+                        background: 'var(--bg)',
+                        borderBottom: '1px solid #333',
+                        paddingBottom: '10px'
+                    } : {})
+                };
+            };
+
             return (
                 <div id="app-container">
                     {window.Header ? <window.Header activeTabs={activeTabs} toggleTab={toggleTab} deferredPrompt={deferredPrompt} installApp={installApp} /> : <header>Loading HEADER...</header>}
                     
                     <main style={{ flex: 1, overflowY: 'auto', padding: isMobile ? '10px 0' : '10px 20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        <div style={{ display: activeTabs.includes('PADS') ? 'flex' : 'none', flex: '0 0 auto', width: '100%', justifyContent: 'center' }}>
+                        <div style={{ ...panelStyle('PADS'), display: activeTabs.includes('PADS') ? 'flex' : 'none', justifyContent: 'center' }}>
                             {window.Pads ? <window.Pads /> : <div>Loading PADS...</div>}
                         </div>
-                        {activeTabs.includes('PADS') && activeTabs.length > 1 && <hr style={{width: '100%', borderColor: '#333'}}/>}
-                        
-                        <div style={{ display: (activeTabs.includes('SEQ') || activeTabs.includes('SONG')) ? 'block' : 'none', flex: '0 0 auto', width: '100%' }}>
+
+                        <div style={panelStyle('SEQ', 'SONG')}>
                             {window.Sequencer ? <window.Sequencer activeTabs={activeTabs} /> : <div>Loading SEQ/SONG...</div>}
                         </div>
-                        {(activeTabs.includes('SEQ') || activeTabs.includes('SONG')) && activeTabs.length > 1 && (activeTabs.includes('EDITOR') || activeTabs.includes('MIXER')) && <hr style={{width: '100%', borderColor: '#333'}}/>}
-                        
-                        <div style={{ display: activeTabs.includes('EDITOR') ? 'flex' : 'none', flex: '0 0 auto', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+
+                        <div style={{ ...panelStyle('EDITOR'), display: activeTabs.includes('EDITOR') ? 'flex' : 'none', justifyContent: 'center', alignItems: 'center' }}>
                             {window.SoundBrowser ? <window.SoundBrowser inline={true} onClose={() => toggleTab('EDITOR')} /> : <div>Loading EDITOR...</div>}
                         </div>
-                        {activeTabs.includes('EDITOR') && activeTabs.length > 1 && activeTabs.includes('MIXER') && <hr style={{width: '100%', borderColor: '#333'}}/>}
-                        
-                        <div style={{ display: activeTabs.includes('MIXER') ? 'block' : 'none', flex: '0 0 auto', width: '100%' }}>
+
+                        <div style={panelStyle('MIXER')}>
                             {window.Mixer ? <window.Mixer /> : <div>Loading MIXER...</div>}
                         </div>
                     </main>

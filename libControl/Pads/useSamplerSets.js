@@ -492,7 +492,11 @@ window.useSamplerSets = (setSampleNames, publishSample) => {
         setCurrentSet(name);
     };
     
+    // Factory sets ship with the app — they can be loaded but never removed.
+    const isFactorySet = (name) => Object.prototype.hasOwnProperty.call(FACTORY_SETS, name);
+
     const deleteSet = (name) => {
+        if (isFactorySet(name)) return;
         const next = Object.assign({}, sets); delete next[name];
         setSetsState({ items: next });
         if (currentSet === name) setCurrentSet('');
@@ -530,5 +534,5 @@ window.useSamplerSets = (setSampleNames, publishSample) => {
         setSampleNames((prev) => { const n = [...prev]; for (let i = 0; i < 16; i++) { const loaded = window.OA_DRUM_SAMPLES[i]; n[i] = loaded ? (loaded.name || '(loaded)') : (metaByIdx[i] ? metaByIdx[i].name : n[i]); } return n; });
     };
     
-    return { sets, currentSet, newSet, deleteSet, loadSet };
+    return { sets, currentSet, newSet, deleteSet, loadSet, isFactorySet };
 };
