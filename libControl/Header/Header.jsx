@@ -1,14 +1,15 @@
-const Header = ({ activeTab, setActiveTab }) => {
+const Header = ({ activeTabs, toggleTab }) => {
     const btnStyle = (tab) => ({
         flex: 1,
         padding: '8px 16px',
-        background: activeTab === tab ? 'var(--accent)' : 'var(--strip)',
-        color: activeTab === tab ? '#06222e' : 'var(--text)',
+        background: activeTabs.includes(tab) ? 'var(--accent)' : 'var(--strip)',
+        color: activeTabs.includes(tab) ? '#06222e' : 'var(--text)',
         border: '1px solid #3a3f49',
         borderRadius: '6px',
         cursor: 'pointer',
         fontWeight: '600',
-        fontSize: '14px'
+        fontSize: '14px',
+        opacity: activeTabs.includes(tab) ? 1 : 0.6
     });
 
     return (
@@ -25,10 +26,10 @@ const Header = ({ activeTab, setActiveTab }) => {
             </h1>
             
             <div style={{ display: 'flex', gap: '8px', flex: 1, marginLeft: '20px' }}>
-                <button onClick={() => setActiveTab('PADS')} style={btnStyle('PADS')}>PADS</button>
-                <button onClick={() => setActiveTab('SEQ')} style={btnStyle('SEQ')}>SEQ</button>
-                <button onClick={() => setActiveTab('EDITOR')} style={btnStyle('EDITOR')}>EDITOR</button>
-                <button onClick={() => setActiveTab('MIXER')} style={btnStyle('MIXER')}>MIXER</button>
+                <button onClick={() => toggleTab('PADS')} style={btnStyle('PADS')}>PADS</button>
+                <button onClick={() => toggleTab('SEQ')} style={btnStyle('SEQ')}>SEQ</button>
+                <button onClick={() => toggleTab('EDITOR')} style={btnStyle('EDITOR')}>EDITOR</button>
+                <button onClick={() => toggleTab('MIXER')} style={btnStyle('MIXER')}>MIXER</button>
             </div>
         </header>
     );

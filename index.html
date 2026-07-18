@@ -200,23 +200,39 @@
     <!-- Mount App -->
     <script type="text/babel">
         function App() {
-            const [activeTab, setActiveTab] = React.useState('SEQ'); // default
+            const [activeTabs, setActiveTabs] = React.useState(['SEQ']); // default
+            
+            const toggleTab = (tab) => {
+                setActiveTabs(prev => {
+                    if (prev.includes(tab)) {
+                        if (prev.length === 1) return prev; // Keep at least one open
+                        return prev.filter(t => t !== tab);
+                    }
+                    return [...prev, tab];
+                });
+            };
             
             return (
                 <div id="app-container">
-                    {window.Header ? <window.Header activeTab={activeTab} setActiveTab={setActiveTab} /> : <header>Loading HEADER...</header>}
+                    {window.Header ? <window.Header activeTabs={activeTabs} toggleTab={toggleTab} /> : <header>Loading HEADER...</header>}
                     
-                    <main style={{ flex: 1, overflowY: 'auto', padding: '20px', display: 'flex', flexDirection: 'column' }}>
-                        <div style={{ display: activeTab === 'PADS' ? 'flex' : 'none', width: '100%', justifyContent: 'center' }}>
+                    <main style={{ flex: 1, overflowY: 'auto', padding: '10px 20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <div style={{ display: activeTabs.includes('PADS') ? 'flex' : 'none', flex: 1, width: '100%', justifyContent: 'center', minHeight: '300px' }}>
                             {window.Pads ? <window.Pads /> : <div>Loading PADS...</div>}
                         </div>
-                        <div style={{ display: activeTab === 'SEQ' ? 'block' : 'none', width: '100%' }}>
+                        {activeTabs.includes('PADS') && activeTabs.length > 1 && <hr style={{width: '100%', borderColor: '#333'}}/>}
+                        
+                        <div style={{ display: activeTabs.includes('SEQ') ? 'block' : 'none', flex: 1, width: '100%', minHeight: '300px' }}>
                             {window.Sequencer ? <window.Sequencer /> : <div>Loading SEQ...</div>}
                         </div>
-                        <div style={{ display: activeTab === 'EDITOR' ? 'flex' : 'none', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                            {window.SoundBrowser ? <window.SoundBrowser inline={true} onClose={() => setActiveTab('SEQ')} /> : <div>Loading EDITOR...</div>}
+                        {activeTabs.includes('SEQ') && activeTabs.length > 1 && (activeTabs.includes('EDITOR') || activeTabs.includes('MIXER')) && <hr style={{width: '100%', borderColor: '#333'}}/>}
+                        
+                        <div style={{ display: activeTabs.includes('EDITOR') ? 'flex' : 'none', flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center', minHeight: '300px' }}>
+                            {window.SoundBrowser ? <window.SoundBrowser inline={true} onClose={() => toggleTab('EDITOR')} /> : <div>Loading EDITOR...</div>}
                         </div>
-                        <div style={{ display: activeTab === 'MIXER' ? 'block' : 'none', width: '100%', height: '100%' }}>
+                        {activeTabs.includes('EDITOR') && activeTabs.length > 1 && activeTabs.includes('MIXER') && <hr style={{width: '100%', borderColor: '#333'}}/>}
+                        
+                        <div style={{ display: activeTabs.includes('MIXER') ? 'block' : 'none', flex: 1, width: '100%', minHeight: '300px' }}>
                             {window.Mixer ? <window.Mixer /> : <div>Loading MIXER...</div>}
                         </div>
                     </main>
