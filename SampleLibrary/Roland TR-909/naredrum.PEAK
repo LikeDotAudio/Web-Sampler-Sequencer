@@ -1,0 +1,185 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "naredrum.wav",
+    "folder": "Roland TR-909",
+    "sub": "Roland TR-909",
+    "path": "Roland TR-909/naredrum.wav",
+    "length_seconds": 0.28947845804988664,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.000014577486401868243,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Perc",
+    "reason": [
+      "1) generic \"drum\" tag — flagged for acoustic audit",
+      "2) envelope Plucky (attack 0 ms, sustain 11%, 1 transient)",
+      "3) Inharmonic+Stochastic+Impulsive · high-band 73%"
+    ],
+    "timbre": "Bright",
+    "length_class": "Short",
+    "subgroup": "Drum",
+    "audit": true,
+    "acoustic_types": [
+      "Inharmonic",
+      "Stochastic",
+      "Impulsive"
+    ],
+    "sound_design_roles": [],
+    "instrument_family": [
+      "Percussion"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.0033786848072562357,
+    "sustain_ratio": 0.1111111111111111,
+    "sustained": false,
+    "envelope_attack_seconds": 0,
+    "envelope_decay_seconds": 0.1346938775510204,
+    "envelope_sustain_level": 0.11292185436382358,
+    "envelope_release_seconds": 0.10975056689342404,
+    "envelope_temporal_centroid": 0.08655079114211774,
+    "envelope_skewness": 1.8725361923191888,
+    "envelope_kurtosis": 3.0310993249885883,
+    "envelope_shape": "Plucky",
+    "decay_time_seconds_60db": 0.5138818232784877,
+    "onset_periodicity": 0,
+    "onset_rate_per_second": 3.454488485038383
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.10337350940157376,
+    "crest_factor": 9.673363013509643,
+    "zero_crossings_per_second": 12232.343725520914,
+    "complexity": 4628.076546473077,
+    "spectral_centroid_hz": 5980.7307647019325,
+    "spectral_rolloff_hz": 10743.459188469373,
+    "spectral_flatness": 0.3866505841240551,
+    "low_band_energy": 0.032542259495001544,
+    "mid_band_energy": 0.23382365676539396,
+    "high_band_energy": 0.7336340837396045,
+    "spectral_flux": 0.2277455964226915,
+    "harmonicity": 0.08255178213373245,
+    "inharmonicity": 0.5608198948462222,
+    "partial_count": 12,
+    "mel_frequency_cepstral_coefficients": [
+      15.34343389946925,
+      -2.216035108603609,
+      -6.06127135592963,
+      4.787859840122751,
+      -3.5602443465072136,
+      2.838483625944786,
+      -1.9161037616559677,
+      1.0264648828859824,
+      -1.741953905691515,
+      0.44108142743559603,
+      -1.7059763821406855,
+      -0.06158140499510807,
+      -1.53834852725634
+    ],
+    "spectral_centroid_mean_hz": 6993.850536878435,
+    "spectral_centroid_deviation_hz": 287.703157425638,
+    "total_harmonic_distortion": 0.3782834254016516,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0.0015250730241922472,
+    "spectral_entropy": 0.7952841783259333,
+    "spectral_slope_db_per_octave": -0.17436259737285273,
+    "band_limit_high_hz": 20219.677734375,
+    "spectral_centroid_slope_hz_per_second": 1389.195953306573,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 0.3333333333333333,
+    "mid_rms": 0.10337350911222616,
+    "side_rms": 0.0021288760987169535,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 229.6875,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.9199509756599727,
+      0.9590718241262305,
+      0.9589518196811476,
+      0.8707925735187277,
+      0.7876988908100172,
+      0.7447808570041786,
+      0.7116411207092067,
+      0.7482911341603397,
+      0.7449278390538361,
+      0.8022462895651329,
+      1,
+      0.9863347566596454
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "PERCUSSION",
+    "subcategory": "MISC",
+    "id": "PERCMisc",
+    "confidence": 0.013068947140827984,
+    "alternatives": [
+      {
+        "category": "FOOD & DRINK",
+        "subcategory": "KITCHENWARE",
+        "id": "FOODKware",
+        "probability": 0.011,
+        "synonyms": []
+      },
+      {
+        "category": "SPORTS",
+        "subcategory": "INDOOR",
+        "id": "SPRTIndor",
+        "probability": 0.011,
+        "synonyms": []
+      },
+      {
+        "category": "PERCUSSION",
+        "subcategory": "SHAKER",
+        "id": "PERCShak",
+        "probability": 0.01,
+        "synonyms": []
+      }
+    ],
+    "synonyms": [],
+    "reason": "no name evidence; signal 0.94, tier signal_narrowable, 440 candidates in contention; gate ruled out AIRHiss (length_seconds 0.2895 < min 0.5000); ABSTAINED to MISC (confidence below threshold)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.24444444444444444,
+        "duration_seconds": 0.24444444444444444,
+        "peak_amplitude": 0.3540801804743485,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 50,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "gUaxaKVazkHNS8w31SrWQNQk3indJOYo6B3oJekX5xvtE+8W7xTwFPEW8xLyEvUN9g31DPQU9wz4CvoI+gn7B/oI+Qj8BfwF/QT9BP4D/QP+Av8B/wH/Af8B/wAAAAAAAAAAAA=="
+  }
+}

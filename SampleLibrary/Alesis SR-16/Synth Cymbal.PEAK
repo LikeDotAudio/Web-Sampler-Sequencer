@@ -1,0 +1,196 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Synth Cymbal.wav",
+    "folder": "Alesis SR-16/Misc",
+    "sub": "Alesis SR-16/Misc",
+    "path": "Alesis SR-16/Misc/Synth Cymbal.wav",
+    "length_seconds": 0.3089569160997732,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": 0.000016846823036123854,
+    "trailing_silence_ms": 0.36281179138321995,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Cymbal",
+    "reason": [
+      "1) path matched \"cymbal\"",
+      "2) envelope Plucky (attack 10 ms, sustain 14%, 1 transient)",
+      "3) Inharmonic+Impulsive · mid-band 80% · root F#4"
+    ],
+    "timbre": "Tonal",
+    "length_class": "Short",
+    "subgroup": "Cymbal Short",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic",
+      "Impulsive"
+    ],
+    "sound_design_roles": [
+      "Pluck"
+    ],
+    "instrument_family": [
+      "Percussion",
+      "Idiophone",
+      "Struck Idiophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.013015873015873015,
+    "sustain_ratio": 0.10526315789473684,
+    "sustained": false,
+    "envelope_attack_seconds": 0.009977324263038548,
+    "envelope_decay_seconds": 0.12471655328798185,
+    "envelope_sustain_level": 0.13607787084765977,
+    "envelope_release_seconds": 0.17959183673469387,
+    "envelope_temporal_centroid": 0.11968858227353463,
+    "envelope_skewness": 2.4455174419819947,
+    "envelope_kurtosis": 5.974186101292551,
+    "envelope_shape": "Plucky",
+    "decay_time_seconds_60db": 0.9072184255614633,
+    "onset_periodicity": 0,
+    "onset_rate_per_second": 3.2366972477064224
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.1531887213772191,
+    "crest_factor": 6.527696513371263,
+    "zero_crossings_per_second": 1414.4366972477064,
+    "complexity": 2364.846246333975,
+    "spectral_centroid_hz": 1540.6880959452403,
+    "spectral_rolloff_hz": 2657.3284403669722,
+    "spectral_flatness": 0.07961515316057424,
+    "low_band_energy": 0.006484951419647352,
+    "mid_band_energy": 0.8034463168996405,
+    "high_band_energy": 0.19006873168071214,
+    "spectral_flux": 0.048197242567445356,
+    "harmonicity": 0.950672033570855,
+    "inharmonicity": 0.22764982737813894,
+    "partial_count": 3,
+    "mel_frequency_cepstral_coefficients": [
+      -2.1678224274652003,
+      12.912730478309344,
+      -5.914601343686127,
+      -2.649531691403007,
+      -4.372776175901268,
+      -5.84807393645773,
+      -4.699341428509417,
+      -4.874053156684478,
+      -3.9096851220610174,
+      -2.5647626976203135,
+      -1.4789019585668253,
+      0.5303418913124832,
+      1.0077149332890725
+    ],
+    "spectral_centroid_mean_hz": 1550.8277696528492,
+    "spectral_centroid_deviation_hz": 117.7511399371186,
+    "total_harmonic_distortion": 0.8131726987613268,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0.016281611983903987,
+    "spectral_entropy": 0.16899836928445303,
+    "spectral_slope_db_per_octave": -0.4448940556333662,
+    "band_limit_high_hz": 7192.08984375,
+    "spectral_centroid_slope_hz_per_second": 1095.38100068416,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 1,
+    "mid_rms": 0.1531887211572388,
+    "side_rms": 0.003670076740700686,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 187.6595744680851,
+    "pitch_slope_semitones_per_second": -0.05769233412421599,
+    "root_note_name": "F#4",
+    "root_frequency_hz": 378.38782458253525,
+    "root_cents_offset": 38.83457274266959,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.24116159442274016,
+      1,
+      0.48250763951573233,
+      0.2421531196108692,
+      0.18291114315655305,
+      0.1780416644029977,
+      0.26572598335269454,
+      0.17330747202664457,
+      0.2059946641603369,
+      0.10392043608982358,
+      0.15777832179350842,
+      0.15353677599033574
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "SYNTH",
+    "subcategory": "KEYS",
+    "id": "SYNTKeys",
+    "confidence": 0.5205091121471062,
+    "alternatives": [
+      {
+        "category": "SYNTH",
+        "subcategory": "PLUCK",
+        "id": "SYNTPluck",
+        "probability": 0.284,
+        "synonyms": [
+          "synth"
+        ]
+      },
+      {
+        "category": "SYNTH",
+        "subcategory": "LEAD",
+        "id": "SYNTLead",
+        "probability": 0.185,
+        "synonyms": [
+          "synth"
+        ]
+      },
+      {
+        "category": "DESIGNED",
+        "subcategory": "SYNTHETIC",
+        "id": "DSGNSynth",
+        "probability": 0.009,
+        "synonyms": [
+          "synth"
+        ]
+      }
+    ],
+    "synonyms": [
+      "synth"
+    ],
+    "reason": "name matched [synth]; signal 0.83, tier signal_narrowable, 6 candidates in contention; gate ruled out AIRBlow (spectral_flatness 0.0796 < min 0.1200)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0.009977324263038548,
+        "end_seconds": 0.28435374149659864,
+        "duration_seconds": 0.2743764172335601,
+        "peak_amplitude": 0.5829257800673774,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 54,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "AADqC4F8iXyuXcJHzTfWJdsg4xznG+ga6BnrGOwY7BbtFe0U7RPvEvAS8BDwDvEO8g7yDvMO8w70DvQN9A31DfQN9Qz1DPUL9gv2CvcI+Aj5B/oH+wX7BfwE/QT9A/4C/gL/Af8BAAAAAAAA"
+  }
+}

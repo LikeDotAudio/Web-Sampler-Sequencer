@@ -1,0 +1,167 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Bassdrum Gated.wav",
+    "folder": "Akai MPC-60",
+    "sub": "Akai MPC-60",
+    "path": "Akai MPC-60/Bassdrum Gated.wav",
+    "length_seconds": 0.5104988662131519,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": 0.00002366525469312175,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Kick",
+    "reason": [
+      "1) path matched \"bassdrum\"",
+      "2) envelope Decaying (attack 10 ms, sustain 0%, 1 transient)",
+      "3) Inharmonic · high-band 49% · root C1"
+    ],
+    "timbre": "Tonal",
+    "length_class": "Medium",
+    "subgroup": "Kick Medium",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic"
+    ],
+    "sound_design_roles": [
+      "Pluck"
+    ],
+    "instrument_family": [
+      "Percussion",
+      "Membranophone",
+      "Struck Membranophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.010045351473922902,
+    "sustain_ratio": 0.0967741935483871,
+    "sustained": false,
+    "envelope_attack_seconds": 0.009977324263038548,
+    "envelope_decay_seconds": 0.24444444444444444,
+    "envelope_sustain_level": 0.003424450776086945,
+    "envelope_release_seconds": 0.03492063492063492,
+    "envelope_temporal_centroid": 0.10389761158552799,
+    "envelope_skewness": 1.694354432147293,
+    "envelope_kurtosis": 2.3279498352347785,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": null,
+    "onset_periodicity": 0.20231862679104212,
+    "onset_rate_per_second": 1.9588682094789678
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.23919515187930382,
+    "crest_factor": 4.180559156677442,
+    "zero_crossings_per_second": 746.3287878114868,
+    "complexity": 3577.0693619577805,
+    "spectral_centroid_hz": 2869.9622655244066,
+    "spectral_rolloff_hz": 5055.838848665216,
+    "spectral_flatness": 0.1947302901590383,
+    "low_band_energy": 0.26587127114810205,
+    "mid_band_energy": 0.2487953334532153,
+    "high_band_energy": 0.48533339539868264,
+    "spectral_flux": 0.20636432982233074,
+    "harmonicity": 0.9499026296947486,
+    "inharmonicity": 0.5744069433614902,
+    "partial_count": 4,
+    "mel_frequency_cepstral_coefficients": [
+      -26.72883779245711,
+      12.365979332519421,
+      -0.7599508330498126,
+      1.478273590681721,
+      2.812866010114629,
+      3.8029694170618478,
+      2.6041377137898163,
+      2.429945323496206,
+      1.6214696283162413,
+      1.6306857343438446,
+      0.7774573019740086,
+      0.797050349068566,
+      0.3045485481265974
+    ],
+    "spectral_centroid_mean_hz": 2349.455953744276,
+    "spectral_centroid_deviation_hz": 1688.3027070117369,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0,
+    "spectral_entropy": 0.25197642370823975,
+    "spectral_slope_db_per_octave": -6.885100614615734,
+    "band_limit_high_hz": 6976.7578125,
+    "spectral_centroid_slope_hz_per_second": 4176.460931215629,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 0.9130434782608695,
+    "mid_rms": 0.23919515194124064,
+    "side_rms": 0.004772159755923497,
+    "lufs": -12.067946560201383
+  },
+  "musicality": {
+    "pitch_hz": 2004.5454545454545,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "C1",
+    "root_frequency_hz": 32.793014436014886,
+    "root_cents_offset": 4.748287452608224,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      1,
+      0.9020948162016366,
+      0.7413194542847236,
+      0.7085760536600281,
+      0.6967405311719838,
+      0.7656296827373256,
+      0.8324804961813013,
+      0.7692218303389755,
+      0.6164256170017652,
+      0.7310607858066621,
+      0.8461510874744446,
+      0.8203727788616508
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "SYNTH",
+    "subcategory": "ARP",
+    "id": "SYNTArp",
+    "confidence": 1,
+    "alternatives": [],
+    "synonyms": [
+      "gated"
+    ],
+    "reason": "name matched [gated]; signal 0.07, tier signal_narrowable, 1 candidate in contention; gate ruled out AIRHiss (harmonicity 0.9499 > max 0.8891)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.22947845804988662,
+        "duration_seconds": 0.22947845804988662,
+        "peak_amplitude": 0.7854607814709402,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 88,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "iXKNf4F1jn2Ddo5u21uoLcQY5mmLIeNQxS60Me49xBXvMtMwxiXvL7Iz01bO+eo2yBH3NsUE4UvJDvgc4xPyGt8e6CLpDfkJ/QX+Av4C/wL/Af8B/wH/AQABAAAAAAAAAAAAAAAAAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+  }
+}

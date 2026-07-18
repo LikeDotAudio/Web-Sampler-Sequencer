@@ -1,0 +1,195 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Open Hat.wav",
+    "folder": "Akai Linndrum",
+    "sub": "Akai Linndrum",
+    "path": "Akai Linndrum/Open Hat.wav",
+    "length_seconds": 0.26031746031746034,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": 0.000027340879008329705,
+    "trailing_silence_ms": 0.06802721088435373,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Hi-Hat",
+    "reason": [
+      "1) path matched \"open hat\"",
+      "2) envelope Decaying (attack 10 ms, sustain 32%, 1 transient)",
+      "3) Inharmonic+Stochastic · high-band 91%"
+    ],
+    "timbre": "Bright",
+    "length_class": "Short",
+    "subgroup": "Open",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic",
+      "Stochastic"
+    ],
+    "sound_design_roles": [],
+    "instrument_family": [
+      "Percussion",
+      "Idiophone",
+      "Struck Idiophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.015623582766439909,
+    "sustain_ratio": 0.3125,
+    "sustained": false,
+    "envelope_attack_seconds": 0.009977324263038548,
+    "envelope_decay_seconds": 0.10975056689342404,
+    "envelope_sustain_level": 0.3150212761268543,
+    "envelope_release_seconds": 0.08979591836734693,
+    "envelope_temporal_centroid": 0.22399350818691355,
+    "envelope_skewness": 0.7098057200178468,
+    "envelope_kurtosis": -0.618764108254342,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": 0.55255332514912,
+    "onset_periodicity": 0,
+    "onset_rate_per_second": 3.841463414634146
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.10889472115150901,
+    "crest_factor": 9.182901355067365,
+    "zero_crossings_per_second": 17036.89024390244,
+    "complexity": 4416.29308642497,
+    "spectral_centroid_hz": 8642.141469155209,
+    "spectral_rolloff_hz": 13222.31707317073,
+    "spectral_flatness": 0.3027903549336805,
+    "low_band_energy": 0.0065929698711416716,
+    "mid_band_energy": 0.08517399762651917,
+    "high_band_energy": 0.9082330325023391,
+    "spectral_flux": 0.2146406290669632,
+    "harmonicity": 0.1372759833287055,
+    "inharmonicity": 0.3005063599261856,
+    "partial_count": 12,
+    "mel_frequency_cepstral_coefficients": [
+      28.258463401911023,
+      -6.221213773356723,
+      -2.373924687732145,
+      3.5422788807205077,
+      -1.9602732211264298,
+      1.6047100596392307,
+      -2.3164325890398865,
+      1.1331870251978333,
+      -2.4370681562272365,
+      -0.5501222113310491,
+      -1.7593116243962164,
+      -0.7497154662851422,
+      -0.8665972054814681
+    ],
+    "spectral_centroid_mean_hz": 8840.156786671501,
+    "spectral_centroid_deviation_hz": 174.00875871620786,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0.3683994276658039,
+    "spectral_entropy": 0.8142076657166754,
+    "spectral_slope_db_per_octave": 1.249842089073734,
+    "band_limit_high_hz": 19638.28125,
+    "spectral_centroid_slope_hz_per_second": 1416.8965722081593,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 0,
+    "mid_rms": 0.10889472084140622,
+    "side_rms": 0.0011478328731273069,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 1191.8918918918919,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.6259693661870336,
+      0.5865676067492022,
+      0.606454999396057,
+      0.6473555375494431,
+      0.7676235654512247,
+      0.9411546936310319,
+      1,
+      0.8626618658021492,
+      0.8812241460464693,
+      0.832901215192867,
+      0.7958613833979608,
+      0.6616357912459891
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "OBJECTS",
+    "subcategory": "FASHION",
+    "id": "OBJFash",
+    "confidence": 0.44557919681495206,
+    "alternatives": [
+      {
+        "category": "MAGIC",
+        "subcategory": "POOF",
+        "id": "MAGPoof",
+        "probability": 0.217,
+        "synonyms": [
+          "open"
+        ]
+      },
+      {
+        "category": "CYMBALS",
+        "subcategory": "HI-HAT",
+        "id": "CYMBHat",
+        "probability": 0.189,
+        "synonyms": [
+          "hat",
+          "open"
+        ]
+      },
+      {
+        "category": "VEHICLES",
+        "subcategory": "DOOR",
+        "id": "VEHDoor",
+        "probability": 0.148,
+        "synonyms": [
+          "open"
+        ]
+      }
+    ],
+    "synonyms": [
+      "hat"
+    ],
+    "reason": "name matched [hat]; signal 0.42, tier semantic_only, 4 candidates in contention; gate ruled out AIRHiss (length_seconds 0.2603 < min 0.5000)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0.009977324263038548,
+        "end_seconds": 0.25442176870748295,
+        "duration_seconds": 0.2444444444444444,
+        "peak_amplitude": 0.24259648946532636,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 45,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "AAAAAIFOuD6mUrNHrT3MQb5AwDbRLr0zyTfWNNgnzSXcLt4p3CrhI94e3h7eJuEU7BrqE+Ie7hbuE+4U8A70DPUN8g7xCvQO9Qr4CvcI+Qj6BfkF/AX7BAAA"
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Bassdrum-02.wav",
+    "folder": "Boss DR-550/Bassdrums",
+    "sub": "Boss DR-550/Bassdrums",
+    "path": "Boss DR-550/Bassdrums/Bassdrum-02.wav",
+    "length_seconds": 0.153718820861678,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.0001875554799576357,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Kick",
+    "reason": [
+      "1) path matched \"bassdrum\"",
+      "2) envelope Decaying (attack 15 ms, sustain 15%, 1 transient)",
+      "3) Inharmonic+Impulsive · low-band 53% · root A#0"
+    ],
+    "timbre": "Tonal",
+    "length_class": "Short",
+    "subgroup": "Kick Short",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic",
+      "Impulsive"
+    ],
+    "sound_design_roles": [
+      "Pluck",
+      "Bass"
+    ],
+    "instrument_family": [
+      "Percussion",
+      "Membranophone",
+      "Struck Membranophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.021519274376417232,
+    "sustain_ratio": 0.2,
+    "sustained": false,
+    "envelope_attack_seconds": 0.014965986394557823,
+    "envelope_decay_seconds": 0.03492063492063492,
+    "envelope_sustain_level": 0.15071937857966017,
+    "envelope_release_seconds": 0.06485260770975057,
+    "envelope_temporal_centroid": 0.22596179454646872,
+    "envelope_skewness": 1.3666024283066776,
+    "envelope_kurtosis": 0.4823672559869405,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": 0.28914348600565914,
+    "onset_periodicity": 0,
+    "onset_rate_per_second": 6.505384274966809
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.28297415320305963,
+    "crest_factor": 3.533783814185694,
+    "zero_crossings_per_second": 195.16152824900428,
+    "complexity": 2834.1918869934643,
+    "spectral_centroid_hz": 1869.2398259285167,
+    "spectral_rolloff_hz": 4514.7366868269655,
+    "spectral_flatness": 0.03698503697940821,
+    "low_band_energy": 0.5265161557857874,
+    "mid_band_energy": 0.13949777656355014,
+    "high_band_energy": 0.33398606765066247,
+    "spectral_flux": 0.22693861502162493,
+    "harmonicity": 0.978128808797947,
+    "inharmonicity": 0.5675009448261694,
+    "partial_count": 5,
+    "mel_frequency_cepstral_coefficients": [
+      -10.775630481268678,
+      14.909187384880656,
+      -3.1582691170161565,
+      7.340127107886503,
+      0.8762680799501991,
+      5.495168832415544,
+      -0.1718841873995452,
+      5.350001700087822,
+      1.0957455935525513,
+      3.26059469722864,
+      1.1258054117922065,
+      1.4808670677485936,
+      0.8033165958690585
+    ],
+    "spectral_centroid_mean_hz": 704.2341220966562,
+    "spectral_centroid_deviation_hz": 544.2210098518649,
+    "total_harmonic_distortion": 1.1811885831943747,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0.14544103951977994,
+    "spectral_entropy": 0.19039744850885248,
+    "spectral_slope_db_per_octave": -6.821579708798391,
+    "band_limit_high_hz": 5986.23046875,
+    "spectral_centroid_slope_hz_per_second": -9591.081410123872,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 0.9285714285714286,
+    "mid_rms": 0.28297415315705865,
+    "side_rms": 0.0042880951603215655,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 2004.5454545454545,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "A#0",
+    "root_frequency_hz": 29.274229237350642,
+    "root_cents_offset": 8.23948135900423,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.8101877646327045,
+      0.34179023551753296,
+      0.7200054399181619,
+      0.6373272154941417,
+      0.485690921813604,
+      0.38016013213903666,
+      0.8094360216500375,
+      0.5064649254846529,
+      1,
+      0.3860258561624335,
+      0.7164321950981339,
+      0.3154667677980954
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "DRUMS",
+    "subcategory": "KICK",
+    "id": "DRUMKick",
+    "confidence": 1,
+    "alternatives": [],
+    "synonyms": [
+      "bassdrum"
+    ],
+    "reason": "name matched [bassdrum]; signal 0.12, tier signal_separable, 1 candidate in contention; gate ruled out AIRBlow (spectral_flatness 0.0370 < min 0.1200)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0.014965986394557823,
+        "end_seconds": 0.12471655328798185,
+        "duration_seconds": 0.10975056689342404,
+        "peak_amplitude": 0.7264859629683132,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 27,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "AAAAAOwQgTbdfY/h0WEMYLkMvfDwAQESBxMHHfEd5PDvBgYIBQj5Bfj6+gEBAQABAAH/Af8A"
+  }
+}

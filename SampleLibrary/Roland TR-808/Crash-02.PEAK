@@ -1,0 +1,191 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Crash-02.wav",
+    "folder": "Roland TR-808",
+    "sub": "Roland TR-808",
+    "path": "Roland TR-808/Crash-02.wav",
+    "length_seconds": 0.8247845804988662,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": 0.000008422475682726542,
+    "trailing_silence_ms": 10,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Crash",
+    "reason": [
+      "1) path matched \"crash\"",
+      "2) envelope Decaying (attack 0 ms, sustain 8%, 1 transient)",
+      "3) Stochastic · high-band 99%"
+    ],
+    "timbre": "Bright",
+    "length_class": "Medium",
+    "subgroup": "Crash Medium",
+    "audit": false,
+    "acoustic_types": [
+      "Stochastic"
+    ],
+    "sound_design_roles": [
+      "Pluck"
+    ],
+    "instrument_family": []
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.0145578231292517,
+    "sustain_ratio": 0.08,
+    "sustained": false,
+    "envelope_attack_seconds": 0,
+    "envelope_decay_seconds": 0.3791383219954648,
+    "envelope_sustain_level": 0.08005158899254247,
+    "envelope_release_seconds": 0.3242630385487528,
+    "envelope_temporal_centroid": 0.08613375155682505,
+    "envelope_skewness": 2.061015484478056,
+    "envelope_kurtosis": 4.494922314357853,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": 1.3058825701939067,
+    "onset_periodicity": 0.0013120220309636665,
+    "onset_rate_per_second": 1.2124377972672038
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.07499328763434769,
+    "crest_factor": 13.33411981212941,
+    "zero_crossings_per_second": 11936.450114095622,
+    "complexity": 4568.603766268664,
+    "spectral_centroid_hz": 10688.77956121715,
+    "spectral_rolloff_hz": 15555.576938938224,
+    "spectral_flatness": 0.5734555087959262,
+    "low_band_energy": 0.0001425145301952083,
+    "mid_band_energy": 0.012944416852079898,
+    "high_band_energy": 0.9869130686177249,
+    "spectral_flux": 0.1951139675405343,
+    "harmonicity": 0.35830361829191154,
+    "inharmonicity": 0.3073310365253227,
+    "partial_count": 12,
+    "mel_frequency_cepstral_coefficients": [
+      0.7858295142555364,
+      -11.937479067362304,
+      -9.140523070120883,
+      -1.3039337919414273,
+      -0.5127351250261372,
+      0.9215866960495507,
+      -0.2605346346857027,
+      0.5907409637998635,
+      0.7313842643692333,
+      1.5140601927918969,
+      -0.05157945998093663,
+      1.3493826950786447,
+      0.7602423475033003
+    ],
+    "spectral_centroid_mean_hz": 8469.14742372308,
+    "spectral_centroid_deviation_hz": 1628.1791889329759,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0,
+    "spectral_entropy": 0.7272825080907448,
+    "spectral_slope_db_per_octave": 6.121904724568842,
+    "band_limit_high_hz": 22028.466796875,
+    "spectral_centroid_slope_hz_per_second": -6948.567274963949,
+    "syllabic_modulation_energy": 0.006376388544846717,
+    "voicing_ratio": 0.25316455696202533,
+    "mid_rms": 0.07499328743619166,
+    "side_rms": 0.0006522729298247441,
+    "lufs": -17.690517029116965
+  },
+  "musicality": {
+    "pitch_hz": 130.08849557522123,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.5950097915941511,
+      0.5393620281718767,
+      0.6319093311086688,
+      0.619337064782785,
+      0.648957964653338,
+      0.6225680457555747,
+      0.6173103869675667,
+      0.6394176154361759,
+      0.7527824223478461,
+      1,
+      0.6732004369886206,
+      0.6271359014125863
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "METAL",
+    "subcategory": "IMPACT",
+    "id": "METLImpt",
+    "confidence": 0.31460714132531864,
+    "alternatives": [
+      {
+        "category": "DESIGNED",
+        "subcategory": "IMPACT",
+        "id": "DSGNImpt",
+        "probability": 0.143,
+        "synonyms": [
+          "crash"
+        ]
+      },
+      {
+        "category": "WATER",
+        "subcategory": "IMPACT",
+        "id": "WATRImpt",
+        "probability": 0.079,
+        "synonyms": [
+          "crash"
+        ]
+      },
+      {
+        "category": "PLASTIC",
+        "subcategory": "IMPACT",
+        "id": "PLASImpt",
+        "probability": 0.073,
+        "synonyms": [
+          "crash"
+        ]
+      }
+    ],
+    "synonyms": [
+      "crash"
+    ],
+    "reason": "name matched [crash]; signal 0.64, tier signal_narrowable, 22 candidates in contention; gate ruled out AIRSuck (envelope_temporal_centroid 0.0861 < min 0.4000)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.6834467120181406,
+        "duration_seconds": 0.6834467120181406,
+        "peak_amplitude": 0.30102893743160175,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 143,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "iU+BX4FOnT6oPLk7tDK/Lcctxi/HKs0ryiXRJdUl2CTQItAh1iLTINgc2x3ZG90f3h3fGd0Z4xnkGuUT5hXpEugV6BPnEeoT6RHrFOoP7RDuEO4P7g7vD+8O7hDyDPEL8A3yDfEM8QvwDvML8gzyCPQK9gr2CvYI9Qv1B/UJ9gn2CvYH9gj3CPgJ9wj4CPgI+Aj5BvoG+AX5BvgG+wX6BvoF+wX6BPsF+wT7BfwF/AT7BfwD/AT8A/0E/AP9BP0D/QP9A/4D/QL9Av0C/gL+Av4C/gL+Av8C/gH+Av4B/wH/Af8B/wH/Af8B/wH/Af8B/wH/Af8B/wEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+  }
+}

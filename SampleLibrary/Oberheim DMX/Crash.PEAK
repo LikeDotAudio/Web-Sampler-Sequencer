@@ -1,0 +1,192 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Crash.wav",
+    "folder": "Oberheim DMX",
+    "sub": "Oberheim DMX",
+    "path": "Oberheim DMX/Crash.wav",
+    "length_seconds": 0.9623356009070295,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.00001655531332931531,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Crash",
+    "reason": [
+      "1) path matched \"crash\"",
+      "2) envelope Decaying (attack 35 ms, sustain 37%, 1 transient)",
+      "3) Inharmonic · high-band 90%"
+    ],
+    "timbre": "Bright",
+    "length_class": "Medium",
+    "subgroup": "Crash Medium",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic"
+    ],
+    "sound_design_roles": [],
+    "instrument_family": [
+      "Percussion",
+      "Idiophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.06653061224489797,
+    "sustain_ratio": 0.46551724137931033,
+    "sustained": false,
+    "envelope_attack_seconds": 0.03492063492063492,
+    "envelope_decay_seconds": 0.364172335600907,
+    "envelope_sustain_level": 0.3679987103341726,
+    "envelope_release_seconds": 0.1895691609977324,
+    "envelope_temporal_centroid": 0.22389506978615692,
+    "envelope_skewness": 0.22929086928354306,
+    "envelope_kurtosis": -1.2239455519481997,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": 1.376266819803169,
+    "onset_periodicity": 0.34923745664492345,
+    "onset_rate_per_second": 1.0391385282405334
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.16111556382178177,
+    "crest_factor": 6.186931227752531,
+    "zero_crossings_per_second": 10774.827399326092,
+    "complexity": 3273.485617828965,
+    "spectral_centroid_hz": 5986.898606726828,
+    "spectral_rolloff_hz": 9138.18421734725,
+    "spectral_flatness": 0.13728088428683868,
+    "low_band_energy": 0.001480232104831736,
+    "mid_band_energy": 0.10147763546174567,
+    "high_band_energy": 0.8970421324334226,
+    "spectral_flux": 0.2121598429577996,
+    "harmonicity": 0.2438423257278391,
+    "inharmonicity": 0.4442583085560587,
+    "partial_count": 12,
+    "mel_frequency_cepstral_coefficients": [
+      24.992601682954067,
+      -1.025126265899264,
+      -10.389644459532771,
+      5.061128377720617,
+      -4.858903405441954,
+      -1.111973817677488,
+      -4.1908881028252845,
+      0.7709046846116445,
+      -2.7893627355454202,
+      1.9046337344410715,
+      -1.945896428415279,
+      2.256595193590784,
+      -0.8226124820867581
+    ],
+    "spectral_centroid_mean_hz": 5849.54094685852,
+    "spectral_centroid_deviation_hz": 368.5192748385553,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0.29189369304421875,
+    "spectral_entropy": 0.7056122704718834,
+    "spectral_slope_db_per_octave": 3.2917927825308015,
+    "band_limit_high_hz": 15977.63671875,
+    "spectral_centroid_slope_hz_per_second": -825.4245254090587,
+    "syllabic_modulation_energy": 0.013666515221157029,
+    "voicing_ratio": 0.12,
+    "mid_rms": 0.16111556364616064,
+    "side_rms": 0.00191880109003109,
+    "lufs": -9.729553621708236
+  },
+  "musicality": {
+    "pitch_hz": 1520.6896551724137,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.45919436614802117,
+      0.652440900625305,
+      0.791959561041606,
+      0.5504248742892639,
+      0.44226480711269356,
+      0.454654238235695,
+      0.6774165970432114,
+      0.5789298569439703,
+      0.7767760691041586,
+      1,
+      0.6699012110972646,
+      0.48693399356134015
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "CYMBALS",
+    "subcategory": "MISC",
+    "id": "CYMBMisc",
+    "confidence": 0.15315076952368512,
+    "alternatives": [
+      {
+        "category": "CYMBALS",
+        "subcategory": "CRASH",
+        "id": "CYMBCrsh",
+        "probability": 0.147,
+        "synonyms": [
+          "crash"
+        ]
+      },
+      {
+        "category": "ICE",
+        "subcategory": "CRASH & DEBRIS",
+        "id": "ICECrsh",
+        "probability": 0.139,
+        "synonyms": [
+          "crash"
+        ]
+      },
+      {
+        "category": "DESIGNED",
+        "subcategory": "IMPACT",
+        "id": "DSGNImpt",
+        "probability": 0.11,
+        "synonyms": [
+          "crash"
+        ]
+      }
+    ],
+    "synonyms": [
+      "crash"
+    ],
+    "reason": "name matched [crash]; signal 0.41, tier signal_narrowable, 19 candidates in contention; gate ruled out AIRSuck (envelope_temporal_centroid 0.2239 < min 0.4000); ABSTAINED to MISC (top two too close to call)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.9478458049886621,
+        "duration_seconds": 0.9478458049886621,
+        "peak_amplitude": 0.32717521969505636,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 166,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "zjjQSME0wEe5Pp9YtU+dbrJRuFWhV4F8sFidVp1YpWOXYq1Ml2+XWatej2KiXaFlnlGZZLRSlWHAeaRRply7OrRjuEWibqZIs1fCSapOp3SiUrJRv03CPcVCv0arSsVJq0C4Q7k7wzq5Q8JFrEDFPNNLzzazQLw70DrBOMU4xD7JLswuyy/PSMQ/vUe4RMk3wTHCNM8wxDnQR8szzCzXNdAsyzHcKNUq2THLL9Qo2C/YJ94j2CbZJ94j4CfVNtgn4iTqFeUh2CjfJd0a4BrpH+Yg5x/jGOsW7BDsEekU7BHxE/EY7xLoEPEQ8g3zDfAP8BjzDvQO9Q33DPcM8wz3CvcK9Qj5CPkH9wf5B/gJ+gb6BvsG+wf7BPwF/AX7BfwF/AX8BfwD/QP8BPwD/QP8A/0C/gL+A/0D/QL+Av4C/wL+Af8B/wH/Af8BAAA="
+  }
+}

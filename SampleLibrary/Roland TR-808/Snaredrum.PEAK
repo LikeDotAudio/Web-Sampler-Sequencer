@@ -1,0 +1,187 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Snaredrum.wav",
+    "folder": "Roland TR-808",
+    "sub": "Roland TR-808",
+    "path": "Roland TR-808/Snaredrum.wav",
+    "length_seconds": 0.10396825396825397,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": 0.000033086778813386044,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Snare",
+    "reason": [
+      "1) path matched \"snare\"",
+      "2) envelope Decaying (attack 0 ms, sustain 17%, 1 transient)",
+      "3) Inharmonic+Stochastic+Impulsive · high-band 77%"
+    ],
+    "timbre": "Bright",
+    "length_class": "Short",
+    "subgroup": "Snare Short",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic",
+      "Stochastic",
+      "Impulsive"
+    ],
+    "sound_design_roles": [],
+    "instrument_family": [
+      "Percussion",
+      "Membranophone",
+      "Struck Membranophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.0068480725623582765,
+    "sustain_ratio": 0.14285714285714285,
+    "sustained": false,
+    "envelope_attack_seconds": 0,
+    "envelope_decay_seconds": 0.044897959183673466,
+    "envelope_sustain_level": 0.16822832134472718,
+    "envelope_release_seconds": 0.044897959183673466,
+    "envelope_temporal_centroid": 0.105587356105715,
+    "envelope_skewness": 1.6826582068412783,
+    "envelope_kurtosis": 2.476031947480938,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": 0.1748590389709669,
+    "onset_periodicity": 0,
+    "onset_rate_per_second": 9.618320610687022
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.12572574573480777,
+    "crest_factor": 7.953577658875868,
+    "zero_crossings_per_second": 6627.022900763359,
+    "complexity": 4729.928829882833,
+    "spectral_centroid_hz": 5862.518161429351,
+    "spectral_rolloff_hz": 10762.900763358779,
+    "spectral_flatness": 0.45203950069907667,
+    "low_band_energy": 0.04157704186325338,
+    "mid_band_energy": 0.18506608167796407,
+    "high_band_energy": 0.7733568764587826,
+    "spectral_flux": 0.22771567488039018,
+    "harmonicity": 0.18499978837967684,
+    "inharmonicity": 0.3619075454948323,
+    "partial_count": 12,
+    "mel_frequency_cepstral_coefficients": [
+      27.78759363218751,
+      -1.4666941273904965,
+      -3.8371385966302936,
+      4.133241478307051,
+      2.5408396412808143,
+      3.421719246732472,
+      1.695063030835054,
+      1.4471614248956934,
+      0.13375576039076575,
+      0.02604004082758713,
+      -0.887488599416059,
+      -0.8261310667922096,
+      -1.044233293183294
+    ],
+    "spectral_centroid_mean_hz": 6546.902823312987,
+    "spectral_centroid_deviation_hz": 129.39163967991473,
+    "total_harmonic_distortion": 1.109211086574808,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0.35310635022451775,
+    "spectral_entropy": 0.7498133041486656,
+    "spectral_slope_db_per_octave": 0.23891027683688557,
+    "band_limit_high_hz": 21296.337890625,
+    "spectral_centroid_slope_hz_per_second": null,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 1,
+    "mid_rms": 0.1257257456021258,
+    "side_rms": 0.0025865032388819333,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 162.13235294117646,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.7464702154803675,
+      0.9450829592506411,
+      0.8691065071217532,
+      0.9540608218321055,
+      1,
+      0.9101603443866751,
+      0.896865016571016,
+      0.7674710025444113,
+      0.7464601768960141,
+      0.6431462789010219,
+      0.810634873214112,
+      0.8449761092937753
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "PERCUSSION",
+    "subcategory": "MISC",
+    "id": "PERCMisc",
+    "confidence": 0.015533312260430516,
+    "alternatives": [
+      {
+        "category": "FOOD & DRINK",
+        "subcategory": "KITCHENWARE",
+        "id": "FOODKware",
+        "probability": 0.015,
+        "synonyms": []
+      },
+      {
+        "category": "FOOD & DRINK",
+        "subcategory": "TABLEWARE",
+        "id": "FOODTware",
+        "probability": 0.015,
+        "synonyms": []
+      },
+      {
+        "category": "PERCUSSION",
+        "subcategory": "TAMBOURINE",
+        "id": "PERCTamb",
+        "probability": 0.015,
+        "synonyms": []
+      }
+    ],
+    "synonyms": [],
+    "reason": "no name evidence; signal 0.83, tier signal_separable, 358 candidates in contention; gate ruled out AIRBlow (length_seconds 0.1040 < min 0.1500); ABSTAINED to MISC (confidence below threshold)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.0947845804988662,
+        "duration_seconds": 0.0947845804988662,
+        "peak_amplitude": 0.38112071443191636,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 18,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "y1eTf79O0DrdKeQm6hfuFvIT9Q32DPoK+gb7Bv0F/gX/AgAB"
+  }
+}

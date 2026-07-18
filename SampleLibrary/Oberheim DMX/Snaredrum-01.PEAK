@@ -1,0 +1,188 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Snaredrum-01.wav",
+    "folder": "Oberheim DMX",
+    "sub": "Oberheim DMX",
+    "path": "Oberheim DMX/Snaredrum-01.wav",
+    "length_seconds": 0.1607482993197279,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.000032110398537787416,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Snare",
+    "reason": [
+      "1) path matched \"snare\"",
+      "2) envelope Plucky (attack 0 ms, sustain 13%, 1 transient)",
+      "3) Inharmonic+Impulsive · high-band 47%"
+    ],
+    "timbre": "Tonal",
+    "length_class": "Short",
+    "subgroup": "Snare Short",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic",
+      "Impulsive"
+    ],
+    "sound_design_roles": [
+      "Pluck"
+    ],
+    "instrument_family": [
+      "Percussion",
+      "Membranophone",
+      "Struck Membranophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.007392290249433106,
+    "sustain_ratio": 0.2,
+    "sustained": false,
+    "envelope_attack_seconds": 0,
+    "envelope_decay_seconds": 0.06984126984126984,
+    "envelope_sustain_level": 0.1260336286852444,
+    "envelope_release_seconds": 0.05487528344671202,
+    "envelope_temporal_centroid": 0.08290149920906552,
+    "envelope_skewness": 1.573831545093715,
+    "envelope_kurtosis": 1.3166459743209655,
+    "envelope_shape": "Plucky",
+    "decay_time_seconds_60db": 0.2395386122977097,
+    "onset_periodicity": 0,
+    "onset_rate_per_second": 6.220905628438426
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.19303753316649658,
+    "crest_factor": 5.18018162591931,
+    "zero_crossings_per_second": 4242.657638595007,
+    "complexity": 3907.1878438569897,
+    "spectral_centroid_hz": 3374.1521936731524,
+    "spectral_rolloff_hz": 7881.887431231486,
+    "spectral_flatness": 0.13321681151633236,
+    "low_band_energy": 0.2043192302710441,
+    "mid_band_energy": 0.3271201489704878,
+    "high_band_energy": 0.46856062075846816,
+    "spectral_flux": 0.21483283568326142,
+    "harmonicity": 0.46455901502398855,
+    "inharmonicity": 0.2459824849284451,
+    "partial_count": 8,
+    "mel_frequency_cepstral_coefficients": [
+      21.146577376241048,
+      6.485838646474928,
+      -3.8575584211935263,
+      6.510126646642799,
+      -1.4547740751387603,
+      4.753235600296987,
+      -1.1310249256352711,
+      3.3067845887963347,
+      -1.4568860958777043,
+      1.9158810540680995,
+      -1.5534846394604584,
+      0.426994587370136,
+      -0.8629634561595296
+    ],
+    "spectral_centroid_mean_hz": 4842.975839544566,
+    "spectral_centroid_deviation_hz": 647.9460007733212,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0,
+    "spectral_entropy": 0.4840384534706753,
+    "spectral_slope_db_per_octave": -1.6352623268887596,
+    "band_limit_high_hz": 14987.109375,
+    "spectral_centroid_slope_hz_per_second": 15751.476769248335,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 1,
+    "mid_rms": 0.19303753297585163,
+    "side_rms": 0.00400530777526077,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 2004.5454545454545,
+    "pitch_slope_semitones_per_second": -0.6524529670929105,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.5581192907046232,
+      0.5073563186677724,
+      0.5881739557842535,
+      0.5603191839349724,
+      1,
+      0.8403525005930693,
+      0.9407973269174295,
+      0.7465660490244428,
+      0.7295900270590796,
+      0.6465195501917514,
+      0.5512665816045639,
+      0.5550580829287746
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "FOOD & DRINK",
+    "subcategory": "MISC",
+    "id": "FOODMisc",
+    "confidence": 0.013784700064766444,
+    "alternatives": [
+      {
+        "category": "CERAMICS",
+        "subcategory": "IMPACT",
+        "id": "CERMImpt",
+        "probability": 0.012,
+        "synonyms": []
+      },
+      {
+        "category": "MALLET",
+        "subcategory": "XYLOPHONE",
+        "id": "MALTXylo",
+        "probability": 0.012,
+        "synonyms": []
+      },
+      {
+        "category": "ANIMALS",
+        "subcategory": "CAT DOMESTIC",
+        "id": "ANMLCat",
+        "probability": 0.012,
+        "synonyms": []
+      }
+    ],
+    "synonyms": [],
+    "reason": "no name evidence; signal 0.88, tier signal_narrowable, 424 candidates in contention; gate ruled out AIRHiss (length_seconds 0.1607 < min 0.5000); ABSTAINED to MISC (confidence below threshold)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.12471655328798185,
+        "duration_seconds": 0.12471655328798185,
+        "peak_amplitude": 0.5703037264813848,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 28,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "lG+gf5ltrDnCSsw20jXjIdgd6RPnGOsX7RPrF+8L9Qr2DfgL+wX7BPwE/wP/Af8B/wL/Af8B/wE="
+  }
+}

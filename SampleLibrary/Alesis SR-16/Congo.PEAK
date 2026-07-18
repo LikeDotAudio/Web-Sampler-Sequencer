@@ -1,0 +1,187 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Congo.wav",
+    "folder": "Alesis SR-16/Percussion",
+    "sub": "Alesis SR-16/Percussion",
+    "path": "Alesis SR-16/Percussion/Congo.wav",
+    "length_seconds": 0.35829931972789114,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.000005246566734799222,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Perc",
+    "reason": [
+      "1) path matched \"percussion\"",
+      "2) envelope Decaying (attack 10 ms, sustain 5%, 1 transient)",
+      "3) Inharmonic+Stochastic+Impulsive · mid-band 67% · root A3"
+    ],
+    "timbre": "Tonal",
+    "length_class": "Short",
+    "subgroup": "Perc Short",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic",
+      "Stochastic",
+      "Impulsive"
+    ],
+    "sound_design_roles": [
+      "Pluck"
+    ],
+    "instrument_family": [
+      "Percussion"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.012947845804988662,
+    "sustain_ratio": 0.09090909090909091,
+    "sustained": false,
+    "envelope_attack_seconds": 0.009977324263038548,
+    "envelope_decay_seconds": 0.16961451247165532,
+    "envelope_sustain_level": 0.04874059675266314,
+    "envelope_release_seconds": 0.10476190476190476,
+    "envelope_temporal_centroid": 0.06580326859970664,
+    "envelope_skewness": 2.6867040065442502,
+    "envelope_kurtosis": 7.235088045648579,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": 0.4438899904021493,
+    "onset_periodicity": 0,
+    "onset_rate_per_second": 2.790962597303968
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.10946969952960539,
+    "crest_factor": 9.134669106782736,
+    "zero_crossings_per_second": 976.8369090563889,
+    "complexity": 3902.90938114462,
+    "spectral_centroid_hz": 2518.5171809205153,
+    "spectral_rolloff_hz": 4914.885133852287,
+    "spectral_flatness": 0.24680171103417223,
+    "low_band_energy": 0.025777501317457683,
+    "mid_band_energy": 0.6731767730792039,
+    "high_band_energy": 0.3010457256033384,
+    "spectral_flux": 0.1362295909362419,
+    "harmonicity": 0.6755858148513345,
+    "inharmonicity": 0.23956809547823166,
+    "partial_count": 3,
+    "mel_frequency_cepstral_coefficients": [
+      -20.23729913219773,
+      16.414889304338022,
+      3.7264710016157845,
+      3.1615004700635767,
+      -0.1728158542056566,
+      -1.3183848782004042,
+      -0.8407365523876816,
+      -1.7286040275986412,
+      -1.1669973656634116,
+      -1.2211147972982408,
+      -0.9258898037365891,
+      -0.7218188031235838,
+      -1.3596218722588527
+    ],
+    "spectral_centroid_mean_hz": 1431.8773300441549,
+    "spectral_centroid_deviation_hz": 816.4137846421085,
+    "total_harmonic_distortion": 0.4162951207429985,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0,
+    "spectral_entropy": 0.2880636572191086,
+    "spectral_slope_db_per_octave": -5.5460320853029765,
+    "band_limit_high_hz": 6395.361328125,
+    "spectral_centroid_slope_hz_per_second": 5430.5335261210075,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 1,
+    "mid_rms": 0.1094696992811916,
+    "side_rms": 0.0028048656863851234,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 53.9119804400978,
+    "pitch_slope_semitones_per_second": 0.4065099818322118,
+    "root_note_name": "A3",
+    "root_frequency_hz": 224.67248908296943,
+    "root_cents_offset": 36.383946056507455,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.827572183864895,
+      0.8910892468529212,
+      0.8519166814222625,
+      0.8879399187364087,
+      1,
+      0.4647755418025784,
+      0.47806683604355465,
+      0.6534721584541459,
+      0.6394384651759332,
+      0.7771297294674592,
+      0.3300513671625058,
+      0.49974648183939363
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "GUITAR",
+    "subcategory": "MISC",
+    "id": "GUITMisc",
+    "confidence": 0.01403744673578695,
+    "alternatives": [
+      {
+        "category": "FOOD & DRINK",
+        "subcategory": "KITCHENWARE",
+        "id": "FOODKware",
+        "probability": 0.012,
+        "synonyms": []
+      },
+      {
+        "category": "SYNTH",
+        "subcategory": "KEYS",
+        "id": "SYNTKeys",
+        "probability": 0.012,
+        "synonyms": []
+      },
+      {
+        "category": "PLASTIC",
+        "subcategory": "IMPACT",
+        "id": "PLASImpt",
+        "probability": 0.011,
+        "synonyms": []
+      }
+    ],
+    "synonyms": [],
+    "reason": "no name evidence; signal 0.95, tier signal_narrowable, 491 candidates in contention; gate ruled out AIRHiss (length_seconds 0.3583 < min 0.5000); ABSTAINED to MISC (confidence below threshold)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.27936507936507937,
+        "duration_seconds": 0.27936507936507937,
+        "peak_amplitude": 0.4474561907152162,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 62,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "2CqWcoFM2DDDRcE/zSHbIN0h6CHyF+MV7RzwC/YK7Q/yDfcH9gvzDPUH/QX4BvgM+QP7A/gG+gb8AvoD/Ab8BPwD+wT8A/8B/gL+BP4B/gL+Av4C/wH+Af8C/wH/Af8B/wEAAP8A/wEAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+  }
+}

@@ -1,0 +1,193 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Clap.wav",
+    "folder": "Akai MPC-60",
+    "sub": "Akai MPC-60",
+    "path": "Akai MPC-60/Clap.wav",
+    "length_seconds": 0.4114512471655329,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.000005802460431592725,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Clap",
+    "reason": [
+      "1) path matched \"clap\"",
+      "2) envelope Decaying (attack 30 ms, sustain 38%, 1 transient)",
+      "3) Inharmonic · high-band 60%"
+    ],
+    "timbre": "Bright",
+    "length_class": "Short",
+    "subgroup": "Clap Short",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic"
+    ],
+    "sound_design_roles": [],
+    "instrument_family": [
+      "Percussion",
+      "Idiophone",
+      "Struck Idiophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.03494331065759637,
+    "sustain_ratio": 0.48,
+    "sustained": false,
+    "envelope_attack_seconds": 0.029931972789115645,
+    "envelope_decay_seconds": 0.16462585034013605,
+    "envelope_sustain_level": 0.38449355283402026,
+    "envelope_release_seconds": 0.07981859410430839,
+    "envelope_temporal_centroid": 0.22977266517095565,
+    "envelope_skewness": 0.2294929827291735,
+    "envelope_kurtosis": -1.4136120015369327,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": 0.4168226873408687,
+    "onset_periodicity": 0.47240478695085336,
+    "onset_rate_per_second": 2.4304216037475888
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.18740660726901423,
+    "crest_factor": 5.334037063205398,
+    "zero_crossings_per_second": 4836.538991457702,
+    "complexity": 3662.06963220065,
+    "spectral_centroid_hz": 4403.421050050292,
+    "spectral_rolloff_hz": 9167.550289335904,
+    "spectral_flatness": 0.0666840942536159,
+    "low_band_energy": 0.0086306914722521,
+    "mid_band_energy": 0.3890160368430307,
+    "high_band_energy": 0.6023532716847172,
+    "spectral_flux": 0.22586171079295708,
+    "harmonicity": 0.13838478263275322,
+    "inharmonicity": 0.3730848130730248,
+    "partial_count": 12,
+    "mel_frequency_cepstral_coefficients": [
+      20.737878675578923,
+      12.190718443224183,
+      -12.227469046415479,
+      1.949078330876624,
+      -7.940344411333181,
+      3.1059604861107997,
+      -2.9328474080175173,
+      2.4179636294293316,
+      -2.6948983162211717,
+      1.420077204807099,
+      -1.5095181051498947,
+      1.386690389514659,
+      -0.7941454224862383
+    ],
+    "spectral_centroid_mean_hz": 3186.358666901751,
+    "spectral_centroid_deviation_hz": 829.7344721485903,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0.2449921920423762,
+    "spectral_entropy": 0.6520770439691639,
+    "spectral_slope_db_per_octave": 0.2648993423157608,
+    "band_limit_high_hz": 14599.51171875,
+    "spectral_centroid_slope_hz_per_second": -6603.940925459671,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 0.07692307692307693,
+    "mid_rms": 0.18740660709777157,
+    "side_rms": 0.003648053688154457,
+    "lufs": -9.761861429607196
+  },
+  "musicality": {
+    "pitch_hz": 1422.5806451612902,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.9288042070953058,
+      0.8215309878709453,
+      0.9675890119035853,
+      0.9507252154284156,
+      1,
+      0.9851532022491433,
+      0.9341004733129733,
+      0.8087936610342273,
+      0.892552701842781,
+      0.8894550576047748,
+      0.8134750201513247,
+      0.8969273103919433
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "ICE",
+    "subcategory": "MISC",
+    "id": "ICEMisc",
+    "confidence": 0.28011404653265165,
+    "alternatives": [
+      {
+        "category": "CERAMICS",
+        "subcategory": "IMPACT",
+        "id": "CERMImpt",
+        "probability": 0.274,
+        "synonyms": [
+          "clap"
+        ]
+      },
+      {
+        "category": "PLASTIC",
+        "subcategory": "IMPACT",
+        "id": "PLASImpt",
+        "probability": 0.208,
+        "synonyms": [
+          "clap"
+        ]
+      },
+      {
+        "category": "HUMAN",
+        "subcategory": "SKIN",
+        "id": "HMNSkin",
+        "probability": 0.072,
+        "synonyms": [
+          "clap"
+        ]
+      }
+    ],
+    "synonyms": [
+      "clap"
+    ],
+    "reason": "name matched [clap]; signal 0.43, tier signal_narrowable, 9 candidates in contention; gate ruled out AIRBlow (spectral_flatness 0.0667 < min 0.1200); ABSTAINED to MISC (top two too close to call)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.38911564625850337,
+        "duration_seconds": 0.38911564625850337,
+        "peak_amplitude": 0.37925534015637313,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 71,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "xzbESZZfwXWZdpVFj3+WfZxponDAQaRcnnaYXadXo162Rqtpr1WzS7ZQuUOrbKdktUutW8BOv0zJQclAvEjMNclF1i/WH9gh1izbJuAg2h/dIOUc7BPsF+wU8g31CvgP9Av0DPcL9gv4BvwG+gf8BvwE+wb9A/4E/QP+Av4C/gL/Af4B/gH/Af8B/wAAAA=="
+  }
+}

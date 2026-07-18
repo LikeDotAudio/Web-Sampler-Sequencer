@@ -1,0 +1,167 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Tom M.wav",
+    "folder": "Akai Linndrum",
+    "sub": "Akai Linndrum",
+    "path": "Akai Linndrum/Tom M.wav",
+    "length_seconds": 0.8270975056689343,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": 0.00001650542899138965,
+    "trailing_silence_ms": 10,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Tom",
+    "reason": [
+      "1) path matched \"tom\"",
+      "2) envelope Decaying (attack 10 ms, sustain 4%, 1 transient)",
+      "3) Harmonic · mid-band 48% · root F#2"
+    ],
+    "timbre": "Tonal",
+    "length_class": "Medium",
+    "subgroup": "Tom Medium",
+    "audit": false,
+    "acoustic_types": [
+      "Harmonic"
+    ],
+    "sound_design_roles": [
+      "Pluck"
+    ],
+    "instrument_family": [
+      "Percussion",
+      "Membranophone",
+      "Struck Membranophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.022448979591836733,
+    "sustain_ratio": 0.04,
+    "sustained": false,
+    "envelope_attack_seconds": 0.009977324263038548,
+    "envelope_decay_seconds": 0.38911564625850337,
+    "envelope_sustain_level": 0.03905545768815713,
+    "envelope_release_seconds": 0.27936507936507937,
+    "envelope_temporal_centroid": 0.06939780849083763,
+    "envelope_skewness": 3.1556459636897123,
+    "envelope_kurtosis": 10.818170825871496,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": 1.1378068002443,
+    "onset_periodicity": 0.021902309739172145,
+    "onset_rate_per_second": 1.2090472926662097
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.10940555867987646,
+    "crest_factor": 9.140024460254455,
+    "zero_crossings_per_second": 365.1322823851953,
+    "complexity": 3263.817659411042,
+    "spectral_centroid_hz": 2472.603003798954,
+    "spectral_rolloff_hz": 5769.573680603153,
+    "spectral_flatness": 0.11259394371829487,
+    "low_band_energy": 0.16755718883375592,
+    "mid_band_energy": 0.4765511350424636,
+    "high_band_energy": 0.3558916761237805,
+    "spectral_flux": 0.11621101531120535,
+    "harmonicity": 0.9316963014297052,
+    "inharmonicity": 0.20303350321422833,
+    "partial_count": 2,
+    "mel_frequency_cepstral_coefficients": [
+      -25.13197914792692,
+      11.811106621191627,
+      4.352329393127277,
+      5.506296564915119,
+      1.6192085154213622,
+      2.1716522611522713,
+      1.1874900025730684,
+      1.7406596844345181,
+      0.6973794278805284,
+      1.1633068363812067,
+      0.5528398697129792,
+      0.8843371496860297,
+      0.5669353524966277
+    ],
+    "spectral_centroid_mean_hz": 1632.3979625914399,
+    "spectral_centroid_deviation_hz": 1183.9235688776428,
+    "total_harmonic_distortion": 0.23017936966946959,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0,
+    "spectral_entropy": 0.2036857037973615,
+    "spectral_slope_db_per_octave": -6.783718553652998,
+    "band_limit_high_hz": 9840.673828125,
+    "spectral_centroid_slope_hz_per_second": 2880.3826803570014,
+    "syllabic_modulation_energy": 0.004651189175222141,
+    "voicing_ratio": 0.9836065573770492,
+    "mid_rms": 0.10940555860601138,
+    "side_rms": 0.0022101550026380015,
+    "lufs": -18.049455773995422
+  },
+  "musicality": {
+    "pitch_hz": 2004.5454545454545,
+    "pitch_slope_semitones_per_second": -3.6226387635966133,
+    "root_note_name": "F#2",
+    "root_frequency_hz": 92.49211788896504,
+    "root_cents_offset": -0.12143183085413511,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.7565498853091833,
+      0.7153197151628236,
+      0.9491518504827878,
+      0.9261706528987604,
+      0.6602531095370285,
+      0.6646905014299093,
+      0.8164044206308969,
+      0.7899197587846609,
+      1,
+      0.9870226012608193,
+      0.8771272003225071,
+      0.7831515710910063
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "DRUMS",
+    "subcategory": "TOM",
+    "id": "DRUMTom",
+    "confidence": 1,
+    "alternatives": [],
+    "synonyms": [
+      "tom"
+    ],
+    "reason": "name matched [tom]; signal 0.13, tier signal_narrowable, 1 candidate in contention; gate ruled out AIRBlow (spectral_flatness 0.1126 < min 0.1200)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0.014965986394557823,
+        "end_seconds": 0.6335600907029478,
+        "duration_seconds": 0.61859410430839,
+        "peak_amplitude": 0.5396775510928135,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 143,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "AAAAAJ4ujn+FWZ96pFnGcKpOzC3YRMMo4Cb5ItYP3C3dI9QV9SLmFu4W7RzrEfce7QL3HfEE9BTuHPEc8RjrBfcS8AT+EfIN9RHxDvEM8gvyBvoN8gP/DPMG+wn2CfYJ9gn1BvkJ+AP8B/oB/gj6Av0I+gT9CPoG+wb7BvsF/Ab7A/0G/AH+BfwA/wX8Av4E/AP9BPwD/QT9A/0D/QP9Av0D/QL+A/0B/wP9AAAD/QH/Av4B/wL+Av4C/gL+Av4C/gL+Av4B/gL/Af8C/wD/Af8A/wH/AAAB/wAAAf8BAAH/Af8B/wH/Af8B/wH/AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+  }
+}

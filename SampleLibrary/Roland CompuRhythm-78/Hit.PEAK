@@ -1,0 +1,196 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Hit.wav",
+    "folder": "Roland CompuRhythm-78",
+    "sub": "Roland CompuRhythm-78",
+    "path": "Roland CompuRhythm-78/Hit.wav",
+    "length_seconds": 0.11029478458049886,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.000025642545599686472,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Perc",
+    "reason": [
+      "1) Acoustic ML Fallback (ZCR/Inharmonicity)",
+      "2) envelope Plucky (attack 10 ms, sustain 5%, 1 transient)",
+      "3) Harmonic+Stochastic+Impulsive · high-band 97%"
+    ],
+    "timbre": "Tonal",
+    "length_class": "Short",
+    "subgroup": "Acoustic Guess",
+    "audit": false,
+    "acoustic_types": [
+      "Harmonic",
+      "Stochastic",
+      "Impulsive"
+    ],
+    "sound_design_roles": [
+      "Pluck"
+    ],
+    "instrument_family": [
+      "Percussion",
+      "Membranophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.011179138321995465,
+    "sustain_ratio": 0.2857142857142857,
+    "sustained": false,
+    "envelope_attack_seconds": 0.009977324263038548,
+    "envelope_decay_seconds": 0.044897959183673466,
+    "envelope_sustain_level": 0.05091418499542442,
+    "envelope_release_seconds": 0.019954648526077097,
+    "envelope_temporal_centroid": 0.12255627123877884,
+    "envelope_skewness": 1.1153224854575392,
+    "envelope_kurtosis": -0.2812944190198965,
+    "envelope_shape": "Plucky",
+    "decay_time_seconds_60db": null,
+    "onset_periodicity": 0,
+    "onset_rate_per_second": 9.066611842105264
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.17719446494190655,
+    "crest_factor": 5.643344913452665,
+    "zero_crossings_per_second": 11306.064967105263,
+    "complexity": 3955.1790608916867,
+    "spectral_centroid_hz": 7412.391509570611,
+    "spectral_rolloff_hz": 11605.263157894737,
+    "spectral_flatness": 0.20085193920597996,
+    "low_band_energy": 0.003829770414889405,
+    "mid_band_energy": 0.026529747841309462,
+    "high_band_energy": 0.9696404817438011,
+    "spectral_flux": 0.11947882452105137,
+    "harmonicity": 0.7742164155511504,
+    "inharmonicity": 0.15332257281879372,
+    "partial_count": 9,
+    "mel_frequency_cepstral_coefficients": [
+      0.2052291318206333,
+      -9.853477632754544,
+      -3.8433239189764072,
+      8.259958135192319,
+      -0.1260496459635924,
+      -2.5671354095273755,
+      2.3077306945782237,
+      2.747284474837742,
+      -2.0667977189417974,
+      -0.1116704065043235,
+      1.064675449627752,
+      0.5867655383524947,
+      1.6343930157292401
+    ],
+    "spectral_centroid_mean_hz": 7177.338691064565,
+    "spectral_centroid_deviation_hz": 375.09111570161815,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0,
+    "spectral_entropy": 0.33486782640647245,
+    "spectral_slope_db_per_octave": 2.9563473877091337,
+    "band_limit_high_hz": 20370.41015625,
+    "spectral_centroid_slope_hz_per_second": -17106.168923500736,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 1,
+    "mid_rms": 0.17719446471674097,
+    "side_rms": 0.0018194675336703674,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 668.1818181818181,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.12303604255584587,
+      0.17470267749279367,
+      0.23126712920957124,
+      0.18883528435636027,
+      0.8350503532266008,
+      0.21758242314288392,
+      1,
+      0.15041777830934297,
+      0.15027268256658832,
+      0.1147778798591697,
+      0.1473684704685212,
+      0.3526135385509783
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "GLASS",
+    "subcategory": "IMPACT",
+    "id": "GLASImpt",
+    "confidence": 0.41040187006402384,
+    "alternatives": [
+      {
+        "category": "VOCALS",
+        "subcategory": "CHOP",
+        "id": "VOCLChop",
+        "probability": 0.111,
+        "synonyms": [
+          "hit"
+        ]
+      },
+      {
+        "category": "PAPER",
+        "subcategory": "IMPACT",
+        "id": "PAPRImpt",
+        "probability": 0.109,
+        "synonyms": [
+          "hit"
+        ]
+      },
+      {
+        "category": "SYNTH",
+        "subcategory": "CHORD",
+        "id": "SYNTChrd",
+        "probability": 0.098,
+        "synonyms": [
+          "hit"
+        ]
+      }
+    ],
+    "synonyms": [
+      "hit"
+    ],
+    "reason": "name matched [hit]; signal 0.83, tier signal_narrowable, 27 candidates in contention; gate ruled out AIRBlow (length_seconds 0.1103 < min 0.1500)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.07482993197278912,
+        "duration_seconds": 0.07482993197278912,
+        "peak_amplitude": 0.4052950946300415,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 19,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "sE2BdIxwimimTcE02CDiGe4N9gf7A/0C/gH/Af8B/wEAAQABAAA="
+  }
+}

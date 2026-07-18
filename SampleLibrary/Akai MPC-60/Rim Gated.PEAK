@@ -1,0 +1,186 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Rim Gated.wav",
+    "folder": "Akai MPC-60",
+    "sub": "Akai MPC-60",
+    "path": "Akai MPC-60/Rim Gated.wav",
+    "length_seconds": 0.3940136054421769,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": 0.000008864956007477987,
+    "trailing_silence_ms": 0.13605442176870747,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Snare",
+    "reason": [
+      "1) path matched \"rim\"",
+      "2) envelope Plucky (attack 10 ms, sustain 6%, 1 transient)",
+      "3) Inharmonic+Stochastic+Impulsive · high-band 65%"
+    ],
+    "timbre": "Bright",
+    "length_class": "Short",
+    "subgroup": "Rimshot",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic",
+      "Stochastic",
+      "Impulsive"
+    ],
+    "sound_design_roles": [],
+    "instrument_family": [
+      "Percussion",
+      "Membranophone",
+      "Struck Membranophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.014217687074829932,
+    "sustain_ratio": 0.08333333333333333,
+    "sustained": false,
+    "envelope_attack_seconds": 0.009977324263038548,
+    "envelope_decay_seconds": 0.05487528344671202,
+    "envelope_sustain_level": 0.06351370118721937,
+    "envelope_release_seconds": 0.18458049886621314,
+    "envelope_temporal_centroid": 0.05824790200932811,
+    "envelope_skewness": 4.0992526848379285,
+    "envelope_kurtosis": 17.147455886320312,
+    "envelope_shape": "Plucky",
+    "decay_time_seconds_60db": 0.1599375888010869,
+    "onset_periodicity": 0,
+    "onset_rate_per_second": 2.5379834254143643
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.0678389363473165,
+    "crest_factor": 14.740347302945748,
+    "zero_crossings_per_second": 4707.959254143646,
+    "complexity": 4395.3772427325885,
+    "spectral_centroid_hz": 4630.672877708482,
+    "spectral_rolloff_hz": 9507.28591160221,
+    "spectral_flatness": 0.34094255366613135,
+    "low_band_energy": 0.03573296526446553,
+    "mid_band_energy": 0.3122848349455391,
+    "high_band_energy": 0.6519821997899954,
+    "spectral_flux": 0.22911381523874852,
+    "harmonicity": 0.2105598773676736,
+    "inharmonicity": 0.6325788083800121,
+    "partial_count": 12,
+    "mel_frequency_cepstral_coefficients": [
+      -5.246721740487687,
+      7.524598321263847,
+      -7.326533256850551,
+      0.5129947470639502,
+      -0.2999156749405246,
+      0.7719421682118897,
+      1.5683395126360866,
+      1.3247683885340718,
+      1.5541536800283662,
+      0.48743079594743277,
+      -0.07293973129872688,
+      0.908743670235428,
+      -0.29326852160929284
+    ],
+    "spectral_centroid_mean_hz": 4218.524052495656,
+    "spectral_centroid_deviation_hz": 1389.6540928994398,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0,
+    "spectral_entropy": 0.6136381009793174,
+    "spectral_slope_db_per_octave": -0.994674658212652,
+    "band_limit_high_hz": 19444.482421875,
+    "spectral_centroid_slope_hz_per_second": 6913.451356769694,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 0,
+    "mid_rms": 0.06783893625428453,
+    "side_rms": 0.001288991849404255,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 1025.5813953488373,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      1,
+      0.774159018545148,
+      0.6600501198540994,
+      0.719595453838557,
+      0.8376338180888079,
+      0.7631091049911548,
+      0.6615110277603143,
+      0.5861492711137047,
+      0.6754843290300034,
+      0.9129867236727996,
+      0.6553182244973724,
+      0.8628509022803069
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "DRUMS",
+    "subcategory": "SNARE",
+    "id": "DRUMSnr",
+    "confidence": 0.9816761308830161,
+    "alternatives": [
+      {
+        "category": "VEHICLES",
+        "subcategory": "TIRE",
+        "id": "VEHTire",
+        "probability": 0.018,
+        "synonyms": [
+          "rim"
+        ]
+      },
+      {
+        "category": "SYNTH",
+        "subcategory": "ARP",
+        "id": "SYNTArp",
+        "probability": 0,
+        "synonyms": [
+          "gated"
+        ]
+      }
+    ],
+    "synonyms": [
+      "rim"
+    ],
+    "reason": "name matched [rim]; signal 0.78, tier signal_separable, 3 candidates in contention; gate ruled out AIRBlow (crest_factor 14.7403 > max 14.0000)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0.009977324263038548,
+        "end_seconds": 0.28435374149659864,
+        "duration_seconds": 0.2743764172335601,
+        "peak_amplitude": 0.34885508308999635,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 68,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "AAD/AJB/oEzGPuMn6RXuGO4M9A30CPkI+wb4B/wE/QT5B/oH/AX7BPwE/AT1CfoH/Ab5CfkI+Av4CvgI8Az5CfcK+Qj5B/gF+Qn8BvsG/AT8BfwE/QP9A/0C/gP+Av8C/gH/AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+  }
+}

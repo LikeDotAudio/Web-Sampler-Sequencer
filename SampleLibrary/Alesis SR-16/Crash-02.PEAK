@@ -1,0 +1,189 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Crash-02.wav",
+    "folder": "Alesis SR-16/Cymbals",
+    "sub": "Alesis SR-16/Cymbals",
+    "path": "Alesis SR-16/Cymbals/Crash-02.wav",
+    "length_seconds": 1.1739002267573697,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.000004965612998820481,
+    "trailing_silence_ms": 14.671201814058957,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Crash",
+    "reason": [
+      "1) path matched \"crash\"",
+      "2) envelope Decaying (attack 25 ms, sustain 4%, 1 transient)",
+      "3) Stochastic · high-band 94%"
+    ],
+    "timbre": "Bright",
+    "length_class": "Medium",
+    "subgroup": "Crash Medium",
+    "audit": false,
+    "acoustic_types": [
+      "Stochastic"
+    ],
+    "sound_design_roles": [],
+    "instrument_family": []
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.04904761904761905,
+    "sustain_ratio": 0.19718309859154928,
+    "sustained": false,
+    "envelope_attack_seconds": 0.02494331065759637,
+    "envelope_decay_seconds": 0.5587301587301587,
+    "envelope_sustain_level": 0.04436760499324628,
+    "envelope_release_seconds": 0.21950113378684807,
+    "envelope_temporal_centroid": 0.11104366473720423,
+    "envelope_skewness": 1.3390457037989576,
+    "envelope_kurtosis": 0.5462848778887501,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": 1.1588389716683636,
+    "onset_periodicity": 0.3250772323261647,
+    "onset_rate_per_second": 0.8518611524271281
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.08293418484410503,
+    "crest_factor": 12.057386038116379,
+    "zero_crossings_per_second": 9129.395970561533,
+    "complexity": 4860.787752097973,
+    "spectral_centroid_hz": 8210.299755191683,
+    "spectral_rolloff_hz": 12409.913268558405,
+    "spectral_flatness": 0.575328533220079,
+    "low_band_energy": 0.005317248004849397,
+    "mid_band_energy": 0.057206391049364605,
+    "high_band_energy": 0.937476360945786,
+    "spectral_flux": 0.20618743776867834,
+    "harmonicity": 0.1487608940351422,
+    "inharmonicity": 0.4102123524886642,
+    "partial_count": 12,
+    "mel_frequency_cepstral_coefficients": [
+      -7.363043030310377,
+      -3.63804749756024,
+      -3.1615653001950252,
+      4.003843810136425,
+      0.44081834624682475,
+      0.3065748660532015,
+      -0.378122974377525,
+      -0.7221352403165378,
+      0.8996963284438195,
+      -0.17251279893672936,
+      0.06013724002741521,
+      -0.7106291708823074,
+      0.23061311966273143
+    ],
+    "spectral_centroid_mean_hz": 7613.890275652078,
+    "spectral_centroid_deviation_hz": 767.8060691336924,
+    "total_harmonic_distortion": 1.7897745056179895,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0,
+    "spectral_entropy": 0.6090197228104599,
+    "spectral_slope_db_per_octave": 1.0651113912245858,
+    "band_limit_high_hz": 22028.466796875,
+    "spectral_centroid_slope_hz_per_second": -554.6074008561236,
+    "syllabic_modulation_energy": 0.003134591719999179,
+    "voicing_ratio": 0.025974025974025976,
+    "mid_rms": 0.0829341846728478,
+    "side_rms": 0.0008314732737413461,
+    "lufs": -14.173628386149664
+  },
+  "musicality": {
+    "pitch_hz": 247.75280898876406,
+    "pitch_slope_semitones_per_second": -8.213053285449039,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.8670624669299216,
+      0.8801187886164976,
+      0.7797530344685181,
+      0.9743986954633523,
+      0.8346766335623628,
+      0.7309348360667463,
+      0.723771563025783,
+      0.7200536989928141,
+      0.7145509966888862,
+      0.7919826336529352,
+      0.8442769975231954,
+      1
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "CYMBALS",
+    "subcategory": "MISC",
+    "id": "CYMBMisc",
+    "confidence": 0.13224071459870682,
+    "alternatives": [
+      {
+        "category": "DESIGNED",
+        "subcategory": "IMPACT",
+        "id": "DSGNImpt",
+        "probability": 0.118,
+        "synonyms": [
+          "crash"
+        ]
+      },
+      {
+        "category": "METAL",
+        "subcategory": "IMPACT",
+        "id": "METLImpt",
+        "probability": 0.106,
+        "synonyms": [
+          "crash"
+        ]
+      },
+      {
+        "category": "CHAINS",
+        "subcategory": "IMPACT",
+        "id": "CHAINImpt",
+        "probability": 0.101,
+        "synonyms": [
+          "crash"
+        ]
+      }
+    ],
+    "synonyms": [
+      "crash"
+    ],
+    "reason": "name matched [crash]; signal 0.46, tier signal_narrowable, 21 candidates in contention; gate ruled out AIRSuck (envelope_temporal_centroid 0.1110 < min 0.4000); ABSTAINED to MISC (top two too close to call)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0.004988662131519274,
+        "end_seconds": 0.7333333333333333,
+        "duration_seconds": 0.728344671201814,
+        "peak_amplitude": 0.2504828008793793,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 203,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "AADdIaM4zz7AWcRav1GhXqh/o16/S7I3qV6WV8BHlUjMQ8xOvj6vUsNIwj6jPL5Sui7MOL1KwEfGQMM41D3XP8ssvjLSHcol1TDTSNcyzS7CJ88n0CDdIdoc2CnbG9wb4x/gHOMa1xvkF+Ue6BjeGOcT7R3pFt0f5RjlLecX6hXqEegg8BbuD+0P7w/vEPIR7BLtEfAQ8QzyDfIP8Q31DfUM8w73DPgJ8QzzD/cK9wr5BvoG+An2C/oF+Qb6BPsF+gb8BfwE+gT8BPsF/AP8A/0E/QT9A/0C/QP9A/0E/gL+Av4C/AL+Av4C/gL+Av4C/wL/Af4B/wL/Af8B/wH/Af8B/wH/Af8B/wEAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+  }
+}

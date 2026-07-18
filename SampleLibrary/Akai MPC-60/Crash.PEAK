@@ -1,0 +1,192 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Crash.wav",
+    "folder": "Akai MPC-60",
+    "sub": "Akai MPC-60",
+    "path": "Akai MPC-60/Crash.wav",
+    "length_seconds": 2.511814058956916,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.000008040511664407877,
+    "trailing_silence_ms": 10,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Crash",
+    "reason": [
+      "1) path matched \"crash\"",
+      "2) envelope Decaying (attack 90 ms, sustain 9%, 1 transient)",
+      "3) Inharmonic · high-band 87%"
+    ],
+    "timbre": "Bright",
+    "length_class": "Long",
+    "subgroup": "Crash Long",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic"
+    ],
+    "sound_design_roles": [],
+    "instrument_family": [
+      "Percussion",
+      "Idiophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.0954421768707483,
+    "sustain_ratio": 0.18543046357615894,
+    "sustained": false,
+    "envelope_attack_seconds": 0.08979591836734693,
+    "envelope_decay_seconds": 1.1723356009070294,
+    "envelope_sustain_level": 0.09222892151483225,
+    "envelope_release_seconds": 0.8929705215419501,
+    "envelope_temporal_centroid": 0.1252139407565465,
+    "envelope_skewness": 1.3616170263368135,
+    "envelope_kurtosis": 0.7855291003190921,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": 3.777080145746895,
+    "onset_periodicity": 0.5803746054184856,
+    "onset_rate_per_second": 0.3981186411605926
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.11249948953733235,
+    "crest_factor": 8.85040908186382,
+    "zero_crossings_per_second": 8437.32836211644,
+    "complexity": 2965.065716624125,
+    "spectral_centroid_hz": 5338.789051182093,
+    "spectral_rolloff_hz": 8655.099258831284,
+    "spectral_flatness": 0.0964412272828874,
+    "low_band_energy": 0.0012271845481988213,
+    "mid_band_energy": 0.12641048483074335,
+    "high_band_energy": 0.8723623306210578,
+    "spectral_flux": 0.18477963311412107,
+    "harmonicity": 0.29049080097698515,
+    "inharmonicity": 0.33752105708885916,
+    "partial_count": 12,
+    "mel_frequency_cepstral_coefficients": [
+      8.447805177792073,
+      3.576893672067531,
+      -13.28083955667074,
+      6.022677707132745,
+      -4.15060170907267,
+      2.9432640675918385,
+      -4.855378086342935,
+      1.3217625932229875,
+      -2.950831820152842,
+      0.8619800389577005,
+      -1.871877210091699,
+      1.652136117139856,
+      -0.9193798051539422
+    ],
+    "spectral_centroid_mean_hz": 5019.770175181096,
+    "spectral_centroid_deviation_hz": 498.819080965751,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0,
+    "spectral_entropy": 0.6613996026022047,
+    "spectral_slope_db_per_octave": 2.7906156228156482,
+    "band_limit_high_hz": 14254.98046875,
+    "spectral_centroid_slope_hz_per_second": -192.11396905708963,
+    "syllabic_modulation_energy": 0.08846860430572002,
+    "voicing_ratio": 0.4185022026431718,
+    "mid_rms": 0.11249948940694796,
+    "side_rms": 0.0015558501040824659,
+    "lufs": -11.071896060829916
+  },
+  "musicality": {
+    "pitch_hz": 127.82608695652173,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      1,
+      0.7363298453826794,
+      0.7640882981431526,
+      0.6726800288660779,
+      0.6008430000133319,
+      0.6073801630384021,
+      0.7129745075286997,
+      0.694897466721794,
+      0.7631167752894772,
+      0.6029950100684076,
+      0.73956419875283,
+      0.631585573058267
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "ICE",
+    "subcategory": "CRASH & DEBRIS",
+    "id": "ICECrsh",
+    "confidence": 0.25451720508966524,
+    "alternatives": [
+      {
+        "category": "CYMBALS",
+        "subcategory": "CRASH",
+        "id": "CYMBCrsh",
+        "probability": 0.146,
+        "synonyms": [
+          "crash"
+        ]
+      },
+      {
+        "category": "WATER",
+        "subcategory": "IMPACT",
+        "id": "WATRImpt",
+        "probability": 0.144,
+        "synonyms": [
+          "crash"
+        ]
+      },
+      {
+        "category": "DESIGNED",
+        "subcategory": "IMPACT",
+        "id": "DSGNImpt",
+        "probability": 0.099,
+        "synonyms": [
+          "crash"
+        ]
+      }
+    ],
+    "synonyms": [
+      "crash"
+    ],
+    "reason": "name matched [crash]; signal 0.31, tier signal_narrowable, 17 candidates in contention; gate ruled out AIRBlow (spectral_flatness 0.0964 < min 0.1200)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 2.214965986394558,
+        "duration_seconds": 2.214965986394558,
+        "peak_amplitude": 0.34386582222861495,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 433,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "5xjdJdsowjbON841yTq+O6w/xS26QMJEpUmxY59aoFuXfpNahU+dZbRZo1msULdVt0OZX4N8rGejS7BguWWVaaFeol2hbadajWmDfaJ6n0ejRq5Nn0KzUaVUqFe1Q75Nrz+6Tr5PqE+3QK1dskW3Rc1BsVKzVatSr1C/Ta5KuFC7RLtAvTK8RL9JzzDIO8oyykq4RcRBtFLKN8lCyUfLLswvvz3JMcc60D3ONcsv2TnKOdUr2jHWK84v1zTWKNMu2DDVNdYt0i3VKNgr3irgJuIhzy/XJeIl3SncJ9Il3SfhIdwe4yHVKeYe5xzZId4r3SDiGN8f3yLgHtkc3x3gGOoZ4xzmFeQX6hrpE+cX7BjvIuQY6RTrHeYW4x/rEuQc5iPoF+Yf5RrrFugU6BnuFvAV7BTtF+4S7xXrFPEQ8A/uFe0X5hHuE+cZ7RHtGOoT5BHqE+kV7BTqF+sW6RnqFewS7RHrFfAU7hHsFO8S7xHuFfAR8hbuD/IP8gv0EvQL8hXvD+4P6w7wEO4Q7g/zEu8O8BPyDvMT8xXwEfMM9g3zC/EQ8g/2CfIP9Qv2EfML9w7tDvYJ9QvyDPUK9gr2CvcJ9gr2DPgL9gr4CvgK+Qf2CvcJ+Av4CvcL+Aj2B/gJ+Qj4CPYL9gj3CvcJ+Qj3CvcK9gj2BvoH+An4CvoI+Af3B/cH+Af3DfcG+An6BvgG+Qn5B/kJ+Af4CfgJ+Af6BvoH+Qf7CPoH+Qb6CPwG+wb7BfoE+gb7BvsF+QT4B/oF+gf5BfsF+wf7BfoG+wb7B/sG+gb8BPoE+gf7B/oG+QX7BfsF+wX8BPsE/AT8BPwE+wP8BPwE/QT8BP0D/QP8A/0E/AP9BP0E/QP8BP0D/QP8A/wE/AT8A/wC/QP9A/wD/QP9A/0D/QL9Av4D/QL+A/0D/gP9A/0C/gL9A/4C/gL+Av4C/gL+Af4D/gL+Av4C/gH+Av4C/gH+Af4C/gL+Af4B/wH+Af8C/gH/Af8B/wL/Af8B/wH/Af8B/wH/Af8B/wH/Af8B/wH/Af8B/wH/AQABAAH/Af8B/wH/AQAB/wH/AP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+  }
+}

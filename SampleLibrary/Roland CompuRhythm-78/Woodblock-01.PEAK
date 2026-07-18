@@ -1,0 +1,158 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Woodblock-01.wav",
+    "folder": "Roland CompuRhythm-78",
+    "sub": "Roland CompuRhythm-78",
+    "path": "Roland CompuRhythm-78/Woodblock-01.wav",
+    "length_seconds": 0.04936507936507936,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.000009181907979731282,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Woodblock",
+    "reason": [
+      "1) path matched \"woodblock\"",
+      "2) envelope Plucky (attack 0 ms, sustain 15%, 1 transient)",
+      "3) Harmonic+Stochastic+Impulsive · high-band 90% · root G#1"
+    ],
+    "timbre": "Tonal",
+    "length_class": "Short",
+    "subgroup": "Woodblock Short",
+    "audit": false,
+    "acoustic_types": [
+      "Harmonic",
+      "Stochastic",
+      "Impulsive"
+    ],
+    "sound_design_roles": [
+      "Pluck"
+    ],
+    "instrument_family": [
+      "Percussion",
+      "Membranophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.0006122448979591836,
+    "sustain_ratio": 0.3333333333333333,
+    "sustained": false,
+    "envelope_attack_seconds": 0,
+    "envelope_decay_seconds": 0.019954648526077097,
+    "envelope_sustain_level": 0.14993512268855652,
+    "envelope_release_seconds": 0.009977324263038548,
+    "envelope_temporal_centroid": 0.052354257343306385,
+    "envelope_skewness": 1.4453045488142446,
+    "envelope_kurtosis": 0.9107265566001601,
+    "envelope_shape": "Plucky",
+    "decay_time_seconds_60db": 0.058517993433316574,
+    "onset_periodicity": null,
+    "onset_rate_per_second": 20.257234726688104
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.19168088871693859,
+    "crest_factor": 5.216844981862342,
+    "zero_crossings_per_second": 5125.08038585209,
+    "complexity": 2982.651723732789,
+    "spectral_centroid_hz": 3637.4754568075336,
+    "spectral_rolloff_hz": 4983.279742765273,
+    "spectral_flatness": 0.2140264971166014,
+    "low_band_energy": 0.00949490804728773,
+    "mid_band_energy": 0.09092180781326005,
+    "high_band_energy": 0.8995832841394522,
+    "spectral_flux": 0,
+    "harmonicity": 0.9135151901985293,
+    "inharmonicity": 0,
+    "partial_count": 0,
+    "mel_frequency_cepstral_coefficients": [
+      -4.260230502708783,
+      3.3577760054762797,
+      -0.7187810145710894,
+      -1.6699939323715816,
+      6.652063922813874,
+      5.442682664670695,
+      -0.811269742112943,
+      -4.50243625688823,
+      -0.6536630139850906,
+      7.058083774427484,
+      0.7772166289484106,
+      -2.6869059484375364,
+      -4.225646742672599
+    ],
+    "spectral_centroid_mean_hz": 3640.633776826377,
+    "spectral_centroid_deviation_hz": 0,
+    "total_harmonic_distortion": 1.8522634563629334,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": null,
+    "spectral_entropy": 0.17551263683001164,
+    "spectral_slope_db_per_octave": -4.2665958695310975,
+    "band_limit_high_hz": 15740.771484375,
+    "spectral_centroid_slope_hz_per_second": null,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 1,
+    "mid_rms": 0.19168088847143627,
+    "side_rms": 0.001616421354897247,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 1297.0588235294117,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "G#1",
+    "root_frequency_hz": 50.643086816720256,
+    "root_cents_offset": -42.87953059191025,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.22032275487089453,
+      0.2584523583329015,
+      0.3610916006941219,
+      1,
+      0.9989838521324188,
+      0.33847200828784985,
+      0.2775276119047055,
+      0.21721264041777966,
+      0.21338435801352157,
+      0.19387133075837687,
+      0.1941319755156907,
+      0.2331005359172689
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "PERCUSSION",
+    "subcategory": "WOODBLOCK",
+    "id": "PERCWood",
+    "confidence": 1,
+    "alternatives": [],
+    "synonyms": [
+      "woodblock"
+    ],
+    "reason": "name matched [woodblock]; signal 0.30, tier signal_narrowable, 1 candidate in contention; gate ruled out AIRBlow (length_seconds 0.0494 < min 0.1500)"
+  },
+  "regions": {
+    "count": 0,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": []
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 9,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "gX3HPeIh7hL4Cf0E/wH/AQAA"
+  }
+}

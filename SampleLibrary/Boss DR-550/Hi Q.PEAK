@@ -1,0 +1,173 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Hi Q.wav",
+    "folder": "Boss DR-550/Percussion",
+    "sub": "Boss DR-550/Percussion",
+    "path": "Boss DR-550/Percussion/Hi Q.wav",
+    "length_seconds": 0.05444444444444444,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.00013849209964598085,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Perc",
+    "reason": [
+      "1) path matched \"percussion\"",
+      "2) envelope Sustained (attack 10 ms, sustain 84%, 1 transient)",
+      "3) Inharmonic · high-band 47%"
+    ],
+    "timbre": "Percussive",
+    "length_class": "Short",
+    "subgroup": "Perc Short",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic"
+    ],
+    "sound_design_roles": [],
+    "instrument_family": [
+      "Percussion"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.01784580498866213,
+    "sustain_ratio": 0.25,
+    "sustained": false,
+    "envelope_attack_seconds": 0.009977324263038548,
+    "envelope_decay_seconds": 0.009977324263038548,
+    "envelope_sustain_level": 0.8378950284314641,
+    "envelope_release_seconds": 0.009977324263038548,
+    "envelope_temporal_centroid": 0.4480359150207619,
+    "envelope_skewness": 0.3136735057042125,
+    "envelope_kurtosis": -1.4948064197949897,
+    "envelope_shape": "Sustained",
+    "decay_time_seconds_60db": null,
+    "onset_periodicity": null,
+    "onset_rate_per_second": 18.367346938775512
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.33619238797715534,
+    "crest_factor": 2.9743965603701414,
+    "zero_crossings_per_second": 2204.081632653061,
+    "complexity": 2818.122796728969,
+    "spectral_centroid_hz": 2840.0817246855313,
+    "spectral_rolloff_hz": 5638.775510204082,
+    "spectral_flatness": 0.10196337777922289,
+    "low_band_energy": 0.06389820149792047,
+    "mid_band_energy": 0.46615895281913766,
+    "high_band_energy": 0.46994284568294187,
+    "spectral_flux": 0,
+    "harmonicity": 0.06392119897062437,
+    "inharmonicity": 0.42059333500974955,
+    "partial_count": 6,
+    "mel_frequency_cepstral_coefficients": [
+      51.844206078845545,
+      13.343731677032821,
+      -8.158012981542615,
+      4.521871156783087,
+      -4.755997495584595,
+      1.0605341206851302,
+      -2.386824620354638,
+      1.6857594365404824,
+      -2.8182347312769114,
+      0.5972004448599572,
+      -0.8306871915317107,
+      -0.3196447643795689,
+      -0.3291472262801815
+    ],
+    "spectral_centroid_mean_hz": 2959.1935539352753,
+    "spectral_centroid_deviation_hz": 0,
+    "total_harmonic_distortion": 2.1400529811416744,
+    "clipping_density": 0,
+    "distortion": "Dirty",
+    "stationarity": null,
+    "spectral_entropy": 0.7339590672389218,
+    "spectral_slope_db_per_octave": -1.8792668211653951,
+    "band_limit_high_hz": 14879.443359375,
+    "spectral_centroid_slope_hz_per_second": null,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 0,
+    "mid_rms": 0.33619238777495675,
+    "side_rms": 0.0006972367855722813,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 2004.5454545454545,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.9405033179976533,
+      0.8967587888942742,
+      0.9176311676534507,
+      0.908638393845312,
+      0.9630379867139031,
+      0.8751720943420214,
+      0.9085729479127255,
+      0.8082815270494647,
+      1,
+      0.9268374744509027,
+      0.8279550088712245,
+      0.6468734422418786
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "KEYBOARD",
+    "subcategory": "MISC",
+    "id": "KEYBMisc",
+    "confidence": 0.037056746983906735,
+    "alternatives": [
+      {
+        "category": "FOOD & DRINK",
+        "subcategory": "KITCHENWARE",
+        "id": "FOODKware",
+        "probability": 0.033,
+        "synonyms": []
+      },
+      {
+        "category": "SPORTS",
+        "subcategory": "COURT",
+        "id": "SPRTCourt",
+        "probability": 0.027,
+        "synonyms": []
+      },
+      {
+        "category": "MALLET",
+        "subcategory": "GLOCKENSPIEL",
+        "id": "MALTGlok",
+        "probability": 0.026,
+        "synonyms": []
+      }
+    ],
+    "synonyms": [],
+    "reason": "no name evidence; signal 0.90, tier signal_narrowable, 269 candidates in contention; gate ruled out AIRBlow (length_seconds 0.0544 < min 0.1500); ABSTAINED to MISC (confidence below threshold)"
+  },
+  "regions": {
+    "count": 0,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": []
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 10,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "AQEBAdsriH+LdKZfuTrWAAAA/wE="
+  }
+}

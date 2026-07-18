@@ -1,0 +1,165 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Tambourine.wav",
+    "folder": "Roland CompuRhythm-78",
+    "sub": "Roland CompuRhythm-78",
+    "path": "Roland CompuRhythm-78/Tambourine.wav",
+    "length_seconds": 0.32083900226757367,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.00002806845027420224,
+    "trailing_silence_ms": 1.8140589569160999,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Tambourine",
+    "reason": [
+      "1) path matched \"tambourine\"",
+      "2) envelope Decaying (attack 10 ms, sustain 24%, 1 transient)",
+      "3) Harmonic+Stochastic · high-band 98%"
+    ],
+    "timbre": "Tonal",
+    "length_class": "Short",
+    "subgroup": "Tambourine Short",
+    "audit": false,
+    "acoustic_types": [
+      "Harmonic",
+      "Stochastic"
+    ],
+    "sound_design_roles": [],
+    "instrument_family": [
+      "String",
+      "Chordophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.015215419501133786,
+    "sustain_ratio": 0.2,
+    "sustained": false,
+    "envelope_attack_seconds": 0.009977324263038548,
+    "envelope_decay_seconds": 0.1346938775510204,
+    "envelope_sustain_level": 0.24031690293734304,
+    "envelope_release_seconds": 0.05986394557823129,
+    "envelope_temporal_centroid": 0.14052179780821905,
+    "envelope_skewness": 1.0582422694003846,
+    "envelope_kurtosis": 0.12181723577765657,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": 0.5497023958163858,
+    "onset_periodicity": 0.2783519521696555,
+    "onset_rate_per_second": 3.1168280443847625
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.13910704117235653,
+    "crest_factor": 7.1884893388170905,
+    "zero_crossings_per_second": 9727.620326524844,
+    "complexity": 4010.940068724857,
+    "spectral_centroid_hz": 6900.129458856756,
+    "spectral_rolloff_hz": 11158.244398897448,
+    "spectral_flatness": 0.3818507619312977,
+    "low_band_energy": 0.0015857630741117504,
+    "mid_band_energy": 0.015077696302756061,
+    "high_band_energy": 0.9833365406231321,
+    "spectral_flux": 0.2278430986443412,
+    "harmonicity": 0.7528749320997726,
+    "inharmonicity": 0.0863772649568547,
+    "partial_count": 3,
+    "mel_frequency_cepstral_coefficients": [
+      -6.007701878208126,
+      -8.732911328653595,
+      -4.670572669125404,
+      6.6923523833740575,
+      2.336123464250313,
+      -2.9432738443328406,
+      0.36678765574332417,
+      2.138041597574466,
+      -1.9617385760441353,
+      -0.5024525734538066,
+      1.046772345827519,
+      -0.19426688227677408,
+      -1.2336630041302128
+    ],
+    "spectral_centroid_mean_hz": 6718.446864481785,
+    "spectral_centroid_deviation_hz": 270.70255763811326,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0.032324425942242496,
+    "spectral_entropy": 0.46746846567874867,
+    "spectral_slope_db_per_octave": 2.6852225478998593,
+    "band_limit_high_hz": 21102.5390625,
+    "spectral_centroid_slope_hz_per_second": -2630.566788561476,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 0.7083333333333334,
+    "mid_rms": 0.13910704100899157,
+    "side_rms": 0.0016969145499640924,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 1633.3333333333333,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.20211395463314202,
+      0.2875020165087542,
+      1,
+      0.47978581852164703,
+      0.2801420250097276,
+      0.17501390131283873,
+      0.16735287305332333,
+      0.14908874300844285,
+      0.151924991783547,
+      0.16419447917831065,
+      0.1727039654757932,
+      0.1768196339031663
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "PERCUSSION",
+    "subcategory": "TAMBOURINE",
+    "id": "PERCTamb",
+    "confidence": 1,
+    "alternatives": [],
+    "synonyms": [
+      "tambourine"
+    ],
+    "reason": "name matched [tambourine]; signal 0.45, tier signal_narrowable, 1 candidate in contention; gate ruled out AIRHiss (length_seconds 0.3208 < min 0.5000)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.22947845804988662,
+        "duration_seconds": 0.22947845804988662,
+        "peak_amplitude": 0.3769617593428189,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 56,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "olGoUJR/xDeoT7RLt0zDO9cs2incIrVNwDnNNsc23CfNMuEc3CThH+sX3SXkHd4n2SXsFusV5xnuEfMO9Qz4CPkI+Qf6BfwE+wX9A/8B/wH/AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+  }
+}

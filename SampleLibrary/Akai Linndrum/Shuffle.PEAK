@@ -1,0 +1,193 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Shuffle.wav",
+    "folder": "Akai Linndrum",
+    "sub": "Akai Linndrum",
+    "path": "Akai Linndrum/Shuffle.wav",
+    "length_seconds": 0.1089342403628118,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.000018006260448649562,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Perc",
+    "reason": [
+      "1) generic \"drum\" tag — flagged for acoustic audit",
+      "2) envelope Plucky (attack 25 ms, sustain 6%, 1 transient)",
+      "3) Inharmonic+Stochastic+Impulsive · high-band 94%"
+    ],
+    "timbre": "Bright",
+    "length_class": "Short",
+    "subgroup": "Drum",
+    "audit": true,
+    "acoustic_types": [
+      "Inharmonic",
+      "Stochastic",
+      "Impulsive"
+    ],
+    "sound_design_roles": [],
+    "instrument_family": [
+      "Percussion"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.031746031746031744,
+    "sustain_ratio": 0.2857142857142857,
+    "sustained": false,
+    "envelope_attack_seconds": 0.02494331065759637,
+    "envelope_decay_seconds": 0.03492063492063492,
+    "envelope_sustain_level": 0.06268442015468047,
+    "envelope_release_seconds": 0.009977324263038548,
+    "envelope_temporal_centroid": 0.3234508620214401,
+    "envelope_skewness": 0.8011194733224297,
+    "envelope_kurtosis": -0.9869585698603642,
+    "envelope_shape": "Plucky",
+    "decay_time_seconds_60db": null,
+    "onset_periodicity": 0,
+    "onset_rate_per_second": 9.17985012489592
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.18840590960453346,
+    "crest_factor": 5.307527160484638,
+    "zero_crossings_per_second": 11107.618651124063,
+    "complexity": 4561.813547402648,
+    "spectral_centroid_hz": 7852.624745411066,
+    "spectral_rolloff_hz": 13182.26477935054,
+    "spectral_flatness": 0.4832044214806467,
+    "low_band_energy": 0.00642377497300878,
+    "mid_band_energy": 0.05016752196074772,
+    "high_band_energy": 0.9434087030662435,
+    "spectral_flux": 0.2239741991327929,
+    "harmonicity": 0.12502173473211853,
+    "inharmonicity": 0.41062210708208263,
+    "partial_count": 12,
+    "mel_frequency_cepstral_coefficients": [
+      35.65824129411942,
+      -5.992657585235338,
+      -4.752138264186787,
+      2.6063223820861854,
+      0.9411535180729392,
+      1.7143584803041534,
+      -0.444914515263465,
+      1.1119195708280012,
+      0.7210047115275865,
+      0.8555473609113337,
+      -0.7615955067661814,
+      0.29799904734910876,
+      -0.07930458857997497
+    ],
+    "spectral_centroid_mean_hz": 7651.036570746665,
+    "spectral_centroid_deviation_hz": 478.20336654716135,
+    "total_harmonic_distortion": 2.8995726629768837,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0.32592006924830486,
+    "spectral_entropy": 0.8330088625889185,
+    "spectral_slope_db_per_octave": 1.1658878827762627,
+    "band_limit_high_hz": 20822.607421875,
+    "spectral_centroid_slope_hz_per_second": -15608.482416862284,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 0.1111111111111111,
+    "mid_rms": 0.1884059093288982,
+    "side_rms": 0.0018285798540367813,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 83.68121442125238,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.9438323028648585,
+      0.796027334743522,
+      0.7399011883846446,
+      0.6624053036615248,
+      0.7136127688461371,
+      0.8769062949289717,
+      0.8635952876691466,
+      0.8359673799191242,
+      0.9128609448606935,
+      1,
+      0.9271704810760245,
+      0.8314577821425778
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "FOOTSTEPS",
+    "subcategory": "HUMAN",
+    "id": "FEETHmn",
+    "confidence": 0.5790194159010399,
+    "alternatives": [
+      {
+        "category": "FOOTSTEPS",
+        "subcategory": "ANIMAL",
+        "id": "FEETAnml",
+        "probability": 0.403,
+        "synonyms": [
+          "shuffle"
+        ]
+      },
+      {
+        "category": "FOOTSTEPS",
+        "subcategory": "HORSE",
+        "id": "FEETHors",
+        "probability": 0.018,
+        "synonyms": [
+          "shuffle"
+        ]
+      },
+      {
+        "category": "FOOTSTEPS",
+        "subcategory": "CREATURE",
+        "id": "FEETCrea",
+        "probability": 0,
+        "synonyms": [
+          "shuffle"
+        ]
+      }
+    ],
+    "synonyms": [
+      "shuffle"
+    ],
+    "reason": "name matched [shuffle]; signal 0.28, tier signal_narrowable, 4 candidates in contention; gate ruled out AIRBlow (length_seconds 0.1089 < min 0.1500)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.0947845804988662,
+        "duration_seconds": 0.0947845804988662,
+        "peak_amplitude": 0.39780709556289967,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 19,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "/gXxDNojs0OjVIF7in6oYYdyv1bbIPQJ+wT9A/0C/QL/Af8B/wE="
+  }
+}

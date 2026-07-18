@@ -1,0 +1,164 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Timbale L.wav",
+    "folder": "Oberheim DMX",
+    "sub": "Oberheim DMX",
+    "path": "Oberheim DMX/Timbale L.wav",
+    "length_seconds": 0.22859410430839003,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": 0.0000036780931873698048,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Timbale",
+    "reason": [
+      "1) path matched \"timbale\"",
+      "2) envelope Sustained (attack 0 ms, sustain 55%, 1 transient)",
+      "3) Inharmonic · mid-band 68% · root C#3"
+    ],
+    "timbre": "Tonal",
+    "length_class": "Short",
+    "subgroup": "Timbale Short",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic"
+    ],
+    "sound_design_roles": [],
+    "instrument_family": [
+      "Percussion",
+      "Idiophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.006326530612244898,
+    "sustain_ratio": 0.6428571428571429,
+    "sustained": true,
+    "envelope_attack_seconds": 0,
+    "envelope_decay_seconds": 0.08979591836734693,
+    "envelope_sustain_level": 0.546490991818356,
+    "envelope_release_seconds": 0.04988662131519274,
+    "envelope_temporal_centroid": 0.28291946829214515,
+    "envelope_skewness": -0.24592407333472435,
+    "envelope_kurtosis": -0.9217828282264873,
+    "envelope_shape": "Sustained",
+    "decay_time_seconds_60db": null,
+    "onset_periodicity": 0.17779392703606892,
+    "onset_rate_per_second": 4.374566015276262
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.25271239024659303,
+    "crest_factor": 3.9569467941248133,
+    "zero_crossings_per_second": 538.0716198789803,
+    "complexity": 1323.0635816320794,
+    "spectral_centroid_hz": 1086.695749824205,
+    "spectral_rolloff_hz": 1828.5685943854778,
+    "spectral_flatness": 0.02523036610745601,
+    "low_band_energy": 0.19432625002526172,
+    "mid_band_energy": 0.681098607236274,
+    "high_band_energy": 0.1245751427384643,
+    "spectral_flux": 0.13454705698661318,
+    "harmonicity": 0.8514982793770967,
+    "inharmonicity": 0.4160639592643115,
+    "partial_count": 8,
+    "mel_frequency_cepstral_coefficients": [
+      3.7658653105647857,
+      26.259245649463217,
+      5.135381038218498,
+      -2.2063128487215034,
+      -1.0358561012939966,
+      2.582244834254418,
+      1.3206818481444287,
+      1.3616212758262605,
+      0.6577126166043432,
+      0.8756681836676358,
+      -0.24647097275884122,
+      0.47955861083219636,
+      -0.3922052623097464
+    ],
+    "spectral_centroid_mean_hz": 726.9393005667483,
+    "spectral_centroid_deviation_hz": 129.39704876022788,
+    "total_harmonic_distortion": 0.19147153669338157,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0.6477041718390774,
+    "spectral_entropy": 0.2422625445922906,
+    "spectral_slope_db_per_octave": -8.69952817474498,
+    "band_limit_high_hz": 2950.048828125,
+    "spectral_centroid_slope_hz_per_second": -1532.3192763823067,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 0.9565217391304348,
+    "mid_rms": 0.2527123900808987,
+    "side_rms": 0.0062862934749592985,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 138.24451410658307,
+    "pitch_slope_semitones_per_second": -4.376584815191205,
+    "root_note_name": "C#3",
+    "root_frequency_hz": 139.9927888471806,
+    "root_cents_offset": 17.41878899848004,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.3837008493671896,
+      1,
+      0.718095509349499,
+      0.45362173668421957,
+      0.5062815649481406,
+      0.6625442207527324,
+      0.4905571931478505,
+      0.6076899843421751,
+      0.3610684602133201,
+      0.6443693260685504,
+      0.40210009181622614,
+      0.5188817594656778
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "DRUMS",
+    "subcategory": "HAND DRUM",
+    "id": "DRUMHand",
+    "confidence": 1,
+    "alternatives": [],
+    "synonyms": [
+      "timbale"
+    ],
+    "reason": "name matched [timbale]; signal 0.58, tier signal_narrowable, 1 candidate in contention; gate ruled out AIRBlow (spectral_flatness 0.0252 < min 0.1200)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.21950113378684805,
+        "duration_seconds": 0.21950113378684805,
+        "peak_amplitude": 0.41120354443060764,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 40,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "hVGef5lRtl+1PJ5gq2WzQqxMyz+3P8Awxz3BNNU0xUTFOcoyxDC+Mtcy0zHVItEvzyvkJt4f4RjkKuYf6xvqG+YY6xfwFvUQ8hHzCAABAAE="
+  }
+}

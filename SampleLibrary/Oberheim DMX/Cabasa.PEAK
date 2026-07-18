@@ -1,0 +1,161 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Cabasa.wav",
+    "folder": "Oberheim DMX",
+    "sub": "Oberheim DMX",
+    "path": "Oberheim DMX/Cabasa.wav",
+    "length_seconds": 0.11662131519274377,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.00002783549659427863,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Shaker",
+    "reason": [
+      "1) path matched \"cabasa\"",
+      "2) envelope Sustained (attack 20 ms, sustain 85%, 1 transient)",
+      "3) Stochastic · high-band 96%"
+    ],
+    "timbre": "Bright",
+    "length_class": "Short",
+    "subgroup": "Shaker Short",
+    "audit": false,
+    "acoustic_types": [
+      "Stochastic"
+    ],
+    "sound_design_roles": [],
+    "instrument_family": []
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.022811791383219954,
+    "sustain_ratio": 0.7142857142857143,
+    "sustained": false,
+    "envelope_attack_seconds": 0.019954648526077097,
+    "envelope_decay_seconds": 0.014965986394557823,
+    "envelope_sustain_level": 0.850489675893363,
+    "envelope_release_seconds": 0.03492063492063492,
+    "envelope_temporal_centroid": 0.34634499881999947,
+    "envelope_skewness": -0.6765090357276936,
+    "envelope_kurtosis": -0.6151695675787692,
+    "envelope_shape": "Sustained",
+    "decay_time_seconds_60db": 0.09775685068524728,
+    "onset_periodicity": 0.18000500289094137,
+    "onset_rate_per_second": 8.574761812171884
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.20377155241059378,
+    "crest_factor": 4.907306592075058,
+    "zero_crossings_per_second": 15443.146023721563,
+    "complexity": 3215.1278408287258,
+    "spectral_centroid_hz": 7662.862309441189,
+    "spectral_rolloff_hz": 11087.167023138247,
+    "spectral_flatness": 0.19290967506414033,
+    "low_band_energy": 0.0022506614269699647,
+    "mid_band_energy": 0.03434149473511561,
+    "high_band_energy": 0.9634078438379144,
+    "spectral_flux": 0.22590041979466222,
+    "harmonicity": 0.10790293017435626,
+    "inharmonicity": 0.49481006903660646,
+    "partial_count": 2,
+    "mel_frequency_cepstral_coefficients": [
+      33.92360993905378,
+      -6.666484659314137,
+      -10.287334102675889,
+      5.974388657760577,
+      -5.483310350956091,
+      5.131642062390191,
+      -3.2071589527557784,
+      2.1470925213919814,
+      -2.0928067395961336,
+      0.5960898715372475,
+      -1.2814313689460595,
+      0.6094204993667144,
+      -0.4442252117193747
+    ],
+    "spectral_centroid_mean_hz": 7685.405845346255,
+    "spectral_centroid_deviation_hz": 73.46108403177115,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0.755532408896588,
+    "spectral_entropy": 0.8204463110667126,
+    "spectral_slope_db_per_octave": 3.6478088458493048,
+    "band_limit_high_hz": 18303.22265625,
+    "spectral_centroid_slope_hz_per_second": 514.3620266070964,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 0.1,
+    "mid_rms": 0.20377155219420287,
+    "side_rms": 0.0015461001664509764,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 66.01796407185628,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.868697297135802,
+      0.717188826735541,
+      0.7282352570006647,
+      1,
+      0.8691372933343565,
+      0.8101817202968861,
+      0.7697818483375175,
+      0.6993555787228604,
+      0.7162550186140932,
+      0.8132633654338539,
+      0.7808555262206097,
+      0.7619445984476698
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "PERCUSSION",
+    "subcategory": "SHAKER",
+    "id": "PERCShak",
+    "confidence": 1,
+    "alternatives": [],
+    "synonyms": [
+      "cabasa"
+    ],
+    "reason": "name matched [cabasa]; signal 0.43, tier signal_separable, 1 candidate in contention; gate ruled out AIRBlow (length_seconds 0.1166 < min 0.1500)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.10975056689342402,
+        "duration_seconds": 0.10975056689342402,
+        "peak_amplitude": 0.3108926932562579,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 21,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "0EK3TZtMl3+Sc5ZjkWKsXqFYnGGpaKJlqVjFN8w4yEHfJeAa4Rj/Af8B"
+  }
+}

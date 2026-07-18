@@ -1,0 +1,194 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Clap.wav",
+    "folder": "Roland TR-808",
+    "sub": "Roland TR-808",
+    "path": "Roland TR-808/Clap.wav",
+    "length_seconds": 0.1736281179138322,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": 0.000011428647678390688,
+    "trailing_silence_ms": 0.06802721088435373,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Clap",
+    "reason": [
+      "1) path matched \"clap\"",
+      "2) envelope Plucky (attack 40 ms, sustain 11%, 1 transient)",
+      "3) Inharmonic+Stochastic · high-band 67%"
+    ],
+    "timbre": "Bright",
+    "length_class": "Short",
+    "subgroup": "Clap Short",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic",
+      "Stochastic"
+    ],
+    "sound_design_roles": [],
+    "instrument_family": [
+      "Percussion",
+      "Idiophone",
+      "Struck Idiophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.013900226757369615,
+    "sustain_ratio": 0.36363636363636365,
+    "sustained": false,
+    "envelope_attack_seconds": 0.039909297052154194,
+    "envelope_decay_seconds": 0.05986394557823129,
+    "envelope_sustain_level": 0.11149350424719547,
+    "envelope_release_seconds": 0.06485260770975057,
+    "envelope_temporal_centroid": 0.21215850443898693,
+    "envelope_skewness": 1.0776312067322928,
+    "envelope_kurtosis": -0.025833006053538554,
+    "envelope_shape": "Plucky",
+    "decay_time_seconds_60db": 0.22018576704805096,
+    "onset_periodicity": 0.38674683148225236,
+    "onset_rate_per_second": 5.759435810369596
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.11124148609562404,
+    "crest_factor": 8.98917766670515,
+    "zero_crossings_per_second": 4676.661878020112,
+    "complexity": 4611.019080860856,
+    "spectral_centroid_hz": 5112.5519286882945,
+    "spectral_rolloff_hz": 10067.493796526054,
+    "spectral_flatness": 0.4205631000996259,
+    "low_band_energy": 0.008163320685737168,
+    "mid_band_energy": 0.3240949447465158,
+    "high_band_energy": 0.6677417345677471,
+    "spectral_flux": 0.2254958762044644,
+    "harmonicity": 0.11862032551378707,
+    "inharmonicity": 0.3755997921649072,
+    "partial_count": 12,
+    "mel_frequency_cepstral_coefficients": [
+      24.852152432538887,
+      3.749283421187597,
+      -5.745431338211149,
+      -2.8149446134042204,
+      -3.8328104030662926,
+      -1.224919925496139,
+      -0.7992251492709197,
+      0.35130022839425984,
+      0.1799420856403308,
+      0.4845467601221079,
+      0.0032176665773485033,
+      0.09535857469919427,
+      -0.10218519492317082
+    ],
+    "spectral_centroid_mean_hz": 4422.467105686196,
+    "spectral_centroid_deviation_hz": 774.3823153743535,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0.18147233947902552,
+    "spectral_entropy": 0.6779968192937793,
+    "spectral_slope_db_per_octave": 0.9646133218027603,
+    "band_limit_high_hz": 21188.671875,
+    "spectral_centroid_slope_hz_per_second": -19834.827368942722,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 0.17647058823529413,
+    "mid_rms": 0.1112414859346225,
+    "side_rms": 0.001945793787934053,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 108.35380835380835,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.872281376134752,
+      0.8066269516990483,
+      0.7718031984007067,
+      0.85376530239431,
+      0.835686038051769,
+      0.8454952435946874,
+      0.7888651460816571,
+      0.7450358441453607,
+      0.8565176763446075,
+      0.9110184484588719,
+      1,
+      0.9486755130475482
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "PLASTIC",
+    "subcategory": "MISC",
+    "id": "PLASMisc",
+    "confidence": 0.2859957074819513,
+    "alternatives": [
+      {
+        "category": "ICE",
+        "subcategory": "IMPACT",
+        "id": "ICEImpt",
+        "probability": 0.25,
+        "synonyms": [
+          "clap"
+        ]
+      },
+      {
+        "category": "CERAMICS",
+        "subcategory": "IMPACT",
+        "id": "CERMImpt",
+        "probability": 0.168,
+        "synonyms": [
+          "clap"
+        ]
+      },
+      {
+        "category": "LEATHER",
+        "subcategory": "IMPACT",
+        "id": "LETHRImpt",
+        "probability": 0.104,
+        "synonyms": [
+          "clap"
+        ]
+      }
+    ],
+    "synonyms": [
+      "clap"
+    ],
+    "reason": "name matched [clap]; signal 0.45, tier signal_narrowable, 9 candidates in contention; gate ruled out AIRHiss (length_seconds 0.1736 < min 0.5000); ABSTAINED to MISC (top two too close to call)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.16462585034013605,
+        "duration_seconds": 0.16462585034013605,
+        "peak_amplitude": 0.2775110894499745,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 30,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "9gXcF4FH5RaccOEYiVK1Wsk90izQLNwh6hXpFOoS8gv2CfcK+gf6B/oH+gb9A/0E/AP8A/4D/AX/AgAA"
+  }
+}

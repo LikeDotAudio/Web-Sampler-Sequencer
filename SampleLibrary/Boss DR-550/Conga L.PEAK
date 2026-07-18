@@ -1,0 +1,167 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Conga L.wav",
+    "folder": "Boss DR-550/Percussion",
+    "sub": "Boss DR-550/Percussion",
+    "path": "Boss DR-550/Percussion/Conga L.wav",
+    "length_seconds": 0.30072562358276644,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.00003071547525354396,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Conga",
+    "reason": [
+      "1) path matched \"conga\"",
+      "2) envelope Decaying (attack 15 ms, sustain 15%, 1 transient)",
+      "3) Harmonic+Impulsive · mid-band 52% · root G2"
+    ],
+    "timbre": "Tonal",
+    "length_class": "Short",
+    "subgroup": "Conga Short",
+    "audit": false,
+    "acoustic_types": [
+      "Harmonic",
+      "Impulsive"
+    ],
+    "sound_design_roles": [
+      "Pluck"
+    ],
+    "instrument_family": [
+      "String",
+      "Chordophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.03013605442176871,
+    "sustain_ratio": 0.15789473684210525,
+    "sustained": false,
+    "envelope_attack_seconds": 0.014965986394557823,
+    "envelope_decay_seconds": 0.12970521541950114,
+    "envelope_sustain_level": 0.15162003410653202,
+    "envelope_release_seconds": 0.11972789115646258,
+    "envelope_temporal_centroid": 0.1647202035634454,
+    "envelope_skewness": 1.4427481755772316,
+    "envelope_kurtosis": 1.1804013857316056,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": 0.52990924378236,
+    "onset_periodicity": 0,
+    "onset_rate_per_second": 3.325290303121701
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.19813667951777691,
+    "crest_factor": 5.04679005455472,
+    "zero_crossings_per_second": 412.33599758709096,
+    "complexity": 2449.9925832085187,
+    "spectral_centroid_hz": 1308.8747279722468,
+    "spectral_rolloff_hz": 2247.8962449102696,
+    "spectral_flatness": 0.034663422649407326,
+    "low_band_energy": 0.32244248803273007,
+    "mid_band_energy": 0.5158374373635156,
+    "high_band_energy": 0.16172007460375434,
+    "spectral_flux": 0.06143583595135794,
+    "harmonicity": 0.800100486214967,
+    "inharmonicity": 0.1784785725982582,
+    "partial_count": 4,
+    "mel_frequency_cepstral_coefficients": [
+      -20.315157822663103,
+      21.093417273419465,
+      7.153668956198388,
+      8.961695822731695,
+      -0.27939042953904414,
+      3.3537651925945804,
+      -1.831830651689799,
+      1.7210678661107504,
+      -1.329307860148201,
+      0.24569537459077684,
+      -1.0362172827313103,
+      -0.004355932840051675,
+      -0.7181117146861804
+    ],
+    "spectral_centroid_mean_hz": 533.5506070376573,
+    "spectral_centroid_deviation_hz": 219.8016925021326,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0.06905309702302698,
+    "spectral_entropy": 0.18995521075707558,
+    "spectral_slope_db_per_octave": -7.6833746640461165,
+    "band_limit_high_hz": 2153.3203125,
+    "spectral_centroid_slope_hz_per_second": -243.69553871410432,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 0.9666666666666667,
+    "mid_rms": 0.19813667938956311,
+    "side_rms": 0.004332348658678816,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 64.19213973799127,
+    "pitch_slope_semitones_per_second": 0.0021839754042442434,
+    "root_note_name": "G2",
+    "root_frequency_hz": 98.09606394209018,
+    "root_cents_offset": 1.7163578194271167,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.2266416484854583,
+      0.41192446134166405,
+      0.3012398477356826,
+      0.6191065198111324,
+      0.40263212720645664,
+      0.3238694842995662,
+      0.602589434880644,
+      1,
+      0.560889682558086,
+      0.3582781697047128,
+      0.33588581549654767,
+      0.43420413906597494
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "DRUMS",
+    "subcategory": "HAND DRUM",
+    "id": "DRUMHand",
+    "confidence": 1,
+    "alternatives": [],
+    "synonyms": [
+      "conga"
+    ],
+    "reason": "name matched [conga]; signal 0.66, tier signal_narrowable, 1 candidate in contention; gate ruled out AIRBlow (spectral_flatness 0.0347 < min 0.1200)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0.014965986394557823,
+        "end_seconds": 0.2893424036281179,
+        "duration_seconds": 0.2743764172335601,
+        "peak_amplitude": 0.5630120456273948,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 52,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "/wAAAPsihXGyZoFksGGdW8dQxUy7Lc89ziHPKdss1xreKt8g5B3tHeAc6hvoE+cQ7BrsD/MS8hPuD/gO8wjyC/UM9wf5CvcI+Qj5BfgG+gf5BPsG+wX7Bf0E+wT8A/0C/QH+AgAAAAA="
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Bass.wav",
+    "folder": "Akai MPC-60",
+    "sub": "Akai MPC-60",
+    "path": "Akai MPC-60/Bass.wav",
+    "length_seconds": 1.0085714285714287,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.000009757075851579713,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Bass",
+    "reason": [
+      "1) path matched \"bass\"",
+      "2) envelope Sustained (attack 5 ms, sustain 81%, 1 transient)",
+      "3) Harmonic · mid-band 41% · root C2"
+    ],
+    "timbre": "Tonal",
+    "length_class": "Medium",
+    "subgroup": "Bass Medium",
+    "audit": false,
+    "acoustic_types": [
+      "Harmonic"
+    ],
+    "sound_design_roles": [
+      "Lead"
+    ],
+    "instrument_family": [
+      "String",
+      "Chordophone",
+      "Plucked Chordophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.016961451247165533,
+    "sustain_ratio": 0.9836065573770492,
+    "sustained": true,
+    "envelope_attack_seconds": 0.004988662131519274,
+    "envelope_decay_seconds": 0.014965986394557823,
+    "envelope_sustain_level": 0.8131807144477834,
+    "envelope_release_seconds": 0.009977324263038548,
+    "envelope_temporal_centroid": 0.4516345186052627,
+    "envelope_skewness": -0.5713703452047534,
+    "envelope_kurtosis": 0.0771557355532475,
+    "envelope_shape": "Sustained",
+    "decay_time_seconds_60db": null,
+    "onset_periodicity": 0.5818741869412544,
+    "onset_rate_per_second": 0.9915014164305948
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.31945116371937354,
+    "crest_factor": 3.130273406361144,
+    "zero_crossings_per_second": 308.356940509915,
+    "complexity": 3142.229403885235,
+    "spectral_centroid_hz": 2063.0279652653544,
+    "spectral_rolloff_hz": 4912.889518413597,
+    "spectral_flatness": 0.05906734546623719,
+    "low_band_energy": 0.30204313200790817,
+    "mid_band_energy": 0.4144809813880487,
+    "high_band_energy": 0.2834758866040432,
+    "spectral_flux": 0.016397389513349785,
+    "harmonicity": 0.9703264845245683,
+    "inharmonicity": 0.008526502896942727,
+    "partial_count": 8,
+    "mel_frequency_cepstral_coefficients": [
+      -6.114752480279528,
+      24.525370376635887,
+      8.999530565377192,
+      7.3094754692208,
+      -1.5683519151703316,
+      2.228692290121808,
+      -2.574963804622417,
+      1.6807179365501572,
+      -1.5138428616980049,
+      1.5579763471599744,
+      -0.7686564345425969,
+      1.1225758787338425,
+      -0.47535652837429526
+    ],
+    "spectral_centroid_mean_hz": 360.5952261469065,
+    "spectral_centroid_deviation_hz": 258.89528023370883,
+    "total_harmonic_distortion": 0.8081539012949678,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0.9260042052119914,
+    "spectral_entropy": 0.2971293911682255,
+    "spectral_slope_db_per_octave": -11.337562532286316,
+    "band_limit_high_hz": 2583.984375,
+    "spectral_centroid_slope_hz_per_second": -354.69113820074773,
+    "syllabic_modulation_energy": 0.11136211324366165,
+    "voicing_ratio": 1,
+    "mid_rms": 0.3194511637433308,
+    "side_rms": 0.00553578453170316,
+    "lufs": -8.993282095361023
+  },
+  "musicality": {
+    "pitch_hz": 64.66275659824046,
+    "pitch_slope_semitones_per_second": 0.09700142711183525,
+    "root_note_name": "C2",
+    "root_frequency_hz": 64.53869111285681,
+    "root_cents_offset": -23.1207591851323,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      1,
+      0.2173454965795324,
+      0.23408778123157767,
+      0.1615828842872843,
+      0.33187167785998606,
+      0.2454890518108011,
+      0.1787922768447035,
+      0.3947600734491868,
+      0.17360167483262742,
+      0.23593796345631488,
+      0.18038655072000767,
+      0.2520452749427298
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "BOATS",
+    "subcategory": "MOTORBOAT",
+    "id": "BOATMotr",
+    "confidence": 0.33730634825519723,
+    "alternatives": [
+      {
+        "category": "BOATS",
+        "subcategory": "FISHING",
+        "id": "BOATFish",
+        "probability": 0.194,
+        "synonyms": [
+          "bass"
+        ]
+      },
+      {
+        "category": "BRASS",
+        "subcategory": "TROMBONE",
+        "id": "BRASTbn",
+        "probability": 0.181,
+        "synonyms": [
+          "bass"
+        ]
+      },
+      {
+        "category": "WOODWIND",
+        "subcategory": "CLARINET",
+        "id": "WWNDClar",
+        "probability": 0.132,
+        "synonyms": [
+          "bass"
+        ]
+      }
+    ],
+    "synonyms": [
+      "bass"
+    ],
+    "reason": "name matched [bass]; signal 0.26, tier semantic_only, 9 candidates in contention; gate ruled out AIRBlow (spectral_flatness 0.0591 < min 0.1200)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 1.0085714285714287,
+        "duration_seconds": 1.0085714285714287,
+        "peak_amplitude": 0.4692920558823654,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 174,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "hELTUYFUjfbbTpkOoS3kUKIRwUSmTKX85UmoDqcp50mqD6pC50eq+O5HsBGrKehGrxOtQuhGrf/sRrUWrCnoRqoXqkLpRqgK6UW6GaUr6UWjGqZB6kShEetEvRugLetDnhynQexDnRTrQsEenC/sQpseq0HsQZsZ7EHCIJsw7UCbIbJA7T+bHO0/xCKbMO0/nCK2P+4+nR3uPsUinS/uPp4itj7uPZ4d7j3GIZ8u7j2fIbY87jygHu48xyGgLe88oSC2O+87oh7vO8ggoizvO6MgtjrvOqMe7zrJH6Qr7zqkH7c57zmlHu85yh+mKfA5ph+3OPA4px7wOMsepyjwOKgeuDfwN6gd8DfNHqkn8DapHbg28DaqHfA2zh2qJvA1qx25NfE1rBzxNc8drCXxNK0cuTTxNK0c8TTQHK4k8TOvHLoz8TOvHPEy0RuwI/EysBu7MvIysRv+Af8B"
+  }
+}

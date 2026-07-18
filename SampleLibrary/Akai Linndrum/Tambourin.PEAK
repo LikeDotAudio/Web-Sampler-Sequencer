@@ -1,0 +1,187 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Tambourin.wav",
+    "folder": "Akai Linndrum",
+    "sub": "Akai Linndrum",
+    "path": "Akai Linndrum/Tambourin.wav",
+    "length_seconds": 0.19412698412698412,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.000009230845526771113,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Perc",
+    "reason": [
+      "1) generic \"drum\" tag — flagged for acoustic audit",
+      "2) envelope Plucky (attack 10 ms, sustain 13%, 1 transient)",
+      "3) Inharmonic+Stochastic+Impulsive · high-band 93%"
+    ],
+    "timbre": "Bright",
+    "length_class": "Short",
+    "subgroup": "Drum",
+    "audit": true,
+    "acoustic_types": [
+      "Inharmonic",
+      "Stochastic",
+      "Impulsive"
+    ],
+    "sound_design_roles": [
+      "Pluck"
+    ],
+    "instrument_family": [
+      "Percussion"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.016054421768707482,
+    "sustain_ratio": 0.25,
+    "sustained": false,
+    "envelope_attack_seconds": 0.009977324263038548,
+    "envelope_decay_seconds": 0.07981859410430839,
+    "envelope_sustain_level": 0.13395347340824115,
+    "envelope_release_seconds": 0.0947845804988662,
+    "envelope_temporal_centroid": 0.15849005907033062,
+    "envelope_skewness": 1.5868537377948169,
+    "envelope_kurtosis": 1.934884373041407,
+    "envelope_shape": "Plucky",
+    "decay_time_seconds_60db": 0.4238098409904638,
+    "onset_periodicity": 0,
+    "onset_rate_per_second": 5.151267375306623
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.12439607910318945,
+    "crest_factor": 8.038593254956027,
+    "zero_crossings_per_second": 12821.504497138185,
+    "complexity": 4655.024048250415,
+    "spectral_centroid_hz": 7765.028337179699,
+    "spectral_rolloff_hz": 14325.674570727719,
+    "spectral_flatness": 0.40191009550002704,
+    "low_band_energy": 0.009215302610580085,
+    "mid_band_energy": 0.06223547380831294,
+    "high_band_energy": 0.928549223581107,
+    "spectral_flux": 0.2302577543068041,
+    "harmonicity": 0.390324887664342,
+    "inharmonicity": 0.35968841851230066,
+    "partial_count": 12,
+    "mel_frequency_cepstral_coefficients": [
+      18.6683807587608,
+      -10.068666497891314,
+      -2.9558634449743044,
+      3.6719420210688196,
+      0.09048717329924312,
+      -0.4386821402524461,
+      1.6323236049374135,
+      -1.094961682153344,
+      0.1985190497657999,
+      1.7661888537367116,
+      -0.9192667284930208,
+      -0.09568048300828091,
+      0.172865839335309
+    ],
+    "spectral_centroid_mean_hz": 8436.659801964339,
+    "spectral_centroid_deviation_hz": 248.4891019088158,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0.14992262077180352,
+    "spectral_entropy": 0.6400977538749127,
+    "spectral_slope_db_per_octave": 1.3867040059198035,
+    "band_limit_high_hz": 20198.14453125,
+    "spectral_centroid_slope_hz_per_second": 3824.2816829092753,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 0.5789473684210527,
+    "mid_rms": 0.12439607879973157,
+    "side_rms": 0.0012251390359891406,
+    "lufs": -70
+  },
+  "musicality": {
+    "pitch_hz": 700,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      1,
+      0.6641899797855049,
+      0.2972254292701629,
+      0.3075653728818888,
+      0.3804795547618432,
+      0.8831391581638054,
+      0.5775767530693712,
+      0.8654768224294792,
+      0.6043744633642893,
+      0.39453424344445653,
+      0.5761605609928205,
+      0.35391804074573774
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "FOOD & DRINK",
+    "subcategory": "MISC",
+    "id": "FOODMisc",
+    "confidence": 0.019611993610403188,
+    "alternatives": [
+      {
+        "category": "FOOD & DRINK",
+        "subcategory": "TABLEWARE",
+        "id": "FOODTware",
+        "probability": 0.019,
+        "synonyms": []
+      },
+      {
+        "category": "PIANO",
+        "subcategory": "PREPARED",
+        "id": "PIANPrep",
+        "probability": 0.019,
+        "synonyms": []
+      },
+      {
+        "category": "GLASS",
+        "subcategory": "IMPACT",
+        "id": "GLASImpt",
+        "probability": 0.016,
+        "synonyms": []
+      }
+    ],
+    "synonyms": [],
+    "reason": "no name evidence; signal 0.93, tier signal_narrowable, 403 candidates in contention; gate ruled out AIRHiss (length_seconds 0.1941 < min 0.5000); ABSTAINED to MISC (confidence below threshold)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0.004988662131519274,
+        "end_seconds": 0.18458049886621314,
+        "duration_seconds": 0.17959183673469387,
+        "peak_amplitude": 0.3934222977005008,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 34,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "AAD7Bol/k2WnVKtbuUrQMdEt0ELhJ+Ai5iDkHuYV6xfwFvMM8w7xC/MN7hH1EPUL8w32CfcJ9wf3CfoG/AX8AwAAAAA="
+  }
+}

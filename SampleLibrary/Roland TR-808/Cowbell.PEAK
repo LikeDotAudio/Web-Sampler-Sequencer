@@ -1,0 +1,185 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Cowbell.wav",
+    "folder": "Roland TR-808",
+    "sub": "Roland TR-808",
+    "path": "Roland TR-808/Cowbell.wav",
+    "length_seconds": 0.46281179138321993,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": 3.9922554431038706e-7,
+    "trailing_silence_ms": 0.045351473922902494,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Cowbell",
+    "reason": [
+      "1) path matched \"cowbell\"",
+      "2) envelope Decaying (attack 0 ms, sustain 4%, 1 transient)",
+      "3) Harmonic · mid-band 69% · root G5"
+    ],
+    "timbre": "Tonal",
+    "length_class": "Short",
+    "subgroup": "Cowbell Short",
+    "audit": false,
+    "acoustic_types": [
+      "Harmonic"
+    ],
+    "sound_design_roles": [
+      "Pluck"
+    ],
+    "instrument_family": [
+      "String",
+      "Chordophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.0027437641723356007,
+    "sustain_ratio": 0.03571428571428571,
+    "sustained": false,
+    "envelope_attack_seconds": 0,
+    "envelope_decay_seconds": 0.2145124716553288,
+    "envelope_sustain_level": 0.04342348392787981,
+    "envelope_release_seconds": 0.17959183673469387,
+    "envelope_temporal_centroid": 0.04296865811875835,
+    "envelope_skewness": 4.215684723323997,
+    "envelope_kurtosis": 20.655156079718424,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": 0.7546684909940267,
+    "onset_periodicity": 0,
+    "onset_rate_per_second": 2.160705536501715
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.06653429031806773,
+    "crest_factor": 15.029385263471099,
+    "zero_crossings_per_second": 1892.7780499755024,
+    "complexity": 3493.003098783614,
+    "spectral_centroid_hz": 2525.179111130812,
+    "spectral_rolloff_hz": 4293.321901028907,
+    "spectral_flatness": 0.15406337167269957,
+    "low_band_energy": 0.0010210682852769223,
+    "mid_band_energy": 0.691663130078167,
+    "high_band_energy": 0.3073158016365561,
+    "spectral_flux": 0.03286316985589287,
+    "harmonicity": 0.9669759255349702,
+    "inharmonicity": 0.0027016074500260958,
+    "partial_count": 2,
+    "mel_frequency_cepstral_coefficients": [
+      -11.834133143669455,
+      6.116766295027961,
+      -5.297536362933329,
+      -5.637365544057854,
+      -5.325386645107699,
+      -4.947143449330097,
+      -3.481902652612352,
+      -1.2428670535944368,
+      0.185179038754502,
+      2.834311999200084,
+      2.0741144362675885,
+      3.181209807052161,
+      0.7179054114011456
+    ],
+    "spectral_centroid_mean_hz": 2600.3805652927385,
+    "spectral_centroid_deviation_hz": 181.65382786004054,
+    "total_harmonic_distortion": 0.18663574765254942,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0,
+    "spectral_entropy": 0.2373019141459215,
+    "spectral_slope_db_per_octave": 1.9206516263937876,
+    "band_limit_high_hz": 18733.88671875,
+    "spectral_centroid_slope_hz_per_second": 839.301044409021,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 1,
+    "mid_rms": 0.0665342901075203,
+    "side_rms": 0.0012288907229052392,
+    "lufs": -19.927026622140517
+  },
+  "musicality": {
+    "pitch_hz": 259.4117647058824,
+    "pitch_slope_semitones_per_second": 0.0007553701116741014,
+    "root_note_name": "G5",
+    "root_frequency_hz": 780.6200641715591,
+    "root_cents_offset": -7.459574922026491,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.5027075790158549,
+      0.17772581336169221,
+      0.2606336073273177,
+      0.1566609870727424,
+      0.19897326662946224,
+      0.19812164923961537,
+      0.3351729749580239,
+      1,
+      0.372362392427433,
+      0.255884618080454,
+      0.24506572407191018,
+      0.2928348625486006
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "BELLS",
+    "subcategory": "ANIMAL",
+    "id": "BELLAnml",
+    "confidence": 0.8935766489733424,
+    "alternatives": [
+      {
+        "category": "PERCUSSION",
+        "subcategory": "COWBELL",
+        "id": "PERCCowb",
+        "probability": 0.106,
+        "synonyms": [
+          "cowbell"
+        ]
+      },
+      {
+        "category": "LOOPS",
+        "subcategory": "BASS LOOP",
+        "id": "LOOPBass",
+        "probability": 0,
+        "synonyms": [
+          "808"
+        ]
+      }
+    ],
+    "synonyms": [
+      "cowbell"
+    ],
+    "reason": "name matched [cowbell]; signal 0.67, tier signal_narrowable, 3 candidates in contention; gate ruled out AIRBlow (crest_factor 15.0294 > max 14.0000)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.37414965986394555,
+        "duration_seconds": 0.37414965986394555,
+        "peak_amplitude": 0.4012177691215796,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 80,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "gXCpR88q2SHkGOcW6xPsEe0Q7g/vDvAO8QzyC/MK8wr0CfQJ9Qn1CfYI9wj3CPgH+Af5B/kG+Qb6BvoG+gX7BfsF+wX7BPwE/AT8BP0E/QT9A/0D/QP+A/4D/gP+A/4D/gL+Av4C/gL+Av4C/gL+Av4C/wL/Af8B/wH/Af8B/wH/Af8B/wH/Af8B/wH/Af8B/wH/AP8A/wD/AP8AAAAAAA=="
+  }
+}

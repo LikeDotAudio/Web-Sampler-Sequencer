@@ -1,0 +1,169 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Bassdrum-01.wav",
+    "folder": "Roland TR-909",
+    "sub": "Roland TR-909",
+    "path": "Roland TR-909/Bassdrum-01.wav",
+    "length_seconds": 0.46591836734693876,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": 6.601967915784543e-7,
+    "trailing_silence_ms": 0,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Kick",
+    "reason": [
+      "1) path matched \"bassdrum\"",
+      "2) envelope Decaying (attack 5 ms, sustain 0%, 1 transient)",
+      "3) Inharmonic · low-band 63% · root A#0"
+    ],
+    "timbre": "Bass",
+    "length_class": "Short",
+    "subgroup": "Kick Short",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic"
+    ],
+    "sound_design_roles": [
+      "Pluck",
+      "Bass"
+    ],
+    "instrument_family": [
+      "Percussion",
+      "Membranophone",
+      "Struck Membranophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.0025170068027210884,
+    "sustain_ratio": 0.14285714285714285,
+    "sustained": false,
+    "envelope_attack_seconds": 0.004988662131519274,
+    "envelope_decay_seconds": 0.22448979591836735,
+    "envelope_sustain_level": 0.0021494617468727317,
+    "envelope_release_seconds": 0.009977324263038548,
+    "envelope_temporal_centroid": 0.06628281254024443,
+    "envelope_skewness": 1.9934985576280657,
+    "envelope_kurtosis": 2.1536404989017868,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": 0.07038140725818716,
+    "onset_periodicity": 0.15993222744167349,
+    "onset_rate_per_second": 2.1462987297415683
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.2393687080800299,
+    "crest_factor": 4.177528008746857,
+    "zero_crossings_per_second": 746.9119579500657,
+    "complexity": 1299.3892286941702,
+    "spectral_centroid_hz": 504.9723464398533,
+    "spectral_rolloff_hz": 412.0893561103811,
+    "spectral_flatness": 0.01859050377282416,
+    "low_band_energy": 0.6320524387135443,
+    "mid_band_energy": 0.31036647295099545,
+    "high_band_energy": 0.05758108833546023,
+    "spectral_flux": 0.2078510156308709,
+    "harmonicity": 0.916517828599006,
+    "inharmonicity": 0.49215558350555216,
+    "partial_count": 7,
+    "mel_frequency_cepstral_coefficients": [
+      -50.53257741219009,
+      13.197396892900878,
+      5.030909457419229,
+      5.188315386067252,
+      2.0577204106073608,
+      3.1503239388758066,
+      0.6859376705705621,
+      1.5504579251405324,
+      1.0940757001955659,
+      0.8257325641173915,
+      0.23277345366458052,
+      0.027837637382919556,
+      0.4022250024430761
+    ],
+    "spectral_centroid_mean_hz": 1765.2784887346616,
+    "spectral_centroid_deviation_hz": 1465.8037570076747,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0,
+    "spectral_entropy": 0.28653279760197736,
+    "spectral_slope_db_per_octave": -12.652810439429118,
+    "band_limit_high_hz": 1012.060546875,
+    "spectral_centroid_slope_hz_per_second": 11392.487286000478,
+    "syllabic_modulation_energy": null,
+    "voicing_ratio": 1,
+    "mid_rms": 0.23936870823459364,
+    "side_rms": 0.004967650514588887,
+    "lufs": -10.214957352515137
+  },
+  "musicality": {
+    "pitch_hz": 2004.5454545454545,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "A#0",
+    "root_frequency_hz": 28.975032851511173,
+    "root_cents_offset": -9.545586035152098,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.6874195261712666,
+      0.7785513025697344,
+      0.7795213305744934,
+      0.6151633593348341,
+      0.7573573808916007,
+      0.7856106020773541,
+      0.9195432699852327,
+      0.8355641053815964,
+      1,
+      0.9663913626578443,
+      0.7598644769548194,
+      0.7884437281658108
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "DRUMS",
+    "subcategory": "KICK",
+    "id": "DRUMKick",
+    "confidence": 1,
+    "alternatives": [],
+    "synonyms": [
+      "bassdrum",
+      "909"
+    ],
+    "reason": "name matched [bassdrum, 909]; signal 0.55, tier signal_separable, 1 candidate in contention; gate ruled out AIRBlow (spectral_flatness 0.0186 < min 0.1200)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0,
+        "end_seconds": 0.18458049886621314,
+        "duration_seconds": 0.18458049886621314,
+        "peak_amplitude": 0.6994880514182882,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 81,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "gX2TcYlrimyKbopviVancYlxinGJVtFVzBEAG/H/+wP/Av4A/QL9A/0C/QP9Af8C/wH/AQAB/wH/AgAA/wD/AQAAAAEAAP8BAAAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "metadata": {
+    "analyzer_version": "20260717.0313-9a2e6ae3aa3c302e",
+    "name": "Ride-01.wav",
+    "folder": "Boss DR-550/Cymbals",
+    "sub": "Boss DR-550/Cymbals",
+    "path": "Boss DR-550/Cymbals/Ride-01.wav",
+    "length_seconds": 1.0677777777777777,
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": 2,
+    "source_format": "WAV",
+    "lossy_source": false,
+    "dc_offset": -0.000019542293333501454,
+    "trailing_silence_ms": 10,
+    "analysis_depth": "full"
+  },
+  "classification": {
+    "group": "Ride",
+    "reason": [
+      "1) path matched \"ride\"",
+      "2) envelope Decaying (attack 15 ms, sustain 2%, 1 transient)",
+      "3) Inharmonic · high-band 91%"
+    ],
+    "timbre": "Bright",
+    "length_class": "Medium",
+    "subgroup": "Ride Medium",
+    "audit": false,
+    "acoustic_types": [
+      "Inharmonic"
+    ],
+    "sound_design_roles": [
+      "Pluck"
+    ],
+    "instrument_family": [
+      "Percussion",
+      "Idiophone",
+      "Struck Idiophone"
+    ]
+  },
+  "envelope": {
+    "transient_count": 1,
+    "attack_seconds": 0.03437641723356009,
+    "sustain_ratio": 0.046153846153846156,
+    "sustained": false,
+    "envelope_attack_seconds": 0.014965986394557823,
+    "envelope_decay_seconds": 0.4988662131519274,
+    "envelope_sustain_level": 0.017081456728526723,
+    "envelope_release_seconds": 0.20453514739229026,
+    "envelope_temporal_centroid": 0.050417158568898994,
+    "envelope_skewness": 3.5508544997786724,
+    "envelope_kurtosis": 13.912992065586923,
+    "envelope_shape": "Decaying",
+    "decay_time_seconds_60db": 0.7451521796449367,
+    "onset_periodicity": 0,
+    "onset_rate_per_second": 0.9365244536940688
+  },
+  "spectral_features": {
+    "root_mean_square_level": 0.05762572869763263,
+    "crest_factor": 17.352830151073743,
+    "zero_crossings_per_second": 8401.560874089491,
+    "complexity": 4118.558926818067,
+    "spectral_centroid_hz": 8029.564633504485,
+    "spectral_rolloff_hz": 12862.226847034339,
+    "spectral_flatness": 0.0783985141743646,
+    "low_band_energy": 0.005250478977080083,
+    "mid_band_energy": 0.08610455137082544,
+    "high_band_energy": 0.9086449696520947,
+    "spectral_flux": 0.1520870446873598,
+    "harmonicity": 0.4322252733238293,
+    "inharmonicity": 0.5436921084854517,
+    "partial_count": 12,
+    "mel_frequency_cepstral_coefficients": [
+      -12.242186202392382,
+      5.198486742817734,
+      -9.73667976683232,
+      7.57977196902835,
+      -3.5353301949751437,
+      3.995957512323542,
+      -2.3302768033311323,
+      1.222581128575709,
+      -1.1378343489535319,
+      -1.0978644319350246,
+      -1.2240009330660777,
+      2.5869728979550817,
+      1.0504748724367283
+    ],
+    "spectral_centroid_mean_hz": 5161.855149555041,
+    "spectral_centroid_deviation_hz": 845.4921023502673,
+    "total_harmonic_distortion": 0,
+    "clipping_density": 0,
+    "distortion": "Clean",
+    "stationarity": 0,
+    "spectral_entropy": 0.5476466658381575,
+    "spectral_slope_db_per_octave": 1.4999447084645166,
+    "band_limit_high_hz": 14965.576171875,
+    "spectral_centroid_slope_hz_per_second": -2377.0983654616152,
+    "syllabic_modulation_energy": 0.003391413873148116,
+    "voicing_ratio": 0.8985507246376812,
+    "mid_rms": 0.05762572856553838,
+    "side_rms": 0.0006541017764143054,
+    "lufs": -18.592325179886796
+  },
+  "musicality": {
+    "pitch_hz": 2004.5454545454545,
+    "pitch_slope_semitones_per_second": null,
+    "root_note_name": "",
+    "root_frequency_hz": 0,
+    "root_cents_offset": 0,
+    "beats_per_minute": 0,
+    "root_midi_note": -1,
+    "chromagram": [
+      0.5832272115765299,
+      0.5139983230223254,
+      0.4577544450839132,
+      0.5923685872416552,
+      0.6848075419414086,
+      0.61877705318841,
+      0.6006101864028741,
+      0.7923910798213136,
+      1,
+      0.8067070586067236,
+      0.47090528673617205,
+      0.7298582180062763
+    ]
+  },
+  "unsupervised": {
+    "cluster": -1,
+    "principal_components": []
+  },
+  "ucs": {
+    "category": "MACHINES",
+    "subcategory": "MISC",
+    "id": "MACHMisc",
+    "confidence": 0.5195732107787114,
+    "alternatives": [
+      {
+        "category": "CYMBALS",
+        "subcategory": "RIDE",
+        "id": "CYMBRide",
+        "probability": 0.48,
+        "synonyms": [
+          "ride"
+        ]
+      }
+    ],
+    "synonyms": [
+      "ride"
+    ],
+    "reason": "name matched [ride]; signal 0.27, tier semantic_only, 2 candidates in contention; gate ruled out AIRBlow (spectral_flatness 0.0784 < min 0.1200); ABSTAINED to MISC (top two too close to call)"
+  },
+  "regions": {
+    "count": 1,
+    "detection_threshold_decibels": -40,
+    "minimum_silence_seconds": 0.15,
+    "minimum_region_seconds": 0.05,
+    "regions": [
+      {
+        "index": 0,
+        "start_seconds": 0.014965986394557823,
+        "end_seconds": 0.6784580498866213,
+        "duration_seconds": 0.6634920634920635,
+        "peak_amplitude": 0.3350039065633094,
+        "name": "",
+        "analysis": null
+      }
+    ]
+  },
+  "preview": {
+    "preview_version": 1,
+    "samples_per_bin": 256,
+    "bin_count": 184,
+    "bits_per_value": 8,
+    "channel_mode": "mono_mixdown",
+    "peak_data_base64": "AAAAAOY/mW2WaZ9/sU24Q8U7xTTFNskuyzDZKtwr4R7eHucd6xvmFuog5hfuHO8T6BTxEe4T8BX0DvIN9gzyDfUN8gz2DPcO9Qv3CPUJ+Qj5B/kI9An2C/kJ+An4B/oG+Af6BvoG+gb6BfsG+wT8BPsF/AT8BfsE+wX6BfwE/QT8A/wD/AP8A/0D/AP9BP0C/AP9A/0C/QL9A/0D/QL9A/0D/QP+Av0C/gL+Av4C/gL+Av0C/gL+Av4B/wL+Af4B/gL+Av4B/gL+Af8B/gH/Af8B/gH/Af8B/wH/Af8B/gL/Af8B/wH/Af8B/wH/Af8B/wH/Af8B/wH/Af8B/wH/Af8B/wH/Af8B/wH/Af8B/wH/AP8A/wH/Af8A/wEAAP8A/wAAAAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+  }
+}
