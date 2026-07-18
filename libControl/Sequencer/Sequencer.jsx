@@ -24,7 +24,7 @@ const SeqKnob = window.SeqKnob;
 const SeqButton = window.SeqButton;
 const TrackSampleMenu = window.TrackSampleMenu;
 
-const Sequencer = ({ label = "Pattern Sequencer" }) => {
+const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
     const {
         safeLabel, isPlaying, setIsPlaying, currentStep, setCurrentStep,
         seq, setSeq, steps, pattern, bpm, toneTrack, toneRoot,
@@ -102,33 +102,45 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
         gap: '12px'
     };
 
+    const showSeq = activeTabs.includes('SEQ');
+    const showSong = activeTabs.includes('SONG');
+
     return (
         <div style={{ padding: '12px', backgroundColor: 'rgba(18,18,18,0.28)', borderRadius: '4px', color: '#fff', border: '1px solid #333', width: '100%', boxSizing: 'border-box', marginTop: '10px' }}>
-            <h3 style={{ margin: '0 0 8px 0', fontSize: '15px', color: '#ccc' }}>{label}</h3>
-            
-            <div style={configStyle}>
-                <window.SeqControls
-                    recording={recording}
-                    toggleRecording={toggleRecording}
-                    clickVol={clickVol}
-                    setClickVol={setClickVol}
-                    isPlaying={isPlaying}
-                    togglePlayback={togglePlayback}
-                    bpm={bpm}
-                    setBpm={setBpm}
-                    tapping={tapping}
-                    tapTempo={tapTempo}
-                    steps={steps}
-                    setSteps={setSteps}
-                    doubleTo={doubleTo}
-                    rendering={rendering}
-                    renderLoop={renderLoop}
-                    savePattern={savePattern}
-                    clearPattern={clearPattern}
-                    configOpen={configOpen}
-                    setConfigOpen={setConfigOpen}
-                />
+            {showSeq && (
+                <>
+                <h3 style={{ margin: '0 0 8px 0', fontSize: '15px', color: '#ccc' }}>{label}</h3>
                 
+                <div style={configStyle}>
+                    <window.SeqControls
+                        recording={recording}
+                        toggleRecording={toggleRecording}
+                        clickVol={clickVol}
+                        setClickVol={setClickVol}
+                        isPlaying={isPlaying}
+                        togglePlayback={togglePlayback}
+                        bpm={bpm}
+                        setBpm={setBpm}
+                        tapping={tapping}
+                        tapTempo={tapTempo}
+                        steps={steps}
+                        setSteps={setSteps}
+                        doubleTo={doubleTo}
+                        rendering={rendering}
+                        renderLoop={renderLoop}
+                        savePattern={savePattern}
+                        clearPattern={clearPattern}
+                        configOpen={configOpen}
+                        setConfigOpen={setConfigOpen}
+                    />
+                </div>
+                </>
+            )}
+
+            {showSong && (
+                <>
+                {showSeq && <hr style={{borderColor: '#444', margin: '20px 0'}} />}
+                <h3 style={{ margin: '0 0 8px 0', fontSize: '15px', color: '#ccc' }}>Library & Song Mode</h3>
                 <window.SeqLibrary 
                     library={library} 
                     loadPattern={loadPattern} 
@@ -145,13 +157,14 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
                     setSongItems={setSongItems} 
                     setSongPos={setSongPos} 
                 />
-            </div>
+                </>
+            )}
             
+            {showSeq && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', overflowX: 'auto', paddingBottom: '6px' }}>
                 {TRACKS.map(({ name: trackName }, trkIdx) => {
                   const muted = mutes[trkIdx];
                   const tvol = trackVol[trkIdx] == null ? 1 : trackVol[trkIdx];
-                  const volAngle = -135 + tvol * 270;   // knob indicator reflects the track volume
                   const openMenu = (e) => { e.stopPropagation(); setTrackMenu({ trkIdx, x: e.clientX, y: e.clientY }); };
                   return (
                     <window.SeqTrack 
@@ -173,8 +186,9 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
                   );
                 })}
             </div>
+            )}
 
-            {toneRoot !== null && (
+            {toneRoot !== null && showSeq && (
                 <window.SeqToneTrack 
                     toneRoot={toneRoot}
                     steps={steps}

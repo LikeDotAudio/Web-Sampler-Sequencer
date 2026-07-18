@@ -54,6 +54,7 @@ const Header = ({ activeTabs, toggleTab }) => {
             <div className="header-tabs">
                 <button onClick={() => toggleTab('PADS')} style={btnStyle('PADS')}>PADS</button>
                 <button onClick={() => toggleTab('SEQ')} style={btnStyle('SEQ')}>SEQ</button>
+                <button onClick={() => toggleTab('SONG')} style={btnStyle('SONG')}>SONG</button>
                 <button onClick={() => toggleTab('EDITOR')} style={btnStyle('EDITOR')}>EDITOR</button>
                 <button onClick={() => toggleTab('MIXER')} style={btnStyle('MIXER', true)}>MIXER</button>
             </div>

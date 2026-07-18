@@ -238,10 +238,10 @@
                         </div>
                         {activeTabs.includes('PADS') && activeTabs.length > 1 && <hr style={{width: '100%', borderColor: '#333'}}/>}
                         
-                        <div style={{ display: activeTabs.includes('SEQ') ? 'block' : 'none', flex: '0 0 auto', width: '100%' }}>
-                            {window.Sequencer ? <window.Sequencer /> : <div>Loading SEQ...</div>}
+                        <div style={{ display: (activeTabs.includes('SEQ') || activeTabs.includes('SONG')) ? 'block' : 'none', flex: '0 0 auto', width: '100%' }}>
+                            {window.Sequencer ? <window.Sequencer activeTabs={activeTabs} /> : <div>Loading SEQ/SONG...</div>}
                         </div>
-                        {activeTabs.includes('SEQ') && activeTabs.length > 1 && (activeTabs.includes('EDITOR') || activeTabs.includes('MIXER')) && <hr style={{width: '100%', borderColor: '#333'}}/>}
+                        {(activeTabs.includes('SEQ') || activeTabs.includes('SONG')) && activeTabs.length > 1 && (activeTabs.includes('EDITOR') || activeTabs.includes('MIXER')) && <hr style={{width: '100%', borderColor: '#333'}}/>}
                         
                         <div style={{ display: activeTabs.includes('EDITOR') ? 'flex' : 'none', flex: '0 0 auto', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                             {window.SoundBrowser ? <window.SoundBrowser inline={true} onClose={() => toggleTab('EDITOR')} /> : <div>Loading EDITOR...</div>}

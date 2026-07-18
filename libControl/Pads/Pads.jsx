@@ -66,7 +66,7 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
                     }
                 }
             `}</style>
-            <div style={{ width: '100%', maxWidth: '800px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', justifyContent: 'center' }}>
+            <div style={{ width: '100%', maxWidth: '800px', display: 'grid', gridTemplateColumns: 'repeat(4, max-content)', gap: '8px', justifyContent: 'center' }}>
                 {layout.map((padNum) => {
                     const idx = padNum - 1;
                     const name = (KIT[idx] && KIT[idx].name) || `Pad ${padNum}`;
