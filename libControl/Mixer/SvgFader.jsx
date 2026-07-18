@@ -3,7 +3,7 @@ const MAX_GAIN = Math.pow(10, DB_MAX / 20);
 const gainToPos = g => g <= 0 ? 0 : Math.max(0, Math.min(1, (20 * Math.log10(g) - DB_MIN) / (DB_MAX - DB_MIN)));
 const posToGain = p => p <= 0.004 ? 0 : Math.pow(10, (DB_MIN + p * (DB_MAX - DB_MIN)) / 20);
 
-const SvgFader = ({ value = 0, color = "#46c2ff", width = 50, height = 180, onChange }) => {
+const SvgFader = ({ value = 0, color = "#f4902c", width = 50, height = 180, onChange }) => {
     const padTop = 6, padBot = 6, travel = height - padTop - padBot;
     const slotCx = 14, slotW = 9, slotX = slotCx - slotW / 2;
     const yAt = p => padTop + (1 - p) * travel;

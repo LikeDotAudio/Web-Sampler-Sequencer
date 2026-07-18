@@ -79,7 +79,7 @@ window.SoundBrowse = ({ onClose, onChoose, onChooseOther, targetLabel, inline })
                     </label>
                     <input type="text" value={filter} onChange={(e) => { setFilter(e.target.value); setSelectedIndex(-1); }} placeholder="Filter (e.g. HH)"
                         style={{ background: '#111', color: '#eee', border: '1px solid #444', borderRadius: '3px', padding: '4px 8px', fontSize: '12px', width: '130px' }} />
-                    {filter.trim() && <span style={{ fontSize: '11px', color: '#8ab4f8' }}>{deepSearching ? 'searching…' : `${shown.length} match${shown.length === 1 ? '' : 'es'}`}</span>}
+                    {filter.trim() && <span style={{ fontSize: '11px', color: '#fca858' }}>{deepSearching ? 'searching…' : `${shown.length} match${shown.length === 1 ? '' : 'es'}`}</span>}
                     <span style={{ fontSize: '11px', color: '#666' }}>↑ ↓ ← → browse · Enter load</span>
                 </div>
 
@@ -179,7 +179,7 @@ window.SoundBrowse = ({ onClose, onChoose, onChooseOther, targetLabel, inline })
                             ⭳ Load to {targetLabel || 'pad'}
                         </button>
                         {onChooseOther && (
-                            <button onClick={chooseOther} disabled={!selected} style={tbtn({ background: selected ? '#8ab4f8' : '#345', color: '#111', border: 'none', fontWeight: 'bold', padding: '8px 14px', cursor: selected ? 'pointer' : 'not-allowed' })}>
+                            <button onClick={chooseOther} disabled={!selected} style={tbtn({ background: selected ? '#fca858' : '#345', color: '#111', border: 'none', fontWeight: 'bold', padding: '8px 14px', cursor: selected ? 'pointer' : 'not-allowed' })}>
                                 ⭳ Load to other pad
                             </button>
                         )}

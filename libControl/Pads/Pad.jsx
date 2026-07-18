@@ -6,7 +6,7 @@ window.Pad = ({
     PadWave
 }) => {
     // Magic numbers for pad rendering and animations extracted here if any
-    const baseColor = isToneMode ? '#1565c0' : (hasSample ? '#f4902c' : '#3a3a3a');
+    const baseColor = isToneMode ? '#c96b18' : (hasSample ? '#f4902c' : '#3a3a3a');
     const restShadow = (hasSample || isToneMode) ? '0 4px 8px rgba(0,0,0,0.4)' : 'inset 0 1px 3px rgba(0,0,0,0.6)';
 
     const titleText = isToneMode ? `${noteName} — (Tone Mode for Pad ${toneRoot + 1})` : 
@@ -57,7 +57,7 @@ window.Pad = ({
                 {padNum}
             </span>
 
-            <span title={`MIDI note ${midiNote}`} style={{ position: 'absolute', top: '4px', left: '6px', fontSize: '8px', fontWeight: 'bold', opacity: 0.6, color: hasSample ? '#3a1f00' : '#8ab4f8' }}>
+            <span title={`MIDI note ${midiNote}`} style={{ position: 'absolute', top: '4px', left: '6px', fontSize: '8px', fontWeight: 'bold', opacity: 0.6, color: hasSample ? '#3a1f00' : '#fca858' }}>
                 {window.midiNoteName(midiNote)}
             </span>
 
@@ -66,7 +66,7 @@ window.Pad = ({
                     SMP
                 </span>
             ) : (remembered && (
-                <span title={`Remembered: ${remembered.name}`} style={{ position: 'absolute', bottom: '3px', right: '5px', fontSize: '10px', fontWeight: 'bold', color: '#8ab4f8', opacity: 0.8 }}>
+                <span title={`Remembered: ${remembered.name}`} style={{ position: 'absolute', bottom: '3px', right: '5px', fontSize: '10px', fontWeight: 'bold', color: '#fca858', opacity: 0.8 }}>
                     ○
                 </span>
             ))}

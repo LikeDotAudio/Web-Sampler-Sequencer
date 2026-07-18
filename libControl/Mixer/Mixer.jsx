@@ -5,9 +5,9 @@ const Mixer = () => {
     const { trackVol, setTrackVol, trackPan, setTrackPan, mutes, toggleMute } = window.useSeqState('Pattern Sequencer', 16, window.OA_DRUM_KIT || []);
     const tracks = window.OA_DRUM_KIT || [];
 
-    const PALETTE = ["#46c2ff","#ff6b6b","#ffd166","#06d6a0","#c792ea","#f78c6b",
-                     "#7ec4ff","#b9f27c","#ff9ff3","#feca57","#54a0ff","#ef5da8",
-                     "#2ec4b6","#e09f3e","#9b5de5","#80ed99"];
+    const PALETTE = ["#f4902c", "#f7a048", "#f08018", "#f4902c", "#faa552", "#e67300",
+                     "#f4902c", "#f28b22", "#f79b39", "#f4902c", "#e0750d", "#fca858",
+                     "#f4902c", "#f59638", "#eb8117", "#f4902c"];
 
     // Local state for Solos, since sequencer doesn't natively support solo yet
     const [solos, setSolos] = React.useState({});
@@ -58,7 +58,7 @@ const Mixer = () => {
                         <div style={{ display: 'flex', gap: '8px', alignItems: 'stretch', height: '225px', opacity: mutedBySolo ? 0.4 : 1, transition: 'opacity 0.2s' }}>
                             <div style={{
                                 width: '10px', borderRadius: '3px', position: 'relative', overflow: 'hidden', border: '1px solid #0008',
-                                background: 'linear-gradient(to top, #21c95a 0%, #21c95a 74%, #f5d020 78%, #f5d020 88%, #ff3b30 93%, #ff3b30 100%)'
+                                background: 'linear-gradient(to top, #c26915 0%, #e87b10 74%, #f4902c 78%, #f7a048 88%, #ffb44d 93%, #ffd494 100%)'
                             }}>
                                 <i style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b' }}></i>
                             </div>
@@ -73,8 +73,8 @@ const Mixer = () => {
                             style={{
                                 width: '66px', padding: '5px 0', textAlign: 'center', borderRadius: '5px',
                                 border: `1px solid ${!isMuted ? 'var(--on)' : '#444b57'}`,
-                                background: !isMuted ? '#1f6b3a' : '#353b45',
-                                color: !isMuted ? '#d7ffe4' : 'var(--muted)',
+                                background: !isMuted ? '#6b3f14' : '#353b45',
+                                color: !isMuted ? '#ffe9d4' : 'var(--muted)',
                                 cursor: 'pointer', fontSize: '11px', fontWeight: '600', letterSpacing: '.5px'
                             }}
                         >
@@ -86,7 +86,7 @@ const Mixer = () => {
                             style={{
                                 width: '66px', padding: '5px 0', textAlign: 'center', borderRadius: '5px',
                                 border: `1px solid ${isSolo ? 'var(--solo)' : '#444b57'}`,
-                                background: isSolo ? '#6b5a14' : '#353b45',
+                                background: isSolo ? '#6b5014' : '#353b45',
                                 color: isSolo ? '#fff3c4' : 'var(--muted)',
                                 cursor: 'pointer', fontSize: '11px', fontWeight: '600', letterSpacing: '.5px'
                             }}
@@ -120,10 +120,10 @@ const Mixer = () => {
                 <div style={{ fontSize: '10px', color: 'var(--muted)', letterSpacing: '.6px', textTransform: 'uppercase', marginTop: '4px' }}>Master</div>
                 
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'stretch', height: '225px', marginTop: '14px' }}>
-                    <div style={{ width: '10px', borderRadius: '3px', position: 'relative', overflow: 'hidden', border: '1px solid #0008', background: 'linear-gradient(to top, #21c95a 0%, #21c95a 74%, #f5d020 78%, #f5d020 88%, #ff3b30 93%, #ff3b30 100%)' }}>
+                    <div style={{ width: '10px', borderRadius: '3px', position: 'relative', overflow: 'hidden', border: '1px solid #0008', background: 'linear-gradient(to top, #c26915 0%, #e87b10 74%, #f4902c 78%, #f7a048 88%, #ffb44d 93%, #ffd494 100%)' }}>
                         <i style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b' }}></i>
                     </div>
-                    <div style={{ width: '10px', borderRadius: '3px', position: 'relative', overflow: 'hidden', border: '1px solid #0008', background: 'linear-gradient(to top, #21c95a 0%, #21c95a 74%, #f5d020 78%, #f5d020 88%, #ff3b30 93%, #ff3b30 100%)' }}>
+                    <div style={{ width: '10px', borderRadius: '3px', position: 'relative', overflow: 'hidden', border: '1px solid #0008', background: 'linear-gradient(to top, #c26915 0%, #e87b10 74%, #f4902c 78%, #f7a048 88%, #ffb44d 93%, #ffd494 100%)' }}>
                         <i style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b' }}></i>
                     </div>
                     {/* Dummy fader for Master since we don't have global master vol in sequencer yet, or we can just leave it as dummy UI */}

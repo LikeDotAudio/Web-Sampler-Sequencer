@@ -47,7 +47,7 @@ window.SeqControls = ({
                             <SeqButton
                                 label={`+${STEP_OPTIONS[i - 1]}`}
                                 onClick={() => doubleTo(n)}
-                                color="#26323a" textColor="#8ab4f8"
+                                color="#26323a" textColor="#fca858"
                                 title={`Extend to ${n} steps: copy the first ${n / 2} onto the second ${n / 2}`}
                                 style={{ border: '1px solid #3a4a58' }}
                             />

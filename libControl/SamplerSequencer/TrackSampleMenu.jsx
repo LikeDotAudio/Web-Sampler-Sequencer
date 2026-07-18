@@ -31,7 +31,7 @@ window.TrackSampleMenu = ({ trkIdx, trackName, anchor, version, onBrowse, onClos
         for (let x = 0; x < c.width; x++) { let mn = 1, mx = -1; for (let j = 0; j < step; j++) { const d = data[x * step + j]; if (d === undefined) break; if (d < mn) mn = d; if (d > mx) mx = d; } cx.moveTo(x, (1 + mn) * amp); cx.lineTo(x, (1 + mx) * amp); }
         cx.stroke();
         if (e.buffer.duration) {
-            const ox = (e.offset || 0) / e.buffer.duration * c.width; cx.strokeStyle = '#8ab4f8'; cx.beginPath(); cx.moveTo(ox, 0); cx.lineTo(ox, c.height); cx.stroke();
+            const ox = (e.offset || 0) / e.buffer.duration * c.width; cx.strokeStyle = '#fca858'; cx.beginPath(); cx.moveTo(ox, 0); cx.lineTo(ox, c.height); cx.stroke();
             const endSec = (e.end != null ? e.end : e.buffer.duration);
             const ex = endSec / e.buffer.duration * c.width; cx.strokeStyle = '#e57373'; cx.beginPath(); cx.moveTo(ex, 0); cx.lineTo(ex, c.height); cx.stroke();
         }
@@ -76,7 +76,7 @@ window.TrackSampleMenu = ({ trkIdx, trackName, anchor, version, onBrowse, onClos
                 <div style={{ marginTop: '10px', opacity: hasBuf ? 1 : 0.4 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#aaa' }}><span>PITCH</span><span style={{ color: '#f4902c' }}>{pitchSemi > 0 ? '+' : ''}{pitchSemi} st</span></div>
                     <input type="range" min="-12" max="12" step="1" value={pitchSemi} disabled={!hasBuf} onChange={(e) => applyPitch(Number(e.target.value))} style={{ width: '100%' }} />
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#aaa', marginTop: '6px' }}><span style={{ color: '#8ab4f8' }}>TIME SHIFT (start)</span><span style={{ color: '#f4902c' }}>{offset.toFixed(3)}s</span></div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#aaa', marginTop: '6px' }}><span style={{ color: '#fca858' }}>TIME SHIFT (start)</span><span style={{ color: '#f4902c' }}>{offset.toFixed(3)}s</span></div>
                     <input type="range" min="0" max={dur ? Number((dur * 0.9).toFixed(3)) : 0} step="0.001" value={offset} disabled={!hasBuf} onChange={(e) => applyOffset(Number(e.target.value))} style={{ width: '100%' }} />
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#aaa', marginTop: '6px' }}><span style={{ color: '#e57373' }}>END / CUT-OFF</span><span style={{ color: '#f4902c' }}>{Number(end || 0).toFixed(3)}s{dur && Math.abs((end || 0) - dur) < 0.0005 ? ' (EOF)' : ''}</span></div>
                     <input type="range" min="0.01" max={dur ? Number(dur.toFixed(3)) : 0} step="0.001" value={Math.min(end || 0, dur || 0)} disabled={!hasBuf} onChange={(e) => applyEnd(Math.max(offset + 0.01, Number(e.target.value)))} style={{ width: '100%' }} />

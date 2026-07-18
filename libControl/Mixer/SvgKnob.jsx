@@ -1,4 +1,4 @@
-const SvgKnob = ({ value = 0, min = 0, max = 1, defaultVal = 0, bipolar = false, color = "#46c2ff", size = 42, onChange }) => {
+const SvgKnob = ({ value = 0, min = 0, max = 1, defaultVal = 0, bipolar = false, color = "#f4902c", size = 42, onChange }) => {
     const cx = size / 2, cy = size / 2, R = size / 2 - 3, bodyR = R - 4;
     const [uid] = React.useState(() => "k" + Math.random().toString(36).slice(2, 8));
     

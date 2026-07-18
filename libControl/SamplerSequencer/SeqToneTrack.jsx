@@ -2,13 +2,13 @@ window.SeqToneTrack = ({ toneRoot, steps, toneTrack, toneTrackRef, toneRootRef, 
     const TRACKS = window.OA_DRUM_KIT || [];
     
     return (
-        <div style={{ display: 'flex', gap: '6px', alignItems: 'center', marginTop: '10px', paddingTop: '10px', borderTop: '1px dashed #1976d2', paddingBottom: '8px' }}>
+        <div style={{ display: 'flex', gap: '6px', alignItems: 'center', marginTop: '10px', paddingTop: '10px', borderTop: '1px dashed #c96b18', paddingBottom: '8px' }}>
             <div style={{ width: '110px', flexShrink: 0, paddingRight: '6px' }}>
-                <span style={{ fontSize: '11px', color: '#64b5f6', fontWeight: 'bold' }}>
+                <span style={{ fontSize: '11px', color: '#ffb44d', fontWeight: 'bold' }}>
                     TONE: {(TRACKS[toneRoot] && TRACKS[toneRoot].name) || `Pad ${toneRoot+1}`}
                 </span>
             </div>
-            <div style={{ display: 'flex', gap: '3px', background: '#001a33', padding: '4px', borderRadius: '4px', border: '1px solid #003366' }}>
+            <div style={{ display: 'flex', gap: '3px', background: '#331a00', padding: '4px', borderRadius: '4px', border: '1px solid #663300' }}>
                 {[...Array(steps)].map((_, step) => {
                     const noteData = toneTrack[step];
                     const isLit = noteData && noteData.vel > 0;
@@ -40,13 +40,13 @@ window.SeqToneTrack = ({ toneRoot, steps, toneTrack, toneTrackRef, toneRootRef, 
                             style={{
                                 position: 'relative', overflow: 'hidden',
                                 width: '18px', height: '20px',
-                                backgroundColor: isCurrent ? '#fff' : (isBeat && !isLit ? '#00264d' : '#0a1929'),
-                                border: isLit ? (isNewlyRecorded ? '1px solid #ff5252' : '1px solid #42a5f5') : '1px solid #001122',
+                                backgroundColor: isCurrent ? '#fff' : (isBeat && !isLit ? '#4d2600' : '#29140a'),
+                                border: isLit ? (isNewlyRecorded ? '1px solid #ff5252' : '1px solid #f4902c') : '1px solid #221100',
                                 cursor: 'pointer', borderRadius: '2px', touchAction: 'none',
-                                boxShadow: isLit ? (isNewlyRecorded ? `0 0 4px rgba(211,47,47,0.6)` : `0 0 4px rgba(66,165,245,0.6)`) : 'none',
+                                boxShadow: isLit ? (isNewlyRecorded ? `0 0 4px rgba(211,47,47,0.6)` : `0 0 4px rgba(244,144,44,0.6)`) : 'none',
                             }}>
                             {isLit && !isCurrent && (
-                                <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: `${Math.max(14, noteData.vel)}%`, background: isNewlyRecorded ? `rgba(211,47,47,0.7)` : `rgba(66,165,245,0.7)`, pointerEvents: 'none' }} />
+                                <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: `${Math.max(14, noteData.vel)}%`, background: isNewlyRecorded ? `rgba(211,47,47,0.7)` : `rgba(244,144,44,0.7)`, pointerEvents: 'none' }} />
                             )}
                             {isLit && (
                                 <div style={{ position: 'absolute', left: 0, right: 0, bottom: `${Math.min(90, pitchPercent)}%`, height: '2px', background: '#fff', pointerEvents: 'none' }} />

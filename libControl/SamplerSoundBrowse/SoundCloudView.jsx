@@ -1,5 +1,5 @@
 window.SoundCloudView = ({ data, rootHandle, onSelectFile }) => {
-    const CLOUD_PALETTE = ['#f4902c', '#8ab4f8', '#4caf50', '#e57373', '#ba68c8', '#4dd0e1', '#ffd54f', '#a1887f', '#90a4ae', '#f06292', '#aed581', '#7986cb', '#ff8a65', '#4db6ac', '#dce775', '#9575cd', '#fff'];
+    const CLOUD_PALETTE = ['#f4902c', '#f7a048', '#f08018', '#faa552', '#e67300', '#f28b22', '#f79b39', '#e0750d', '#fca858', '#f59638', '#eb8117', '#ffb44d', '#ffd494', '#c96b18', '#d67615', '#eb8117', '#fff'];
     const chartRef = React.useRef(null);
     const echartsInst = React.useRef(null);
     const [detail, setDetail] = React.useState(null);   // clicked sample → side panel
@@ -135,7 +135,7 @@ window.SoundCloudView = ({ data, rootHandle, onSelectFile }) => {
                 {detail ? (
                     <div>
                         <div style={{ color: '#f4902c', fontWeight: 'bold', marginBottom: '4px', wordBreak: 'break-word' }}>{detail.name}</div>
-                        <div style={{ fontSize: '11px', color: '#8ab4f8', marginBottom: '10px', wordBreak: 'break-word' }}>{detail.sub || '(root)'}</div>
+                        <div style={{ fontSize: '11px', color: '#fca858', marginBottom: '10px', wordBreak: 'break-word' }}>{detail.sub || '(root)'}</div>
                         <div style={{ marginBottom: '3px' }}>Group: <b style={{ color: colorFor(groupKey(detail)) }}>{detail.group || 'Other'}</b></div>
                         {detail.timbre ? row('Timbre', detail.timbre) : null}
                         {detail.cluster != null && detail.cluster >= 0 ? row('Cluster', '#' + detail.cluster) : null}

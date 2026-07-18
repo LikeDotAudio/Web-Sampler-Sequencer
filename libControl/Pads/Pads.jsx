@@ -140,7 +140,7 @@ const Sampler = ({ label = "Drum Sampler", centerVelocity = 100, edgeVelocity = 
             {missingCount > 0 && (
                 <div style={{ marginTop: '10px', textAlign: 'center' }}>
                     <button onClick={restoreSounds} title="Re-load the samples remembered on these pads (from MQTT) using the saved folder"
-                        style={{ background: '#8ab4f8', color: '#111', border: 'none', borderRadius: '3px', padding: '5px 12px', fontSize: '11px', fontWeight: 'bold', cursor: 'pointer' }}>
+                        style={{ background: '#fca858', color: '#111', border: 'none', borderRadius: '3px', padding: '5px 12px', fontSize: '11px', fontWeight: 'bold', cursor: 'pointer' }}>
                         ↻ Restore {missingCount} sample{missingCount > 1 ? 's' : ''}{restoreMsg ? ` · ${restoreMsg}` : ''}
                     </button>
                 </div>
@@ -168,7 +168,7 @@ const Sampler = ({ label = "Drum Sampler", centerVelocity = 100, edgeVelocity = 
                 </button>
                 {window.PadBrowse && (
                     <button onClick={() => setShowPadBrowse(true)} title="Browse a folder into all 16 pads at once"
-                        style={{ background: '#8ab4f8', color: '#111', border: 'none', borderRadius: '3px', padding: '5px 12px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' }}>
+                        style={{ background: '#fca858', color: '#111', border: 'none', borderRadius: '3px', padding: '5px 12px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' }}>
                         🎛 Pad Browser
                     </button>
                 )}
@@ -189,7 +189,7 @@ const Sampler = ({ label = "Drum Sampler", centerVelocity = 100, edgeVelocity = 
                 <window.PadBrowse onClose={() => setShowPadBrowse(false)} />
             )}
             {pendingAssign && (
-                <div style={{ position: 'fixed', top: '12px', left: '50%', transform: 'translateX(-50%)', zIndex: 10001, background: '#8ab4f8', color: '#111', padding: '8px 16px', borderRadius: '4px', fontSize: '13px', fontWeight: 'bold', boxShadow: '0 4px 16px rgba(0,0,0,0.5)' }}>
+                <div style={{ position: 'fixed', top: '12px', left: '50%', transform: 'translateX(-50%)', zIndex: 10001, background: '#fca858', color: '#111', padding: '8px 16px', borderRadius: '4px', fontSize: '13px', fontWeight: 'bold', boxShadow: '0 4px 16px rgba(0,0,0,0.5)' }}>
                     👆 Click a pad to assign "{pendingAssign.meta && pendingAssign.meta.name}" — Esc to cancel
                 </div>
             )}
