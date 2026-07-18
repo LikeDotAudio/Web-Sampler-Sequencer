@@ -36,49 +36,11 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
         recording, toggleRecording, recordingRef,
         recordedNotes, setRecordedNotes,
         writeStepVel, previewVoice, getAudioCtx, currentStepRef,
-        setSeqRef
+        setSeqRef,
+        library, setLibraryItems, song, setSongItems, songItemsRef, libraryRef, songRef, songPos, setSongPos
     } = window.useSeqState(label, DEFAULT_STEPS, TRACKS);
 
-    // Per-track sample menu (click a track name) + its Browse target.
-    const [trackMenu, setTrackMenu] = React.useState(null);   // { trkIdx, x, y }
-    const [browseTrack, setBrowseTrack] = React.useState(null);
-    const [trackVer, setTrackVer] = React.useState(0);
-    const trackPublish = window.useMqttPublish ? window.useMqttPublish() : null;
-    const loadTrackSample = async (trkIdx, file, meta) => {
-        try {
-            const ctx = window.oaAudioCtx();
-            const buf = await window.oaDecodeAudio(ctx, await file.arrayBuffer());
-            const prev = window.OA_DRUM_SAMPLES[trkIdx] || {};
-            window.oaSetDrumSample(trkIdx, buf, { name: file.name, pitch: prev.pitch, loop: prev.loop, fade: prev.fade, offset: 0, folder: (meta && meta.folder) || '' });
-            setTrackVer((v) => v + 1);
-            if (trackPublish) trackPublish(`OpenAir/Gui/DrumKit/${trkIdx}/sample`, { name: file.name, folder: (meta && meta.folder) || '' });
-        } catch (e) { console.error('🛑 [Sequencer] load track sample:', e); }
-    };
-
-    // Saved-pattern library — also pushed to / read from MQTT (retained), with a
-    // localStorage seed so it still loads when the broker is offline.
-    const [lib, setLib] = window.useMqttState(libraryTopic, { items: loadLibrary() });
-    const library = (lib && lib.items) || [];
-    const setLibraryItems = (items) => setLib({ items });
-    React.useEffect(() => {
-        if (lib && lib.items) {
-            try {
-                window.localStorage.setItem(LIBRARY_KEY, JSON.stringify(lib.items));
-            } catch (e) { /* storage full / unavailable — keep running */ }
-        }
-    }, [lib]);
-
-    // SONG — an ordered list of saved-pattern NAMES chained end-to-end at
-    // playback (pattern A, then B, then A again…). Shared over MQTT (retained)
-    // like the library so it survives reloads and syncs across clients.
-    const songTopic = `OpenAir/Gui/Sequencer/${safeLabel}/song`;
-    const [songState, setSongState] = window.useMqttState(songTopic, { items: [] });
-    const song = (songState && songState.items) || [];
-    const setSongItems = (items) => setSongState({ items });
-    const songItemsRef = React.useRef(song); songItemsRef.current = song;
-    const libraryRef = React.useRef(library); libraryRef.current = library;
-    const songRef = React.useRef(null);            // { idx } while a song plays
-    const [songPos, setSongPos] = React.useState(null);
+    const { trackMenu, setTrackMenu, browseTrack, setBrowseTrack, trackVer, setTrackVer, loadTrackSample } = window.useSeqMenus();
 
     const { timerIDRef, nextNoteTimeRef, scheduler } = window.useSeqScheduler(
         bpmRef, stepsRef, mutesRef, trackVolRef, trackPanRef, 
@@ -208,20 +170,7 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
                 setSongPos={setSongPos} 
             />
 
-            {activeFader && (
-                <div style={{ position: 'fixed', zIndex: 10000, pointerEvents: 'none',
-                    left: Math.min(activeFader.x + 16, window.innerWidth - 90),
-                    top: Math.min(Math.max(activeFader.y - 130, 8), window.innerHeight - 260),
-                    width: '78px', background: '#1c1c1c', border: '1px solid #f4902c', borderRadius: '6px',
-                    padding: '10px', boxShadow: '0 8px 30px rgba(0,0,0,0.75)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ fontSize: '22px', fontWeight: 'bold', color: '#f4902c', lineHeight: 1 }}>{activeFader.vel}</div>
-                    <div style={{ position: 'relative', width: '30px', height: '200px', background: '#0a0a0a', border: '1px solid #444', borderRadius: '3px', overflow: 'hidden' }}>
-                        <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: `${activeFader.vel}%`, background: 'linear-gradient(to top, #b96a1e, #f4902c)' }} />
-                        <div style={{ position: 'absolute', left: '-2px', right: '-2px', bottom: `calc(${activeFader.vel}% - 2px)`, height: '4px', background: '#fff', borderRadius: '1px' }} />
-                    </div>
-                    <div style={{ fontSize: '9px', color: '#888', letterSpacing: '0.5px' }}>VELOCITY</div>
-                </div>
-            )}
+            <window.SeqFader activeFader={activeFader} />
 
             {trackMenu && (
                 <TrackSampleMenu

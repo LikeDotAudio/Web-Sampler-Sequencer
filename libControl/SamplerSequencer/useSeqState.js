@@ -166,6 +166,32 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
         };
     }, []);
 
+    const LIBRARY_KEY = 'oaSequencerLibrary';
+    const loadLibrary = () => {
+        try { return JSON.parse(window.localStorage.getItem(LIBRARY_KEY)) || []; }
+        catch (e) { return []; }
+    };
+
+    const libraryTopic = `OpenAir/Gui/Sequencer/${safeLabel}/library`;
+    const [lib, setLib] = window.useMqttState(libraryTopic, { items: loadLibrary() });
+    const library = (lib && lib.items) || [];
+    const setLibraryItems = (items) => setLib({ items });
+    React.useEffect(() => {
+        if (lib && lib.items) {
+            try { window.localStorage.setItem(LIBRARY_KEY, JSON.stringify(lib.items)); } 
+            catch (e) { }
+        }
+    }, [lib]);
+
+    const songTopic = `OpenAir/Gui/Sequencer/${safeLabel}/song`;
+    const [songState, setSongState] = window.useMqttState(songTopic, { items: [] });
+    const song = (songState && songState.items) || [];
+    const setSongItems = (items) => setSongState({ items });
+    const songItemsRef = React.useRef(song); songItemsRef.current = song;
+    const libraryRef = React.useRef(library); libraryRef.current = library;
+    const songRef = React.useRef(null);
+    const [songPos, setSongPos] = React.useState(null);
+
     return {
         safeLabel, isPlaying, setIsPlaying, currentStep, setCurrentStep,
         seq, setSeq, steps, pattern, bpm, toneTrack, toneRoot,
@@ -177,6 +203,7 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
         recording, toggleRecording, recordingRef,
         recordedNotes, setRecordedNotes,
         writeStepVel, previewVoice, getAudioCtx, currentStepRef,
-        setSeqRef
+        setSeqRef,
+        library, setLibraryItems, song, setSongItems, songItemsRef, libraryRef, songRef, songPos, setSongPos
     };
 };
