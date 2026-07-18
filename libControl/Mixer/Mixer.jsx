@@ -80,7 +80,7 @@ const Mixer = () => {
 
 
     return (
-        <div className="fat-scrollbar-mobile" style={{ display: 'flex', gap: '6px', padding: '16px', overflowX: 'auto', alignItems: 'stretch', backgroundColor: 'var(--bg)' }}>
+        <div className="chunky-scrollbar" style={{ display: 'flex', gap: '6px', padding: '16px', overflowX: 'auto', alignItems: 'stretch', backgroundColor: 'var(--bg)' }}>
             {tracks.map((track, i) => {
                 const color = PALETTE[i % PALETTE.length];
                 const isMuted = mutes[i];
