@@ -110,7 +110,20 @@ window.oaRenderSynthVoice = async function (idx) {
     try {
         const off = new OfflineCtx(1, Math.ceil(rate * seconds), rate);
         engine.render(off, patch, 0, 0.9, off.destination);
-        const buffer = await off.startRendering();
+        const raw = await off.startRendering();
+
+        // Trim the trailing silence. Without this a 30ms rimshot is drawn into
+        // the first eighth of the pad with the rest blank, while a long cymbal
+        // fills it — the shapes would not be comparable.
+        const src = raw.getChannelData(0);
+        let last = src.length - 1;
+        while (last > 0 && Math.abs(src[last]) < 0.0015) last--;
+        const len = Math.max(64, last + 1);
+        let buffer = raw;
+        if (len < src.length) {
+            buffer = new (window.AudioBuffer || Object)({ length: len, sampleRate: rate, numberOfChannels: 1 });
+            buffer.copyToChannel(src.subarray(0, len), 0);
+        }
         window.OA_SYNTH_RENDER[idx] = { key: key, buffer: buffer };
         window.dispatchEvent(new CustomEvent('oa-synth-rendered', { detail: { idx: idx } }));
         return buffer;
