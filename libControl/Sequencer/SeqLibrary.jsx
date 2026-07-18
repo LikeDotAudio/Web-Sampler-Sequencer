@@ -13,9 +13,13 @@ window.SeqLibrary = ({ library, loadPattern, deletePattern, setSongItems, song }
                     {library.map((entry) => (
                         <div key={entry.name} style={{ display: 'flex', alignItems: 'center', background: '#2a2a2a', borderRadius: '3px', border: '1px solid #444', overflow: 'hidden' }}>
                             <button
-                                onClick={() => loadPattern(entry)}
+                                onClick={() => {
+                                    loadPattern(entry);
+                                    // Bring the grid up so the pattern you just loaded is editable.
+                                    window.dispatchEvent(new CustomEvent('oa-open-tab', { detail: { tab: 'SEQ' } }));
+                                }}
                                 onContextMenu={(e) => { e.preventDefault(); if (window.confirm(`Delete pattern "${entry.name}"?`)) deletePattern(entry.name); }}
-                                title={`Load "${entry.name}"${entry.bpm ? ` @ ${entry.bpm} BPM` : ''} · right-click to delete`}
+                                title={`Load "${entry.name}"${entry.bpm ? ` @ ${entry.bpm} BPM` : ''} into the sequencer to edit · right-click to delete`}
                                 style={{ background: 'transparent', color: '#f4902c', border: 'none', padding: '5px 10px', cursor: 'pointer', fontSize: '12px' }}
                             >
                                 {entry.name}

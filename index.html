@@ -283,6 +283,13 @@
                 });
             };
 
+            // Panels can request focus (e.g. loading a pattern opens the grid to edit it).
+            React.useEffect(() => {
+                const open = (e) => { const t = e.detail && e.detail.tab; if (t) toggleTab(t); };
+                window.addEventListener('oa-open-tab', open);
+                return () => window.removeEventListener('oa-open-tab', open);
+            }, []);
+
             // Explicit dismissal (e.g. the Editor's ✕) — the tab bar itself never closes.
             const closeTab = (tab) => setActiveTabs(prev => prev.length > 1 ? prev.filter(t => t !== tab) : prev);
 

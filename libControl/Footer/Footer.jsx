@@ -10,9 +10,11 @@ const Footer = () => {
         <footer style={{ padding: '10px 20px', backgroundColor: 'var(--panel)', borderTop: '1px solid #3a3f49', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px', color: 'var(--muted)', flexWrap: 'wrap', gap: '10px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                 <div id="seq-footer-slot" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}></div>
-                <div id="midi-footer-slot" style={{ display: 'flex', alignItems: 'center' }}></div>
             </div>
-            {!isMobile && <div>Created by Anthony Kuzub — for educational and experimental purposes</div>}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                {!isMobile && <div>Created by Anthony Kuzub — for educational and experimental purposes</div>}
+                <div id="config-footer-slot" style={{ display: 'flex', alignItems: 'center' }}></div>
+            </div>
         </footer>
     );
 };

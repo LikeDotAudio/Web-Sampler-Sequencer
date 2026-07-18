@@ -21,13 +21,9 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
     const padButtons = React.useRef([]);
     const fileInputs = React.useRef([]);
     const rootRef = React.useRef(null);
-    const [midiConfigOpen, setMidiConfigOpen] = React.useState(false);
-
-    const [midiNode, setMidiNode] = React.useState(null);
     // Sets live inside the sequencer's ⚙ Config drop-up rather than owning a footer button.
     const [setsNode, setSetsNode] = React.useState(null);
     React.useEffect(() => {
-        setMidiNode(document.getElementById('midi-footer-slot'));
         setSetsNode(document.getElementById('config-dropup-slot'));
     }, []);
     // The drop-up belongs to the Sequencer; ask it to close once a set is chosen.
@@ -156,32 +152,17 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
                 </div>
             )}
             
-            {/* Web MIDI — map a connected controller's notes to the pads */}
-            {midiNode && ReactDOM.createPortal(
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
-                    <window.SeqButton
-                        label={midiConfigOpen ? "✖ Close" : "🎹 MIDI"}
-                        onClick={() => setMidiConfigOpen(!midiConfigOpen)}
-                        active={midiConfigOpen}
-                        color="#444" textColor="#fff"
-                        style={Object.assign({}, window.OA_FOOTER_BTN, { border: '1px solid #666' })}
-                    />
-                    {midiConfigOpen && (
+            {/* Web MIDI — a section of the ⚙ Config drop-up */}
+            {setsNode && ReactDOM.createPortal(
                         <div style={{
-                            position: 'absolute',
-                            bottom: '36px',
-                            right: '0',
-                            background: 'var(--panel)',
-                            padding: '12px',
-                            border: '1px solid #444',
-                            borderRadius: '8px',
-                            boxShadow: '0 -4px 16px rgba(0,0,0,0.6)',
+                            borderTop: '1px solid #444',
+                            paddingTop: '12px',
                             display: 'flex',
                             flexDirection: 'column',
                             gap: '8px',
-                            zIndex: 1000,
                             minWidth: '180px'
                         }}>
+                            <span style={{ fontSize: '11px', color: '#aaa', textTransform: 'uppercase', letterSpacing: '0.5px' }}>MIDI</span>
                             <span style={{ fontSize: '11px', color: '#ccc' }}>
                                 Status: <b style={{ color: (midiStatus && !/not supported|denied|No MIDI/i.test(midiStatus)) ? '#4caf50' : '#f55' }}>{midiStatus || 'connecting…'}</b>
                             </span>
@@ -190,10 +171,8 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
                                 <input type="number" value={midiBase} onChange={(e) => setMidiBase(Number(e.target.value))} title="MIDI note number that triggers pad 1" style={{ width: '50px', background: '#000', color: '#f4902c', border: '1px solid #444', textAlign: 'center', borderRadius: '3px', fontSize: '11px' }} />
                             </div>
                             {midiNote != null && <span style={{ fontSize: '11px', color: '#888' }}>Last Note: <b style={{ color: '#f4902c' }}>{midiNote}</b></span>}
-                        </div>
-                    )}
-                </div>,
-                midiNode
+                        </div>,
+                setsNode
             )}
             
             {/* SETS — a section of the sequencer's ⚙ Config drop-up, shown on the PADS tab */}

@@ -12,8 +12,10 @@ window.SeqControls = ({
     const SeqKnob = window.SeqKnob;
     const STEP_OPTIONS = [4, 8, 16, 32, 64];
     const [footerNode, setFooterNode] = React.useState(null);
+    const [configBtnNode, setConfigBtnNode] = React.useState(null);
     React.useEffect(() => {
         setFooterNode(document.getElementById('seq-footer-slot'));
+        setConfigBtnNode(document.getElementById('config-footer-slot'));
     }, []);
 
     // Every footer button shares this footprint so the row reads as one set of controls.
@@ -35,15 +37,6 @@ window.SeqControls = ({
                 color={isPlaying ? '#ffb300' : '#388e3c'} textColor="#fff"
                 style={Object.assign({}, FOOTER_BTN, { border: 'none' })}
             />
-            <SeqKnob value={bpm} min={40} max={300} def={120} onChange={setBpm} label="BPM" flash={tapping} title="Drag up/down or scroll to change BPM" />
-            <SeqButton label="TAP" onClick={tapTempo} active={tapping} title="Tap to set tempo" style={Object.assign({}, FOOTER_BTN)} />
-            <SeqButton
-                label={configOpen ? "✖ Close" : "⚙ Config"}
-                onClick={() => setConfigOpen(!configOpen)}
-                active={configOpen}
-                color="#444" textColor="#fff"
-                style={Object.assign({}, FOOTER_BTN, { border: '1px solid #666' })}
-            />
             <SeqButton
                 label="⭳ Save Pattern"
                 onClick={savePattern}
@@ -53,13 +46,32 @@ window.SeqControls = ({
         </div>
     );
 
+    // Config lives alone at the far right of the footer.
+    const configButton = (
+        <SeqButton
+            label={configOpen ? "✖ Close" : "⚙ Config"}
+            onClick={() => setConfigOpen(!configOpen)}
+            active={configOpen}
+            color="#444" textColor="#fff"
+            style={Object.assign({}, FOOTER_BTN, { border: '1px solid #666' })}
+        />
+    );
+
     return (
         <div style={{ display: 'flex', gap: '10px', marginBottom: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
-            {footerNode 
+            {footerNode
                 ? ReactDOM.createPortal(playbackControls, footerNode)
                 : playbackControls}
+            {configBtnNode && ReactDOM.createPortal(configButton, configBtnNode)}
 
-            <div style={{ marginLeft: '15px', display: 'flex', alignItems: 'flex-start', gap: '5px' }}>
+            {/* Tempo — a configuration setting, so it lives in the drop-up, not the footer. */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '12px', color: '#aaa' }}>Tempo:</span>
+                <SeqKnob value={bpm} min={40} max={300} def={120} onChange={setBpm} label="BPM" flash={tapping} title="Drag up/down or scroll to change BPM" />
+                <SeqButton label="TAP" onClick={tapTempo} active={tapping} title="Tap to set tempo" style={Object.assign({}, FOOTER_BTN)} />
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '5px' }}>
                 <span style={{ fontSize: '12px', color: '#aaa', marginTop: '6px' }}>Steps:</span>
                 {STEP_OPTIONS.map((n, i) => (
                     <div key={n} style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>

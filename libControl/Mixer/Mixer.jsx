@@ -12,6 +12,7 @@ const Mixer = () => {
     const isAnySolo = solos.some(v => v);
 
     const meterRefs = React.useRef([]);
+    const clickMeterRef = React.useRef(null);
     const masterRefs = React.useRef([null, null]);
     const masterPeaks = React.useRef({ L: 0, R: 0, pending: false });
     
@@ -77,16 +78,32 @@ const Mixer = () => {
                 });
             }
         };
+        // The click track gets its own meter — it bypasses the track strips entirely.
+        const onClick = (e) => {
+            const el = clickMeterRef.current;
+            if (!el) return;
+            const i = Math.max(0, Math.min(1, ((e.detail && e.detail.velocity) || 0) / 100));
+            el.style.transition = 'none';
+            el.style.height = `${(1 - i) * 100}%`;
+            void el.offsetHeight;
+            el.style.transition = 'height 0.3s cubic-bezier(0.2, 1, 0.3, 1)';
+            el.style.height = '100%';
+        };
+
         const EVENTS = ['oa-drum-play', 'oa-drum-hit', 'oa-tone-hit'];
         EVENTS.forEach(name => window.addEventListener(name, onPlay));
-        return () => EVENTS.forEach(name => window.removeEventListener(name, onPlay));
+        window.addEventListener('oa-click', onClick);
+        return () => {
+            EVENTS.forEach(name => window.removeEventListener(name, onPlay));
+            window.removeEventListener('oa-click', onClick);
+        };
     }, []);
 
     const panLabel = v => Math.abs(v) < 0.02 ? "C" : (v < 0 ? "L" + Math.round(-v * 100) : "R" + Math.round(v * 100));
 
 
     return (
-        <div className="chunky-scrollbar" style={{ display: 'flex', gap: 0, padding: 0, overflowX: 'auto', alignItems: 'stretch', backgroundColor: 'var(--bg)' }}>
+        <div className="chunky-scrollbar" style={{ display: 'flex', gap: 0, padding: 0, overflowX: 'auto', alignItems: 'stretch', justifyContent: 'safe center', backgroundColor: 'var(--bg)' }}>
             {tracks.map((track, i) => {
                 const color = PALETTE[i % PALETTE.length];
                 const isMuted = mutes[i];
@@ -171,6 +188,12 @@ const Mixer = () => {
                 <div style={{ fontSize: '10px', color: recording ? '#ff8a80' : '#aaa', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px', fontWeight: recording ? 'bold' : 'normal' }}>Click</div>
                 
                 <div style={{ display: 'flex', gap: '4px', alignItems: 'stretch', height: '180px', justifyContent: 'center' }}>
+                    <div style={{
+                        width: '6px', borderRadius: '2px', position: 'relative', overflow: 'hidden', border: '1px solid #0008',
+                        background: 'linear-gradient(to top, #8a8a8a 0%, #c9c9c9 74%, #e0e0e0 88%, #fff 100%)'
+                    }}>
+                        <i ref={clickMeterRef} style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '100%', background: '#15171b' }}></i>
+                    </div>
                     <SvgFader value={clickVol} color={recording ? "#d32f2f" : "#aaa"} width={36} height={180} onChange={(v) => setClickVol(v)} />
                 </div>
                 

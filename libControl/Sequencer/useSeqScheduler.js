@@ -74,6 +74,10 @@ window.useSeqScheduler = (
             gain.gain.exponentialRampToValueAtTime(0.001, time + 0.05);
             osc.start(time);
             osc.stop(time + 0.06);
+            // Let the Mixer's CLICK meter flash in time with the audible click.
+            const clickDelay = Math.max(0, (time - ctx.currentTime) * 1000);
+            const clickLevel = clickVolRef.current;
+            setTimeout(() => window.dispatchEvent(new CustomEvent('oa-click', { detail: { velocity: clickLevel * 100 } })), clickDelay);
         }
 
         const tTrack = toneTrackRef.current;
