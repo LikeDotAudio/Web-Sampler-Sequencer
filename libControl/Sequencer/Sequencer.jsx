@@ -107,9 +107,6 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
 
     return (
         <div style={{ padding: '0', backgroundColor: 'transparent', borderRadius: '0', color: '#fff', border: 'none', width: '100%', boxSizing: 'border-box', marginTop: '10px' }}>
-            {showSeq && (
-                <>
-                
                 <div style={configStyle}>
                     <window.SeqControls
                         recording={recording}
@@ -133,8 +130,6 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
                         setConfigOpen={setConfigOpen}
                     />
                 </div>
-                </>
-            )}
 
             {showSong && (
                 <>
