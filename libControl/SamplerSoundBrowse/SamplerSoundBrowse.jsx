@@ -27,6 +27,9 @@ const DEEP_MAX = 20000;
 window.SoundBrowse = ({ onClose, onChoose, onChooseOther, targetLabel, inline }) => {
     const [buffer, setBuffer] = React.useState(null);
     const [autoPreview, setAutoPreview] = React.useState(true);
+    const bigCanvasRef = React.useRef(null);
+    const gridScrollRef = React.useRef(null);
+    const selectedThumbRef = React.useRef(null);
     
     const { 
         supportsFS, rootHandle, selectedFolder, selectedFolderPath, selectedIndex, setSelectedIndex,
