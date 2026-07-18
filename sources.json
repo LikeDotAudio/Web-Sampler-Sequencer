@@ -26,6 +26,7 @@
   "libControl/Sequencer/useSeqPointer.js",
   "libControl/Sequencer/oaSongFile.js",
   "libControl/Sequencer/useSeqLibrary.js",
+  "libControl/Sequencer/useSeqTransportKeys.js",
   "libControl/Sequencer/useSeqScheduler.js",
   "libControl/Sequencer/useSeqRenderer.js",
   "libControl/Sequencer/SeqToneTrack.jsx",

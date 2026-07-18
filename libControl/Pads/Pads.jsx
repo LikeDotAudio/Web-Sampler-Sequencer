@@ -224,7 +224,7 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
                             </div>
                             
                             <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
-                                <button onClick={newSet} title="Save the current kit as a new set"
+                                <button onClick={() => { newSet(); closeConfig(); }} title="Save the current kit as a new set"
                                     style={{ background: '#388e3c', color: '#fff', border: 'none', borderRadius: '3px', padding: '5px 12px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', flex: 1 }}>
                                     + NEW set
                                 </button>
@@ -237,7 +237,7 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
                             </div>
                             
                             {currentSet && !isFactorySet(currentSet) && (
-                                <button onClick={() => deleteSet(currentSet)} title={`Delete "${currentSet}"`}
+                                <button onClick={() => { deleteSet(currentSet); closeConfig(); }} title={`Delete "${currentSet}"`}
                                     style={{ background: '#d32f2f', color: '#fff', border: 'none', borderRadius: '3px', padding: '5px 8px', fontSize: '11px', cursor: 'pointer', alignSelf: 'flex-start', marginTop: '4px' }}>✕ Delete "{currentSet}"</button>
                             )}
                         </div>,

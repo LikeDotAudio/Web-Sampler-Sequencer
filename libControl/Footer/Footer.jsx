@@ -12,7 +12,19 @@ const Footer = () => {
                 <div id="seq-footer-slot" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}></div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                {!isMobile && <div>Created by Anthony Kuzub — for educational and experimental purposes</div>}
+                {!isMobile && (
+                    <a
+                        href="https://github.com/LikeDotAudio/Web-Sampler-Sequencer"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="View the source on GitHub"
+                        style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px solid transparent' }}
+                        onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.borderBottomColor = 'var(--accent)'; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.color = 'inherit'; e.currentTarget.style.borderBottomColor = 'transparent'; }}
+                    >
+                        Created by Anthony Kuzub — for educational and experimental purposes
+                    </a>
+                )}
                 <div id="config-footer-slot" style={{ display: 'flex', alignItems: 'center' }}></div>
             </div>
         </footer>

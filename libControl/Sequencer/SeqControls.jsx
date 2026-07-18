@@ -47,6 +47,10 @@ window.SeqControls = ({
         </div>
     );
 
+    // Picking something in the drop-up is a decision, so the panel closes once
+    // it is made. Continuous controls (the tempo slider) deliberately do not.
+    const chose = (fn) => (...args) => { fn(...args); setConfigOpen(false); };
+
     // Config lives alone at the far right of the footer.
     const configButton = (
         <SeqButton
@@ -83,11 +87,11 @@ window.SeqControls = ({
                 <span style={{ fontSize: '12px', color: '#aaa', marginTop: '6px' }}>Steps:</span>
                 {STEP_OPTIONS.map((n, i) => (
                     <div key={n} style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-                        <SeqButton label={String(n)} active={steps === n} onClick={() => setSteps(n)} />
+                        <SeqButton label={String(n)} active={steps === n} onClick={chose(() => setSteps(n))} />
                         {i > 0 && (
                             <SeqButton
                                 label={`+${STEP_OPTIONS[i - 1]}`}
-                                onClick={() => doubleTo(n)}
+                                onClick={chose(() => doubleTo(n))}
                                 color="#26323a" textColor="#fca858"
                                 title={`Extend to ${n} steps: copy the first ${n / 2} onto the second ${n / 2}`}
                                 style={{ border: '1px solid #3a4a58' }}
@@ -99,7 +103,7 @@ window.SeqControls = ({
             <div style={{ display: 'flex', gap: '6px' }}>
                 <SeqButton
                     label={rendering ? '…rendering' : '⭳ RENDER'}
-                    onClick={renderLoop}
+                    onClick={chose(renderLoop)}
                     disabled={rendering}
                     color="#7b1fa2" textColor="#fff"
                     title="Render this pattern to a loopable WAV file"
@@ -107,11 +111,11 @@ window.SeqControls = ({
                 />
                 <SeqButton
                     label="Clear"
-                    onClick={() => {
+                    onClick={chose(() => {
                         if (window.confirm("Are you sure you want to clear the entire pattern?")) {
                             clearPattern();
                         }
-                    }}
+                    })}
                     style={{ padding: '6px 12px', border: 'none' }}
                 />
             </div>

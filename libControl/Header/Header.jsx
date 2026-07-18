@@ -49,10 +49,9 @@ const Header = ({ activeTabs, toggleTab, deferredPrompt, installApp }) => {
                     }
                 }
             `}</style>
+            {/* Not a link — the GitHub link lives on the footer credit. */}
             <h1 className="header-logo">
-                <a href="https://github.com/LikeDotAudio/Web-Sampler-Sequencer" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
-                    <b style={{ fontWeight: 800 }}>SAMPLER</b>.LIKE.AUDIO
-                </a>
+                <b style={{ fontWeight: 800 }}>SAMPLER</b>.LIKE.AUDIO
             </h1>
             
             <div className="header-tabs">

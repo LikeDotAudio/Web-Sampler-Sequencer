@@ -84,15 +84,39 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
 
     const clearPattern = () => setSeq({ grid: emptyPattern(steps), bpm, steps, toneTrack: Array(steps).fill(null), toneRoot: null });
 
+    // Space / Ctrl+Space drive the transport from anywhere in the app. Declared
+    // after togglePlayback so it is not read before it exists.
+    window.useSeqTransportKeys(isPlaying, togglePlayback, recording, toggleRecording);
+
     const { rendering, renderLoop } = window.useSeqRenderer(pattern, steps, mutes, bpm, safeLabel);
 
     const [configOpen, setConfigOpen] = React.useState(false);
+    const configRef = React.useRef(null);
     // Sections portalled into the drop-up (e.g. Pads' Sets) close it this way.
     React.useEffect(() => {
         const close = () => setConfigOpen(false);
         window.addEventListener('oa-close-config', close);
         return () => window.removeEventListener('oa-close-config', close);
     }, []);
+
+    // Anything outside the panel — a tab, a pad, the page — dismisses it, as a
+    // drop-up should. The ⚙ button is excluded so it still toggles.
+    React.useEffect(() => {
+        if (!configOpen) return;
+        const onDown = (e) => {
+            if (configRef.current && configRef.current.contains(e.target)) return;
+            const btn = document.getElementById('config-footer-slot');
+            if (btn && btn.contains(e.target)) return;
+            setConfigOpen(false);
+        };
+        const onEsc = (e) => { if (e.key === 'Escape') setConfigOpen(false); };
+        document.addEventListener('pointerdown', onDown, true);
+        window.addEventListener('keydown', onEsc);
+        return () => {
+            document.removeEventListener('pointerdown', onDown, true);
+            window.removeEventListener('keydown', onEsc);
+        };
+    }, [configOpen]);
 
     const configStyle = {
         display: configOpen ? 'flex' : 'none',
@@ -119,7 +143,7 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
                 {/* Portalled to <body>: the drop-up must show even when this panel's
                     tab is closed, since its footer controls are always live. */}
                 {ReactDOM.createPortal(
-                <div style={configStyle}>
+                <div ref={configRef} style={configStyle}>
                     <window.SeqControls
                         recording={recording}
                         toggleRecording={toggleRecording}
