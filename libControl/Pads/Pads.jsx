@@ -22,6 +22,7 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
     const fileInputs = React.useRef([]);
     const rootRef = React.useRef(null);
     const [midiConfigOpen, setMidiConfigOpen] = React.useState(false);
+    const [padsConfigOpen, setPadsConfigOpen] = React.useState(false);
 
     const { hitPad, startGlow, triggerPadAt, triggerPadKey } = window.useSamplerPads(
         centerVelocity, edgeVelocity, onHit, toneRoot, midiBaseRef, 
@@ -145,9 +146,7 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
                     </button>
                 </div>
             )}
-            <div style={{ marginTop: '14px', fontSize: '10px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.5px', textAlign: 'center' }}>
-                Velocity: centre {centerVelocity}% · edge {edgeVelocity}% (sets volume) · <b>ALT+click</b> to browse · <b>CTRL+click</b> for Tone Mode
-            </div>
+            
             {/* Web MIDI — map a connected controller's notes to the pads */}
             {document.getElementById('midi-footer-slot') && ReactDOM.createPortal(
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
@@ -186,39 +185,73 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
                 </div>,
                 document.getElementById('midi-footer-slot')
             )}
-            {/* SETS — named snapshots of the whole kit */}
-            <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <span style={{ fontSize: '11px', color: '#aaa', textTransform: 'uppercase', letterSpacing: '0.5px', marginRight: '4px' }}>Sets:</span>
-                {Object.keys(sets).map((n) => (
-                    <button key={n} onClick={() => loadSet(n)} 
-                        style={{
-                            background: currentSet === n ? '#f4902c' : '#222',
-                            color: currentSet === n ? '#111' : '#ccc',
+            
+            {/* SETS — moved to footer config drop-up */}
+            {document.getElementById('pads-footer-slot') && ReactDOM.createPortal(
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
+                    <button 
+                        onClick={() => setPadsConfigOpen(!padsConfigOpen)}
+                        style={{ background: padsConfigOpen ? '#333' : 'transparent', color: padsConfigOpen ? '#fff' : '#888', border: '1px solid #444', padding: '4px 8px', borderRadius: '3px', cursor: 'pointer', fontSize: '11px', fontWeight: 'bold' }}
+                    >
+                        {padsConfigOpen ? "✖ Close" : "⚙ Sets"}
+                    </button>
+                    {padsConfigOpen && (
+                        <div style={{
+                            position: 'absolute',
+                            bottom: '36px',
+                            left: '0',
+                            background: 'var(--panel)',
+                            padding: '16px',
                             border: '1px solid #444',
-                            borderRadius: '3px',
-                            padding: '4px 10px',
-                            fontSize: '12px',
-                            cursor: 'pointer',
-                            fontWeight: currentSet === n ? 'bold' : 'normal'
+                            borderRadius: '8px',
+                            boxShadow: '0 -4px 16px rgba(0,0,0,0.6)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '12px',
+                            zIndex: 1000,
+                            minWidth: '220px'
                         }}>
-                        {n}
-                    </button>
-                ))}
-                <button onClick={newSet} title="Save the current kit as a new set"
-                    style={{ background: '#388e3c', color: '#fff', border: 'none', borderRadius: '3px', padding: '5px 12px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' }}>
-                    + NEW set
-                </button>
-                {window.PadBrowse && (
-                    <button onClick={() => setShowPadBrowse(true)} title="Browse a folder into all 16 pads at once"
-                        style={{ background: '#fca858', color: '#111', border: 'none', borderRadius: '3px', padding: '5px 12px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' }}>
-                        🎛 Pad Browser
-                    </button>
-                )}
-                {currentSet && (
-                    <button onClick={() => deleteSet(currentSet)} title={`Delete "${currentSet}"`}
-                        style={{ background: 'none', color: '#888', border: '1px solid #444', borderRadius: '3px', padding: '5px 8px', fontSize: '11px', cursor: 'pointer' }}>✕</button>
-                )}
-            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                                <span style={{ fontSize: '11px', color: '#aaa', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Drum Kits:</span>
+                                {Object.keys(sets).map((n) => (
+                                    <button key={n} onClick={() => loadSet(n)} 
+                                        style={{
+                                            background: currentSet === n ? '#f4902c' : '#222',
+                                            color: currentSet === n ? '#111' : '#ccc',
+                                            border: '1px solid #444',
+                                            borderRadius: '3px',
+                                            padding: '4px 10px',
+                                            fontSize: '12px',
+                                            cursor: 'pointer',
+                                            fontWeight: currentSet === n ? 'bold' : 'normal'
+                                        }}>
+                                        {n}
+                                    </button>
+                                ))}
+                            </div>
+                            
+                            <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
+                                <button onClick={newSet} title="Save the current kit as a new set"
+                                    style={{ background: '#388e3c', color: '#fff', border: 'none', borderRadius: '3px', padding: '5px 12px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', flex: 1 }}>
+                                    + NEW set
+                                </button>
+                                {window.PadBrowse && (
+                                    <button onClick={() => { setShowPadBrowse(true); setPadsConfigOpen(false); }} title="Browse a folder into all 16 pads at once"
+                                        style={{ background: '#fca858', color: '#111', border: 'none', borderRadius: '3px', padding: '5px 12px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', flex: 1 }}>
+                                        🎛 Pad Browser
+                                    </button>
+                                )}
+                            </div>
+                            
+                            {currentSet && (
+                                <button onClick={() => deleteSet(currentSet)} title={`Delete "${currentSet}"`}
+                                    style={{ background: '#d32f2f', color: '#fff', border: 'none', borderRadius: '3px', padding: '5px 8px', fontSize: '11px', cursor: 'pointer', alignSelf: 'flex-start', marginTop: '4px' }}>✕ Delete "{currentSet}"</button>
+                            )}
+                        </div>
+                    )}
+                </div>,
+                document.getElementById('pads-footer-slot')
+            )}
             {browsePad != null && window.SoundBrowser && (
                 <window.SoundBrowser
                     targetLabel={(KIT[browsePad] && KIT[browsePad].name) || `Pad ${browsePad + 1}`}
