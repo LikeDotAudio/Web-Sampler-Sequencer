@@ -81,7 +81,6 @@ window.TrackSampleMenu = ({ trkIdx, trackName, anchor, version, onBrowse, onClos
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#aaa', marginTop: '6px' }}><span style={{ color: '#e57373' }}>END / CUT-OFF</span><span style={{ color: '#f4902c' }}>{Number(end || 0).toFixed(3)}s{dur && Math.abs((end || 0) - dur) < 0.0005 ? ' (EOF)' : ''}</span></div>
                     <input type="range" min="0.01" max={dur ? Number(dur.toFixed(3)) : 0} step="0.001" value={Math.min(end || 0, dur || 0)} disabled={!hasBuf} onChange={(e) => applyEnd(Math.max(offset + 0.01, Number(e.target.value)))} style={{ width: '100%' }} />
                 </div>
-                </div>
             </div>
         </React.Fragment>
     );
