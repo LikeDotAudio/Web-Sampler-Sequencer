@@ -1,0 +1,55 @@
+name: Build
+
+# The site is served straight from the repo, so dist/app.js IS the release.
+# This guarantees it always matches the sources, whether or not build.sh was
+# run locally: on main it rebuilds and commits any difference; on a pull
+# request it fails instead, so a stale bundle can never be merged.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install build dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Compile
+        run: node build.mjs
+
+      - name: Fail a PR whose bundle is stale
+        if: github.event_name == 'pull_request'
+        run: |
+          if ! git diff --quiet -- dist/; then
+            echo "::error::dist/ is out of date with the sources."
+            echo "Run ./build.sh and commit the result."
+            git diff --stat -- dist/
+            exit 1
+          fi
+          echo "dist/ matches the sources."
+
+      - name: Commit the rebuilt bundle
+        if: github.event_name != 'pull_request'
+        run: |
+          if git diff --quiet -- dist/; then
+            echo "dist/ already up to date — nothing to commit."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/
+          git commit -m "Build: recompile dist/ [skip ci]"
+          git push

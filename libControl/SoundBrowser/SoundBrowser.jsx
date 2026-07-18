@@ -52,7 +52,9 @@ window.SoundBrowser = ({ onClose, onChoose, onChooseOther, targetLabel, inline }
 
     return (
         <div onClick={inline ? undefined : onClose} style={inline ? { display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', width: '100%', height: '100%' } : { position: 'fixed', inset: 0, zIndex: 10000, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif' }}>
-            <div onClick={(e) => inline ? undefined : e.stopPropagation()} style={{ width: inline ? '100%' : '66vw', minWidth: '760px', maxWidth: '95vw', height: inline ? '100%' : '80vh', display: 'flex', flexDirection: 'column', background: '#1c1c1c', border: '1px solid #f4902c', borderRadius: '6px', color: '#eee', boxShadow: inline ? 'none' : '0 10px 40px rgba(0,0,0,0.6)' }}>
+            {/* minWidth must yield to the viewport — a hard 760px pushed the
+                whole dialog off the side of a phone. */}
+            <div className="oa-browse" onClick={(e) => inline ? undefined : e.stopPropagation()} style={{ width: inline ? '100%' : 'min(66vw, 95vw)', minWidth: 'min(760px, 96vw)', maxWidth: '96vw', height: inline ? '100%' : 'min(80vh, 92dvh)', display: 'flex', flexDirection: 'column', background: '#1c1c1c', border: '1px solid #f4902c', borderRadius: '6px', color: '#eee', boxShadow: inline ? 'none' : '0 10px 40px rgba(0,0,0,0.6)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', borderBottom: '1px solid #333' }}>
                     <h3 style={{ margin: 0, color: '#f4902c', textTransform: 'uppercase', letterSpacing: '1px', fontSize: '15px' }}>
                         Sound Browse{targetLabel ? ` → ${targetLabel}` : ''}
