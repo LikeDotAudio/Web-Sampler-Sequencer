@@ -216,7 +216,7 @@ const Header = ({
       fontSize: '12px',
       marginLeft: 'auto'
     }
-  }, "⬇ INSTALL APP"));
+  }, "\u2B07 INSTALL APP"));
 };
 window.Header = Header;
 })();
@@ -263,7 +263,7 @@ const Footer = () => {
       alignItems: 'center',
       gap: '15px'
     }
-  }, !isMobile && /*#__PURE__*/React.createElement("div", null, "Created by Anthony Kuzub — for educational and experimental purposes"), /*#__PURE__*/React.createElement("div", {
+  }, !isMobile && /*#__PURE__*/React.createElement("div", null, "Created by Anthony Kuzub \u2014 for educational and experimental purposes"), /*#__PURE__*/React.createElement("div", {
     id: "config-footer-slot",
     style: {
       display: 'flex',
@@ -1692,7 +1692,7 @@ window.Pad = ({
       color: '#fca858',
       opacity: 0.8
     }
-  }, "○"), vel > 0 && /*#__PURE__*/React.createElement("span", {
+  }, "\u25CB"), vel > 0 && /*#__PURE__*/React.createElement("span", {
     style: {
       position: 'absolute',
       top: '4px',
@@ -2779,7 +2779,7 @@ const Pads = ({
       fontWeight: 'bold',
       cursor: 'pointer'
     }
-  }, "↻ Restore ", missingCount, " sample", missingCount > 1 ? 's' : '', restoreMsg ? ` · ${restoreMsg}` : '')), setsNode && ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+  }, "\u21BB Restore ", missingCount, " sample", missingCount > 1 ? 's' : '', restoreMsg ? ` · ${restoreMsg}` : '')), setsNode && ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
     style: {
       borderTop: '1px solid #444',
       paddingTop: '12px',
@@ -2914,7 +2914,7 @@ const Pads = ({
       cursor: 'pointer',
       flex: 1
     }
-  }, "🎛 Pad Browser")), currentSet && !isFactorySet(currentSet) && /*#__PURE__*/React.createElement("button", {
+  }, "\uD83C\uDF9B Pad Browser")), currentSet && !isFactorySet(currentSet) && /*#__PURE__*/React.createElement("button", {
     onClick: () => deleteSet(currentSet),
     title: `Delete "${currentSet}"`,
     style: {
@@ -2928,7 +2928,7 @@ const Pads = ({
       alignSelf: 'flex-start',
       marginTop: '4px'
     }
-  }, "✕ Delete \"", currentSet, "\"")), setsNode), browsePad != null && window.SoundBrowser && /*#__PURE__*/React.createElement(window.SoundBrowser, {
+  }, "\u2715 Delete \"", currentSet, "\"")), setsNode), browsePad != null && window.SoundBrowser && /*#__PURE__*/React.createElement(window.SoundBrowser, {
     targetLabel: KIT[browsePad] && KIT[browsePad].name || `Pad ${browsePad + 1}`,
     onClose: () => setBrowsePad(null),
     onChoose: (file, meta) => {
@@ -2959,7 +2959,7 @@ const Pads = ({
       fontWeight: 'bold',
       boxShadow: '0 4px 16px rgba(0,0,0,0.5)'
     }
-  }, "👆 Click a pad to assign \"", pendingAssign.meta && pendingAssign.meta.name, "\" — Esc to cancel"));
+  }, "\uD83D\uDC46 Click a pad to assign \"", pendingAssign.meta && pendingAssign.meta.name, "\" \u2014 Esc to cancel"));
 };
 window.Pads = Pads;
 })();
@@ -4121,7 +4121,7 @@ window.SeqControls = ({
     title: "Tap to set tempo",
     style: Object.assign({}, FOOTER_BTN)
   }), /*#__PURE__*/React.createElement(SeqButton, {
-    label: "⭳ Save Pattern",
+    label: "\u2B73 Save Pattern",
     onClick: savePattern,
     color: "#1565c0",
     textColor: "#fff",
@@ -4280,7 +4280,7 @@ window.SeqLibrary = ({
       color: '#666',
       fontStyle: 'italic'
     }
-  }, "No saved patterns yet — build a beat and hit Save.") : /*#__PURE__*/React.createElement("div", {
+  }, "No saved patterns yet \u2014 build a beat and hit Save.") : /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       flexWrap: 'wrap',
@@ -4332,7 +4332,7 @@ window.SeqLibrary = ({
       fontSize: '12px',
       fontWeight: 'bold'
     }
-  }, "＋")))));
+  }, "\uFF0B")))));
 };
 })();
 
@@ -4447,7 +4447,7 @@ window.SeqSong = ({
       margin: '0 4px'
     }
   }), /*#__PURE__*/React.createElement(SeqButton, {
-    label: "⭳ Export",
+    label: "\u2B73 Export",
     onClick: exportSong,
     disabled: !library || library.length === 0,
     title: "Download every saved pattern and the current arrangement as a .json file",
@@ -4456,7 +4456,7 @@ window.SeqSong = ({
       border: 'none'
     }
   }), /*#__PURE__*/React.createElement(SeqButton, {
-    label: "⭱ Import",
+    label: "\u2B71 Import",
     onClick: () => fileRef.current && fileRef.current.click(),
     title: "Load patterns and a song from a .json export",
     style: {
@@ -4480,7 +4480,7 @@ window.SeqSong = ({
       color: '#666',
       fontStyle: 'italic'
     }
-  }, "A song chains patterns together. Click ＋ on patterns above to build one.") : /*#__PURE__*/React.createElement("div", {
+  }, "A song chains patterns together. Click \uFF0B on patterns above to build one.") : /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       flexWrap: 'wrap',
@@ -4494,7 +4494,7 @@ window.SeqSong = ({
       color: '#555',
       fontSize: '14px'
     }
-  }, "→"), /*#__PURE__*/React.createElement("div", {
+  }, "\u2192"), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       alignItems: 'center',
@@ -4508,7 +4508,7 @@ window.SeqSong = ({
     disabled: i === 0,
     title: "Move earlier in the song",
     style: arrowStyle(i > 0)
-  }, "◀"), /*#__PURE__*/React.createElement("span", {
+  }, "\u25C0"), /*#__PURE__*/React.createElement("span", {
     title: `Play from this pattern`,
     onClick: () => {
       setSongPos(i);
@@ -4525,7 +4525,7 @@ window.SeqSong = ({
     disabled: i === song.length - 1,
     title: "Move later in the song",
     style: arrowStyle(i < song.length - 1)
-  }, "▶"), /*#__PURE__*/React.createElement("button", {
+  }, "\u25B6"), /*#__PURE__*/React.createElement("button", {
     onClick: () => setSongItems(song.filter((_, idx) => idx !== i)),
     title: `Remove from song`,
     style: {
@@ -4538,7 +4538,7 @@ window.SeqSong = ({
       fontSize: '12px',
       opacity: 0.8
     }
-  }, "×"))))));
+  }, "\xD7"))))));
 };
 })();
 
@@ -4766,7 +4766,7 @@ window.TrackSampleMenu = ({
       cursor: 'pointer',
       fontSize: '16px'
     }
-  }, "×")), /*#__PURE__*/React.createElement("div", {
+  }, "\xD7")), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '11px',
       color: '#aaa',
@@ -4809,7 +4809,7 @@ window.TrackSampleMenu = ({
       fontWeight: 'bold',
       fontSize: '12px'
     }
-  }, "📁 Browse sample…"), /*#__PURE__*/React.createElement("label", {
+  }, "\uD83D\uDCC1 Browse sample\u2026"), /*#__PURE__*/React.createElement("label", {
     title: "Loop the sample (Sampler pad hold)",
     style: {
       display: 'flex',
@@ -4836,7 +4836,7 @@ window.TrackSampleMenu = ({
       cursor: 'pointer',
       fontSize: '12px'
     }
-  }, "►")), /*#__PURE__*/React.createElement("div", {
+  }, "\u25BA")), /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: '10px',
       opacity: hasBuf ? 1 : 0.4
@@ -5558,14 +5558,14 @@ window.DrumSynthEditor = ({
       fontWeight: 'bold',
       letterSpacing: '1px'
     }
-  }, String(idx + 1).padStart(2, '0'), " ", name, " — SYNTH"), /*#__PURE__*/React.createElement("div", {
+  }, String(idx + 1).padStart(2, '0'), " ", name, " \u2014 SYNTH"), /*#__PURE__*/React.createElement("div", {
     style: {
       marginLeft: 'auto',
       display: 'flex',
       gap: '6px'
     }
   }, /*#__PURE__*/React.createElement(window.SeqButton, {
-    label: "▶ Audition",
+    label: "\u25B6 Audition",
     onClick: audition,
     color: "#388e3c",
     textColor: "#fff",
@@ -5574,14 +5574,14 @@ window.DrumSynthEditor = ({
       border: 'none'
     }
   }), /*#__PURE__*/React.createElement(window.SeqButton, {
-    label: "↺ Reset",
+    label: "\u21BA Reset",
     onClick: () => window.oaResetSynthPatch(idx),
     title: "Back to the factory patch for this voice",
     style: {
       padding: '4px 10px'
     }
   }), /*#__PURE__*/React.createElement(window.SeqButton, {
-    label: "✖ Close",
+    label: "\u2716 Close",
     onClick: onClose,
     style: {
       padding: '4px 10px'
@@ -6826,12 +6826,12 @@ window.SoundCloudView = ({
       color: '#f4902c',
       fontWeight: 'bold'
     }
-  }, " — loop") : /*#__PURE__*/React.createElement("span", {
+  }, " \u2014 loop") : /*#__PURE__*/React.createElement("span", {
     style: {
       color: '#8a8',
       fontWeight: 'bold'
     }
-  }, " — one-shot")), detail.bpm ? row('BPM', detail.bpm.toFixed(1)) : null, detail.sample_rate ? row('Format', (detail.sample_rate / 1000).toFixed(1) + ' kHz / ' + (detail.bit_depth || '?') + '-bit') : null, /*#__PURE__*/React.createElement("button", {
+  }, " \u2014 one-shot")), detail.bpm ? row('BPM', detail.bpm.toFixed(1)) : null, detail.sample_rate ? row('Format', (detail.sample_rate / 1000).toFixed(1) + ' kHz / ' + (detail.bit_depth || '?') + '-bit') : null, /*#__PURE__*/React.createElement("button", {
     onClick: () => loadAndDetail(detail),
     style: {
       marginTop: '10px',
@@ -6844,7 +6844,7 @@ window.SoundCloudView = ({
       fontWeight: 'bold',
       cursor: 'pointer'
     }
-  }, "► Play")) : /*#__PURE__*/React.createElement("div", {
+  }, "\u25BA Play")) : /*#__PURE__*/React.createElement("div", {
     style: {
       color: '#666'
     }
@@ -6979,7 +6979,7 @@ window.SoundFolderNode = ({
       width: '10px',
       color: '#888'
     }
-  }, open ? '▾' : '▸'), /*#__PURE__*/React.createElement("span", null, "📁 ", name)), open && subdirs && subdirs.map((d, i) => /*#__PURE__*/React.createElement(window.SoundFolderNode, {
+  }, open ? '▾' : '▸'), /*#__PURE__*/React.createElement("span", null, "\uD83D\uDCC1 ", name)), open && subdirs && subdirs.map((d, i) => /*#__PURE__*/React.createElement(window.SoundFolderNode, {
     key: i,
     name: d.name,
     handle: d.handle,
@@ -7424,7 +7424,7 @@ window.SoundBrowser = ({
       fontSize: '20px',
       cursor: 'pointer'
     }
-  }, "×")), /*#__PURE__*/React.createElement("div", {
+  }, "\xD7")), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       alignItems: 'center',
@@ -7462,7 +7462,7 @@ window.SoundBrowser = ({
       fontWeight: 'bold',
       cursor: 'pointer'
     }
-  }, "★ Favorites", favorites.length ? ` (${favorites.length})` : ''), /*#__PURE__*/React.createElement("button", {
+  }, "\u2605 Favorites", favorites.length ? ` (${favorites.length})` : ''), /*#__PURE__*/React.createElement("button", {
     onClick: showCloud,
     style: {
       background: view === 'cloud' ? '#f4902c' : '#222',
@@ -7473,7 +7473,7 @@ window.SoundBrowser = ({
       fontWeight: 'bold',
       cursor: 'pointer'
     }
-  }, "☁ THE CLOUD")), supportsFS ? /*#__PURE__*/React.createElement("button", {
+  }, "\u2601 THE CLOUD")), supportsFS ? /*#__PURE__*/React.createElement("button", {
     onClick: pickFolder,
     style: tbtn({
       background: '#f4902c',
@@ -7481,14 +7481,14 @@ window.SoundBrowser = ({
       border: 'none',
       fontWeight: 'bold'
     })
-  }, "📁 Choose folder…") : /*#__PURE__*/React.createElement("label", {
+  }, "\uD83D\uDCC1 Choose folder\u2026") : /*#__PURE__*/React.createElement("label", {
     style: tbtn({
       background: '#f4902c',
       color: '#111',
       border: 'none',
       fontWeight: 'bold'
     })
-  }, "📁 Choose files…", /*#__PURE__*/React.createElement("input", {
+  }, "\uD83D\uDCC1 Choose files\u2026", /*#__PURE__*/React.createElement("input", {
     type: "file",
     accept: "audio/*",
     multiple: true,
@@ -7535,13 +7535,13 @@ window.SoundBrowser = ({
       fontSize: '11px',
       color: '#666'
     }
-  }, "↑ ↓ ← → browse · Enter load")), err && /*#__PURE__*/React.createElement("div", {
+  }, "\u2191 \u2193 \u2190 \u2192 browse \xB7 Enter load")), err && /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '6px 16px',
       color: '#f88',
       fontSize: '12px'
     }
-  }, "⚠️ ", err), /*#__PURE__*/React.createElement("div", {
+  }, "\u26A0\uFE0F ", err), /*#__PURE__*/React.createElement("div", {
     className: "oa-browse-body",
     style: {
       flex: 1,
@@ -7592,7 +7592,7 @@ window.SoundBrowser = ({
       fontSize: '11px',
       color: '#888'
     }
-  }, "scanning…"), chips.map((c, i) => {
+  }, "scanning\u2026"), chips.map((c, i) => {
     const active = filter.toLowerCase() === c.display.toLowerCase();
     return /*#__PURE__*/React.createElement("button", {
       key: i,
@@ -7663,7 +7663,7 @@ window.SoundBrowser = ({
       fontSize: '24px',
       marginBottom: '10px'
     }
-  }, "☁️"), cloudErr) : cloudData ? /*#__PURE__*/React.createElement(SoundCloudView, {
+  }, "\u2601\uFE0F"), cloudErr) : cloudData ? /*#__PURE__*/React.createElement(SoundCloudView, {
     data: cloudData,
     rootHandle: rootHandle,
     onSelectFile: entry => {
@@ -7744,7 +7744,7 @@ window.SoundBrowser = ({
     onClick: rewind,
     disabled: !selected,
     style: tbtn()
-  }, "⏮ Rewind"), /*#__PURE__*/React.createElement("button", {
+  }, "\u23EE Rewind"), /*#__PURE__*/React.createElement("button", {
     onClick: togglePlay,
     disabled: !selected,
     style: tbtn({
@@ -7789,7 +7789,7 @@ window.SoundBrowser = ({
       padding: '8px 14px',
       cursor: selected ? 'pointer' : 'not-allowed'
     })
-  }, "⭳ Load to ", targetLabel || 'pad'), onChooseOther && /*#__PURE__*/React.createElement("button", {
+  }, "\u2B73 Load to ", targetLabel || 'pad'), onChooseOther && /*#__PURE__*/React.createElement("button", {
     onClick: chooseOther,
     disabled: !selected,
     style: tbtn({
@@ -7800,7 +7800,7 @@ window.SoundBrowser = ({
       padding: '8px 14px',
       cursor: selected ? 'pointer' : 'not-allowed'
     })
-  }, "⭳ Load to other pad")))));
+  }, "\u2B73 Load to other pad")))));
 };
 })();
 
