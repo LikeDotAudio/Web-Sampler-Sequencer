@@ -13,7 +13,6 @@ window.oaPlayDrumVoice = function (ctx, track, time, volume, pan) {
     osc.start(time);
     osc.stop(time + 0.15);
 };
-
 // Play a loaded sample ENTRY at `time` with `volume` (0..1); honours pitch,
 // loop and fade. Returns the BufferSource so a looping voice can be stopped.
 window.oaPlayDrumSample = function (ctx, entry, time, volume, pan) {
@@ -74,7 +73,6 @@ window.oaPlayDrumSample = function (ctx, entry, time, volume, pan) {
     } catch (e) {}
     return src;
 };
-
 // Trigger drum voice `idx`: sample (pitch/loop/fade) if loaded, else synth.
 // For an auto-loop pad, TOGGLES the loop. Returns true if a loop just STARTED.
 window.oaTriggerDrum = function (idx, volume, time) {
@@ -97,7 +95,6 @@ window.oaTriggerDrum = function (idx, volume, time) {
     window.oaPlayDrumVoice(ctx, window.OA_DRUM_KIT[idx], t, vol);
     return false;
 };
-
 // Trigger a drum voice pitched by N semitones (Tone Mode)
 window.oaTriggerTone = function(rootIdx, semitones, volume, time) {
     const ctx = window.oaAudioCtx();
@@ -130,7 +127,6 @@ window.oaTriggerTone = function(rootIdx, semitones, volume, time) {
     }
     return false;
 };
-
 // Pre-render a sample at multiple pitches to eliminate real-time resampling latency
 window.oaPrecacheTones = async function(rootIdx) {
     const entry = window.OA_DRUM_SAMPLES[rootIdx];
@@ -172,7 +168,6 @@ window.oaPrecacheTones = async function(rootIdx) {
         }
     }
 };
-
 // Pre-cache an individual pad's configured pitch to eliminate real-time latency
 window.oaPrecachePad = async function(entry) {
     if (!entry || !entry.buffer) return;

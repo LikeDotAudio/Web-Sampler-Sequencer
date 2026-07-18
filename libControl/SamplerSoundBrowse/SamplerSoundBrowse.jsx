@@ -24,224 +24,26 @@ const MAX_FILES = 4000;    // cap on rendered thumbnails
 const NAME_MAX = 60000;    // cap on the name-only scan
 const DEEP_MAX = 20000;
 
-const loadFavs = () => { try { return JSON.parse(window.localStorage.getItem('oaSoundFavs')) || []; } catch (e) { return []; } };
-
 window.SoundBrowse = ({ onClose, onChoose, onChooseOther, targetLabel }) => {
-    const supportsFS = typeof window.showDirectoryPicker === 'function';
-    const [rootHandle, setRootHandle] = React.useState(supportsFS ? (window.OA_SOUND_DIR || null) : null);
-    const [selectedFolder, setSelectedFolder] = React.useState(null);
-    const [selectedFolderPath, setSelectedFolderPath] = React.useState('');
-    const [folderFiles, setFolderFiles] = React.useState([]);
-    const [flatEntries, setFlatEntries] = React.useState([]);
-    const [selectedIndex, setSelectedIndex] = React.useState(-1);
-    const [selected, setSelected] = React.useState(null);   // {name, file, folder}
     const [buffer, setBuffer] = React.useState(null);
-    const [playing, setPlaying] = React.useState(false);
-    const [loop, setLoop] = React.useState(false);
     const [autoPreview, setAutoPreview] = React.useState(true);
-    const [pos, setPos] = React.useState(0);
-    const [err, setErr] = React.useState('');
-    const [chips, setChips] = React.useState([]);
-    const [scanning, setScanning] = React.useState(false);
-    const [deepResults, setDeepResults] = React.useState([]);
-    const [deepSearching, setDeepSearching] = React.useState(false);
+    
+    const { 
+        supportsFS, rootHandle, selectedFolder, selectedFolderPath, selectedIndex, setSelectedIndex,
+        selected, setSelected, err, chips, scanning, deepSearching, filter, setFilter,
+        view, cloudData, cloudErr, favorites, isFav, toggleFav, showFiles, showFavorites, showCloud,
+        shown, pickFolder, selectFolder, onPlainFiles, selectFileByIndex, files
+    } = window.useSoundBrowseState();
 
-    // Favorites (liked files), tracked over MQTT (retained) + localStorage.
-    const [favState, setFavState] = window.useMqttState('OpenAir/Gui/SoundFavorites', { items: loadFavs() });
-    const favorites = (favState && favState.items) || [];
-    React.useEffect(() => { try { localStorage.setItem('oaSoundFavs', JSON.stringify(favorites)); } catch (e) {} }, [favState]);
-    const [view, setView] = React.useState('files');   // 'files' | 'favorites' | 'cloud'
-    const [favEntries, setFavEntries] = React.useState([]);
-    const [cloudData, setCloudData] = React.useState(null);
-    const [cloudErr, setCloudErr] = React.useState('');
-    const isFav = (s) => !!s && favorites.some((f) => f.name === s.name && f.folder === (s.folder || ''));
-    const toggleFav = () => {
-        if (!selected) return;
-        const entry = { name: selected.name, folder: selected.folder || '' };
-        const exists = favorites.some((f) => f.name === entry.name && f.folder === entry.folder);
-        setFavState({ items: exists ? favorites.filter((f) => !(f.name === entry.name && f.folder === entry.folder)) : [...favorites, entry] });
-    };
-    const showFiles = () => { setView('files'); setSelectedIndex(-1); };
-    const showFavorites = async () => { setView('favorites'); setSelectedIndex(-1); if (window.oaEnsureRootPermission) await window.oaEnsureRootPermission(); };
-    const showCloud = async () => { 
-        setView('cloud'); setSelectedIndex(-1); setCloudErr('');
-        if (!supportsFS || !rootHandle) {
-            setCloudErr('Please choose a folder first to view the sample cloud.');
-            return;
-        }
-        try {
-            const fh = await rootHandle.getFileHandle('sample_cloud_data.PEAK');
-            const file = await fh.getFile();
-            const text = await file.text();
-            setCloudData(JSON.parse(text));
-        } catch (e) {
-            setCloudErr('No sample_cloud_data.PEAK found. Run the analyzer on this folder: python3 BackEnd/sample_analyzer_app.py (Rust core, 30 workers).');
-            setCloudData(null);
-        }
-    };
-    // Resolve favorite files (from their folder path) when viewing favorites.
-    React.useEffect(() => {
-        if (view !== 'favorites') return;
-        let cancelled = false;
-        (async () => {
-            const es = await Promise.all(favorites.map(async (f) => {
-                const file = window.oaResolveFile ? await window.oaResolveFile(f.folder, f.name) : null;
-                return { name: f.name, folder: f.folder, file: file || undefined };
-            }));
-            if (!cancelled) setFavEntries(es);
-        })();
-        return () => { cancelled = true; };
-    }, [view, favState]);
-
-    const bigCanvasRef = React.useRef(null);
-    const gridScrollRef = React.useRef(null);
-    const selectedThumbRef = React.useRef(null);
-    const srcRef = React.useRef(null);
-    const startTimeRef = React.useRef(0);
-    const offsetRef = React.useRef(0);
-    const rafRef = React.useRef(null);
-
-    const [filter, setFilter] = React.useState('');
-    const files = supportsFS ? folderFiles : flatEntries;
-    const baseList = view === 'favorites' ? favEntries : files;
-    // Filtered view: in the Files view of a real folder we deep-search the whole
-    // tree (uncapped); otherwise we just filter the current list.
-    const shown = filter.trim()
-        ? ((view === 'files' && supportsFS) ? deepResults : baseList.filter((f) => f.name.toLowerCase().includes(filter.trim().toLowerCase())))
-        : baseList;
-    const duration = buffer ? buffer.duration : 0;
-
-    // Run the uncapped deep search when a filter is set on a real folder.
-    React.useEffect(() => {
-        const term = filter.trim().toLowerCase();
-        if (!term || !supportsFS || !selectedFolder) { setDeepResults([]); setDeepSearching(false); return; }
-        let cancelled = false;
-        setDeepSearching(true);
-        const timer = setTimeout(async () => {
-            const out = [];
-            try { await gatherMatching(selectedFolder, '', out, term, 0); } catch (e) {}
-            if (!cancelled) {
-                out.sort((a, b) => (a.sub === b.sub ? a.name.localeCompare(b.name) : (a.sub || '').localeCompare(b.sub || '')));
-                setDeepResults(out); setDeepSearching(false);
-            }
-        }, 300);
-        return () => { cancelled = true; clearTimeout(timer); };
-    }, [filter, selectedFolder]);
-
-    const pickFolder = async () => {
-        try {
-            const h = await window.showDirectoryPicker();
-            window.OA_SOUND_DIR = h; setRootHandle(h);
-            if (window.oaIdbSet) window.oaIdbSet('oaRootDir', h).catch(() => {}); // persist for revert
-            selectFolder(h, h.name || 'root');
-        } catch (e) { /* cancelled */ }
-    };
-    const selectFolder = async (handle, path) => {
-        // Clear the current list immediately, then scan the newly picked folder.
-        setFolderFiles([]); setDeepResults([]);
-        setSelectedFolder(handle); setSelectedFolderPath(path || ''); setSelectedIndex(-1); setErr(''); setFilter(''); setScanning(true); setChips([]);
-        const items = [], names = [], builder = makeChipBuilder();
-        const onEmit = () => setChips(builder.top());   // push the growing chip list to the UI
-        // Recurse every sub-folder: all names feed the chips; handles (capped) the grid.
-        try { await gatherAll(handle, '', items, names, builder, onEmit, 0); }
-        catch (e) { setErr('Could not read folder.'); }
-        items.sort((a, b) => (a.sub === b.sub ? a.name.localeCompare(b.name) : (a.sub || '').localeCompare(b.sub || '')));
-        setFolderFiles(items);
-        setChips(builder.top());   // final list from EVERY filename
-        setScanning(false);
-        if (names.length > MAX_FILES) setErr(`Showing ${MAX_FILES} of ${names.length}${names.length >= NAME_MAX ? '+' : ''} files — filter to find the rest.`);
-    };
-    const onPlainFiles = (fileList) => {
-        setFlatEntries(Array.from(fileList || []).filter((f) => AUDIO_RE.test(f.name)).map((f) => ({ name: f.name, file: f })));
-        setSelectedIndex(-1);
-    };
-
-    const selectFileByIndex = async (idx) => {
-        if (idx < 0 || idx >= shown.length) return;
-        setSelectedIndex(idx);
-        const entry = shown[idx];
-        try {
-            const file = entry.file || (entry.handle && await entry.handle.getFile());
-            if (!file) { setErr('File unavailable — grant folder access or re-pick the folder.'); return; }
-            const folder = entry.folder != null ? entry.folder : (supportsFS ? (selectedFolderPath + (entry.sub ? '/' + entry.sub : '')) : '');
-            setSelected({ name: entry.name, file, folder });
-            setPos(0);
-            try { setBuffer(await window.oaDecodeAudio(window.oaAudioCtx(), await file.arrayBuffer())); } catch (e) { setBuffer(null); }
-        } catch (e) { setErr('Could not open file.'); }
-    };
-
-    // ---- Web Audio transport (works for every decodable format incl. AIFF) ---
-    const stopSrc = () => { if (srcRef.current) { try { srcRef.current.stop(); } catch (e) {} srcRef.current = null; } if (rafRef.current) cancelAnimationFrame(rafRef.current); };
-    const playFrom = (frac) => {
-        if (!buffer) return;
-        stopSrc();
-        const ctx = window.oaAudioCtx();
-        const src = ctx.createBufferSource();
-        src.buffer = buffer; src.loop = loop; src.connect(ctx.destination);
-        const startOffset = Math.max(0, Math.min(0.999, frac)) * buffer.duration;
-        src.start(0, startOffset);
-        srcRef.current = src; startTimeRef.current = ctx.currentTime; offsetRef.current = startOffset;
-        src.onended = () => { if (srcRef.current === src) { srcRef.current = null; if (!loop) setPlaying(false); } };
-        setPlaying(true);
-        const update = () => {
-            if (!srcRef.current) return;
-            let t = offsetRef.current + (ctx.currentTime - startTimeRef.current);
-            if (loop && buffer.duration) t = t % buffer.duration;
-            setPos(buffer.duration ? Math.min(1, t / buffer.duration) : 0);
-            rafRef.current = requestAnimationFrame(update);
-        };
-        rafRef.current = requestAnimationFrame(update);
-    };
-    const togglePlay = () => { if (playing) { stopSrc(); setPlaying(false); } else { playFrom(pos); } };
-    const rewind = () => { setPos(0); if (playing) playFrom(0); };
-    const scrub = (e) => { if (!duration) return; const rect = e.currentTarget.getBoundingClientRect(); const frac = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)); setPos(frac); if (playing) playFrom(frac); };
-    React.useEffect(() => { if (srcRef.current) srcRef.current.loop = loop; }, [loop]);
-    React.useEffect(() => () => stopSrc(), []);
-
-    // Auto-preview the first 5 seconds when a new buffer is ready.
-    React.useEffect(() => {
-        if (!buffer || !autoPreview) return;
-        playFrom(0);
-        const stop = setTimeout(() => { stopSrc(); setPlaying(false); }, 5000);
-        return () => clearTimeout(stop);
-    }, [buffer, autoPreview]);
+    const { playing, loop, setLoop, pos, setPos, togglePlay, rewind, scrub } = window.useSoundBrowseAudio(buffer, autoPreview);
 
     // Big waveform of the selected file.
     React.useEffect(() => { drawWave(bigCanvasRef.current, buffer, '#f4902c'); }, [buffer]);
 
-    // Keep the selected thumbnail centered in the grid as you browse.
-    React.useEffect(() => {
-        const el = selectedThumbRef.current, cont = gridScrollRef.current;
-        if (!el || !cont) return;
-        const cr = cont.getBoundingClientRect(), er = el.getBoundingClientRect();
-        const delta = (er.top - cr.top) - (cont.clientHeight / 2 - el.clientHeight / 2);
-        if (Math.abs(delta) > 2) cont.scrollTo({ top: cont.scrollTop + delta, behavior: 'smooth' });
-    }, [selectedIndex]);
-
-    // Arrow-key navigation across the thumbnail grid; Enter = Load.
-    React.useEffect(() => {
-        const onKey = (e) => {
-            if (e.key === 'Escape') { onClose(); e.preventDefault(); return; }
-            if (e.target && (e.target.tagName === 'INPUT')) return;  // don't hijack the filter box
-            if (!shown.length) return;
-            let d = 0;
-            // Snake traversal: forward advances one (…over, over, over, down a row),
-            // back reverses, both wrapping around the whole grid.
-            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') d = 1;
-            else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') d = -1;
-            else if (e.key === 'Enter') { chooseIt(); e.preventDefault(); return; }
-            else return;
-            e.preventDefault();
-            const n = shown.length;
-            const base = selectedIndex < 0 ? (d > 0 ? -1 : 0) : selectedIndex;
-            selectFileByIndex(((base + d) % n + n) % n);
-        };
-        window.addEventListener('keydown', onKey);
-        return () => window.removeEventListener('keydown', onKey);
-    }, [shown, selectedIndex, selectedFolderPath, selected]);
-
     const chooseIt = () => { if (selected && onChoose) onChoose(selected.file, { name: selected.name, folder: selected.folder || '' }); };
     const chooseOther = () => { if (selected && onChooseOther) onChooseOther(selected.file, { name: selected.name, folder: selected.folder || '' }); };
+
+    window.useSoundBrowseKeys(shown, selectedIndex, (idx) => selectFileByIndex(idx, setBuffer, setPos), chooseIt, onClose, gridScrollRef, selectedThumbRef);
 
     const tbtn = (extra) => ({ background: '#333', color: '#fff', border: '1px solid #444', borderRadius: '3px', padding: '6px 12px', cursor: 'pointer', fontSize: '13px', ...extra });
 

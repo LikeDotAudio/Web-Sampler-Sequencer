@@ -2,28 +2,23 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
     const audioCtxRef = React.useRef(null);
     const [isPlaying, setIsPlaying] = React.useState(false);
     const [currentStep, setCurrentStep] = React.useState(0);
-
     const safeLabel = label.replace(/[^A-Za-z0-9]+/g, '_');
     const patternTopic = `OpenAir/Gui/Sequencer/${safeLabel}/pattern`;
     
     const emptyPattern = (steps) => Array(TRACKS.length).fill().map(() => Array(steps).fill(0));
-
     const [seq, setSeq] = window.useMqttState(patternTopic, { grid: emptyPattern(DEFAULT_STEPS), bpm: 120, steps: DEFAULT_STEPS, toneTrack: [], toneRoot: null });
     const steps = (seq && seq.steps) || DEFAULT_STEPS;
     const pattern = (seq && seq.grid) || emptyPattern(steps);
     const bpm = (seq && seq.bpm) || 120;
     const toneTrack = (seq && seq.toneTrack) || [];
     const toneRoot = (seq && seq.toneRoot !== undefined) ? seq.toneRoot : null;
-
     const stepsRef = React.useRef(steps); stepsRef.current = steps;
     const patternRef = React.useRef(pattern); patternRef.current = pattern;
     const bpmRef = React.useRef(bpm); bpmRef.current = bpm;
     const toneTrackRef = React.useRef(toneTrack); toneTrackRef.current = toneTrack;
     const toneRootRef = React.useRef(toneRoot); toneRootRef.current = toneRoot;
-
     const setPattern = (grid) => setSeq({ grid, bpm, steps, toneTrack, toneRoot });
     const setBpm = (nextBpm) => setSeq({ grid: pattern, bpm: nextBpm, steps, toneTrack, toneRoot });
-
     const tapTimesRef = React.useRef([]);
     const tapFlashRef = React.useRef(null);
     const [tapping, setTapping] = React.useState(false);
@@ -41,7 +36,6 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
         if (tapFlashRef.current) clearTimeout(tapFlashRef.current);
         tapFlashRef.current = setTimeout(() => setTapping(false), 130);
     };
-
     const setSteps = (n) => {
         const grid = pattern.map((row) => {
             const r = row.slice(0, n);
@@ -52,7 +46,6 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
         while (tt.length < n) tt.push(null);
         setSeq({ grid, bpm, steps: n, toneTrack: tt, toneRoot });
     };
-
     const doubleTo = (n) => {
         const half = n / 2;
         const grid = pattern.map((row) => {
@@ -65,19 +58,15 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
         const tt = [...th, ...th.map((c) => (c ? { ...c } : null))];
         setSeq({ grid, bpm, steps: n, toneTrack: tt, toneRoot });
     };
-
     const [clickVol, setClickVol] = React.useState(0.8);
     const clickVolRef = React.useRef(clickVol); clickVolRef.current = clickVol;
-
     const [mutes, setMutes] = React.useState(() => Array(TRACKS.length).fill(false));
     const mutesRef = React.useRef(mutes); mutesRef.current = mutes;
     const toggleMute = (trkIdx) => setMutes((prev) => { const n = [...prev]; n[trkIdx] = !n[trkIdx]; return n; });
-
     const [trackVol, setTrackVol] = React.useState(() => Array(TRACKS.length).fill(1));
     const [trackPan, setTrackPan] = React.useState(() => Array(TRACKS.length).fill(0));
     const trackVolRef = React.useRef(trackVol); trackVolRef.current = trackVol;
     const trackPanRef = React.useRef(trackPan); trackPanRef.current = trackPan;
-
     const [recording, setRecording] = React.useState(false);
     const recordingRef = React.useRef(recording); recordingRef.current = recording;
     const playingRef = React.useRef(isPlaying); playingRef.current = isPlaying;
@@ -88,14 +77,12 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
     const toggleRecording = () => {
         setRecording(r => { if (r) setRecordedNotes(new Set()); return !r; });
     };
-
     const writeStepVel = (trkIdx, step, vel) => {
         const v = Math.max(0, Math.min(100, Math.round(vel)));
         const grid = patternRef.current.map((r) => r.slice());
         grid[trkIdx][step] = v;
         setSeqRef.current({ grid, bpm: bpmRef.current, steps: stepsRef.current, toneTrack: toneTrackRef.current, toneRoot: toneRootRef.current });
     };
-
     const previewVoice = (trkIdx, vel) => {
         const ctx = window.oaAudioCtx();
         const vol = (vel / 100) * (trackVolRef.current[trkIdx] == null ? 1 : trackVolRef.current[trkIdx]);
@@ -105,16 +92,13 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
         else if (window.oaPlayDrumVoice) window.oaPlayDrumVoice(ctx, TRACKS[trkIdx], ctx.currentTime, vol, pan);
         window.dispatchEvent(new CustomEvent('oa-drum-play', { detail: { idx: trkIdx, velocity: vel } }));
     };
-
     const getAudioCtx = () => {
         if (!audioCtxRef.current) {
             audioCtxRef.current = window.oaAudioCtx ? window.oaAudioCtx() : new (window.AudioContext || window.webkitAudioContext)();
         }
         return audioCtxRef.current;
     };
-
     const currentStepRef = React.useRef(0);
-
     React.useEffect(() => {
         const onDrumHit = (e) => {
             if (!recordingRef.current || !playingRef.current) return;
@@ -155,7 +139,6 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
                 }));
             }
         };
-
         window.addEventListener('oa-drum-hit', onDrumHit);
         window.addEventListener('oa-tone-hit', onToneHit);
         window.addEventListener('oa-tone-mode', onToneMode);
@@ -165,13 +148,11 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
             window.removeEventListener('oa-tone-mode', onToneMode);
         };
     }, []);
-
     const LIBRARY_KEY = 'oaSequencerLibrary';
     const loadLibrary = () => {
         try { return JSON.parse(window.localStorage.getItem(LIBRARY_KEY)) || []; }
         catch (e) { return []; }
     };
-
     const libraryTopic = `OpenAir/Gui/Sequencer/${safeLabel}/library`;
     const [lib, setLib] = window.useMqttState(libraryTopic, { items: loadLibrary() });
     const library = (lib && lib.items) || [];
@@ -182,7 +163,6 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
             catch (e) { }
         }
     }, [lib]);
-
     const songTopic = `OpenAir/Gui/Sequencer/${safeLabel}/song`;
     const [songState, setSongState] = window.useMqttState(songTopic, { items: [] });
     const song = (songState && songState.items) || [];
@@ -191,7 +171,6 @@ window.useSeqState = (label, DEFAULT_STEPS, TRACKS) => {
     const libraryRef = React.useRef(library); libraryRef.current = library;
     const songRef = React.useRef(null);
     const [songPos, setSongPos] = React.useState(null);
-
     return {
         safeLabel, isPlaying, setIsPlaying, currentStep, setCurrentStep,
         seq, setSeq, steps, pattern, bpm, toneTrack, toneRoot,
