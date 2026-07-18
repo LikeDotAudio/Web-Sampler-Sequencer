@@ -83,28 +83,81 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
 
     const { rendering, renderLoop } = window.useSeqRenderer(pattern, steps, mutes, bpm, safeLabel);
 
+    const [configOpen, setConfigOpen] = React.useState(false);
+    const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 1000);
+
+    React.useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 1000);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const configStyle = isMobile ? {
+        display: configOpen ? 'flex' : 'none',
+        flexDirection: 'column',
+        position: 'fixed',
+        bottom: '46px',
+        right: '12px',
+        background: 'var(--panel)',
+        padding: '16px',
+        border: '1px solid #444',
+        borderRadius: '8px',
+        zIndex: 1000,
+        boxShadow: '0 -4px 16px rgba(0,0,0,0.6)',
+        maxHeight: '75vh',
+        overflowY: 'auto',
+        gap: '12px'
+    } : {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '12px'
+    };
+
     return (
         <div style={{ padding: '12px', backgroundColor: 'rgba(18,18,18,0.28)', borderRadius: '4px', color: '#fff', border: '1px solid #333', width: '100%', boxSizing: 'border-box', marginTop: '10px' }}>
             <h3 style={{ margin: '0 0 8px 0', fontSize: '15px', color: '#ccc' }}>{label}</h3>
-            <window.SeqControls
-                recording={recording}
-                toggleRecording={toggleRecording}
-                clickVol={clickVol}
-                setClickVol={setClickVol}
-                isPlaying={isPlaying}
-                togglePlayback={togglePlayback}
-                bpm={bpm}
-                setBpm={setBpm}
-                tapping={tapping}
-                tapTempo={tapTempo}
-                steps={steps}
-                setSteps={setSteps}
-                doubleTo={doubleTo}
-                rendering={rendering}
-                renderLoop={renderLoop}
-                savePattern={savePattern}
-                clearPattern={clearPattern}
-            />
+            
+            <div style={configStyle}>
+                <window.SeqControls
+                    recording={recording}
+                    toggleRecording={toggleRecording}
+                    clickVol={clickVol}
+                    setClickVol={setClickVol}
+                    isPlaying={isPlaying}
+                    togglePlayback={togglePlayback}
+                    bpm={bpm}
+                    setBpm={setBpm}
+                    tapping={tapping}
+                    tapTempo={tapTempo}
+                    steps={steps}
+                    setSteps={setSteps}
+                    doubleTo={doubleTo}
+                    rendering={rendering}
+                    renderLoop={renderLoop}
+                    savePattern={savePattern}
+                    clearPattern={clearPattern}
+                    isMobile={isMobile}
+                    configOpen={configOpen}
+                    setConfigOpen={setConfigOpen}
+                />
+                
+                <window.SeqLibrary 
+                    library={library} 
+                    loadPattern={loadPattern} 
+                    deletePattern={deletePattern} 
+                    setSongItems={setSongItems} 
+                    song={song} 
+                />
+
+                <window.SeqSong 
+                    songPos={songPos} 
+                    song={song} 
+                    togglePlayback={togglePlayback} 
+                    playSong={playSong} 
+                    setSongItems={setSongItems} 
+                    setSongPos={setSongPos} 
+                />
+            </div>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', overflowX: 'auto', paddingBottom: '6px' }}>
                 {TRACKS.map(({ name: trackName }, trkIdx) => {
@@ -152,23 +205,6 @@ const Sequencer = ({ label = "Pattern Sequencer" }) => {
                     trackVolRef={trackVolRef}
                 />
             )}
-
-            <window.SeqLibrary 
-                library={library} 
-                loadPattern={loadPattern} 
-                deletePattern={deletePattern} 
-                setSongItems={setSongItems} 
-                song={song} 
-            />
-
-            <window.SeqSong 
-                songPos={songPos} 
-                song={song} 
-                togglePlayback={togglePlayback} 
-                playSong={playSong} 
-                setSongItems={setSongItems} 
-                setSongPos={setSongPos} 
-            />
 
             <window.SeqFader activeFader={activeFader} />
 

@@ -5,13 +5,13 @@ window.SeqControls = ({
     bpm, setBpm, tapping, tapTempo,
     steps, setSteps, doubleTo,
     rendering, renderLoop,
-    savePattern, clearPattern
+    savePattern, clearPattern,
+    isMobile, configOpen, setConfigOpen
 }) => {
     const SeqButton = window.SeqButton;
     const SeqKnob = window.SeqKnob;
     const STEP_OPTIONS = [4, 8, 16, 32, 64];
 
-    return (
     const playbackControls = (
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             <SeqButton
@@ -38,6 +38,16 @@ window.SeqControls = ({
                 <span style={{ fontSize: '12px', color: '#aaa' }}>Tempo:</span>
                 <SeqKnob value={bpm} min={40} max={300} def={120} onChange={setBpm} label="BPM" flash={tapping} title="Drag up/down or scroll to change BPM" />
                 <SeqButton label="TAP" onClick={tapTempo} active={tapping} title="Tap to set tempo" style={{ padding: '4px 8px', fontSize: '12px' }} />
+                
+                {isMobile && (
+                    <SeqButton 
+                        label={configOpen ? "✖ Close" : "⚙ Config"} 
+                        onClick={() => setConfigOpen(!configOpen)} 
+                        active={configOpen} 
+                        color="#444" textColor="#fff" 
+                        style={{ padding: '4px 8px', marginLeft: '10px', border: '1px solid #666' }} 
+                    />
+                )}
             </div>
         </div>
     );
