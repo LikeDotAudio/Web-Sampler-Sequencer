@@ -9,27 +9,11 @@ window.SeqTrack = ({
     
     return (
         <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-            <div style={{ width: '110px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '5px', paddingRight: '6px', position: 'sticky', left: 0, background: '#161616', zIndex: 2 }}>
-                <button
-                    onClick={() => toggleMute(trkIdx)}
-                    title={muted ? `Unmute ${trackName}` : `Mute ${trackName}`}
-                    style={{ width: '17px', height: '17px', flexShrink: 0, padding: 0, fontSize: '9px', fontWeight: 'bold', lineHeight: 1, cursor: 'pointer', borderRadius: '3px', border: `1px solid ${muted ? '#d32f2f' : '#444'}`, background: muted ? '#d32f2f' : '#2a2a2a', color: muted ? '#fff' : '#888' }}
-                >
-                    M
-                </button>
-                <button
-                    onClick={openMenu}
-                    title={`${trackName} — vol ${Math.round(tvol * 100)} · click for sample / pitch / vol / pan`}
-                    style={{ width: '17px', height: '17px', flexShrink: 0, padding: 0, borderRadius: '50%', border: '1px solid #555', background: 'radial-gradient(circle at 50% 35%, #555, #222)', cursor: 'pointer', position: 'relative' }}
-                >
-                    <span style={{ position: 'absolute', inset: 0, transform: `rotate(${volAngle}deg)` }}>
-                        <span style={{ position: 'absolute', left: '50%', top: '1px', width: '2px', height: '6px', background: '#f4902c', transform: 'translateX(-50%)', borderRadius: '1px' }} />
-                    </span>
-                </button>
+            <div style={{ width: '70px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '5px', paddingRight: '6px', position: 'sticky', left: 0, background: '#161616', zIndex: 2 }}>
                 <span
                     onClick={openMenu}
                     title={`${trackName} — click to pick a sample / pitch / vol / pan`}
-                    style={{ fontSize: '11px', color: muted ? '#666' : '#ccc', textAlign: 'left', whiteSpace: 'nowrap', cursor: 'pointer' }}
+                    style={{ fontSize: '11px', color: muted ? '#666' : '#ccc', textAlign: 'right', whiteSpace: 'nowrap', cursor: 'pointer' }}
                 >
                     {trackName}
                 </span>

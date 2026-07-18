@@ -106,10 +106,9 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
     const showSong = activeTabs.includes('SONG');
 
     return (
-        <div style={{ padding: '12px', backgroundColor: 'rgba(18,18,18,0.28)', borderRadius: '4px', color: '#fff', border: '1px solid #333', width: '100%', boxSizing: 'border-box', marginTop: '10px' }}>
+        <div style={{ padding: '0', backgroundColor: 'transparent', borderRadius: '0', color: '#fff', border: 'none', width: '100%', boxSizing: 'border-box', marginTop: '10px' }}>
             {showSeq && (
                 <>
-                <h3 style={{ margin: '0 0 8px 0', fontSize: '15px', color: '#ccc' }}>{label}</h3>
                 
                 <div style={configStyle}>
                     <window.SeqControls
