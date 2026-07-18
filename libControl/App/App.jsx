@@ -101,11 +101,9 @@
             );
         }
 
-        // Wait a tick for Babel to process the external scripts before rendering
-        setTimeout(() => {
-            const root = ReactDOM.createRoot(document.getElementById('root'));
-            root.render(<App />);
-        }, 500);
+        // Everything above is already in this bundle, in order — nothing to wait
+        // for. (This used to sleep 500ms for Babel to compile the .jsx files.)
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
