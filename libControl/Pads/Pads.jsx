@@ -159,12 +159,22 @@ const Pads = ({ label = "Drum Pads", centerVelocity = 100, edgeVelocity = 10, on
             )}
             {/* SETS — named snapshots of the whole kit */}
             <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <span style={{ fontSize: '11px', color: '#aaa', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Sets</span>
-                <select value={currentSet} onChange={(e) => loadSet(e.target.value)}
-                    style={{ background: '#000', color: '#f4902c', border: '1px solid #444', borderRadius: '3px', padding: '4px 8px', fontSize: '12px', minWidth: '130px' }}>
-                    <option value="">— select set —</option>
-                    {Object.keys(sets).map((n) => <option key={n} value={n}>{n}</option>)}
-                </select>
+                <span style={{ fontSize: '11px', color: '#aaa', textTransform: 'uppercase', letterSpacing: '0.5px', marginRight: '4px' }}>Sets:</span>
+                {Object.keys(sets).map((n) => (
+                    <button key={n} onClick={() => loadSet(n)} 
+                        style={{
+                            background: currentSet === n ? '#f4902c' : '#222',
+                            color: currentSet === n ? '#111' : '#ccc',
+                            border: '1px solid #444',
+                            borderRadius: '3px',
+                            padding: '4px 10px',
+                            fontSize: '12px',
+                            cursor: 'pointer',
+                            fontWeight: currentSet === n ? 'bold' : 'normal'
+                        }}>
+                        {n}
+                    </button>
+                ))}
                 <button onClick={newSet} title="Save the current kit as a new set"
                     style={{ background: '#388e3c', color: '#fff', border: 'none', borderRadius: '3px', padding: '5px 12px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' }}>
                     + NEW set
