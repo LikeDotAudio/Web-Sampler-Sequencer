@@ -76,14 +76,14 @@ window.SeqControls = ({
                     type="range" min={40} max={300} step={1} value={bpm}
                     onChange={(e) => setBpm(Number(e.target.value))}
                     title="Drag to set the tempo"
-                    style={{ flex: 1, minWidth: '320px', accentColor: tapping ? '#fff' : '#f4902c', cursor: 'pointer' }}
+                    style={{ flex: 1, minWidth: 0, width: '320px', accentColor: tapping ? '#fff' : '#f4902c', cursor: 'pointer' }}
                 />
                 <span style={{ fontSize: '14px', fontWeight: 'bold', color: tapping ? '#fff' : '#f4902c', fontVariantNumeric: 'tabular-nums', minWidth: '54px', textAlign: 'right' }}>
                     {bpm} <span style={{ fontSize: '9px', color: '#888' }}>BPM</span>
                 </span>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '5px' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '5px', flexWrap: 'wrap' }}>
                 <span style={{ fontSize: '12px', color: '#aaa', marginTop: '6px' }}>Steps:</span>
                 {STEP_OPTIONS.map((n, i) => (
                     <div key={n} style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
@@ -100,7 +100,7 @@ window.SeqControls = ({
                     </div>
                 ))}
             </div>
-            <div style={{ display: 'flex', gap: '6px' }}>
+            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                 <SeqButton
                     label={rendering ? '…rendering' : '⭳ RENDER'}
                     onClick={chose(renderLoop)}

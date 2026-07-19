@@ -2,21 +2,24 @@ window.useSeqRenderer = (pattern, steps, mutes, bpm, safeLabel) => {
     const [rendering, setRendering] = React.useState(false);
     const velOf = (c) => (typeof c === 'number' ? c : (c ? 100 : 0));
 
+    const LOOPS = 8;
+
     const renderLoop = async () => {
         setRendering(true);
         try {
             const secPerStep = 0.25 * 60 / (bpm || 120);   // 16th note
-            const dur = steps * secPerStep;
+            const totalSteps = steps * LOOPS;
+            const dur = totalSteps * secPerStep;
             const rate = (window.OA_AUDIO_CTX && window.OA_AUDIO_CTX.sampleRate) || 44100;
             const Offline = window.OfflineAudioContext || window.webkitOfflineAudioContext;
             const tailSec = 2.0;
             const offline = new Offline(2, Math.max(1, Math.ceil((dur + tailSec) * rate)), rate);
             const TRACKS = window.OA_DRUM_KIT || [];
             
-            for (let step = 0; step < steps; step++) {
+            for (let step = 0; step < totalSteps; step++) {
                 const t = step * secPerStep;
                 pattern.forEach((track, trkIdx) => {
-                    const v = velOf(track[step]);
+                    const v = velOf(track[step % steps]);
                     if (v > 0 && !mutes[trkIdx]) {
                         const vol = v / 100;
                         const entry = window.OA_DRUM_SAMPLES && window.OA_DRUM_SAMPLES[trkIdx];
@@ -37,7 +40,7 @@ window.useSeqRenderer = (pattern, steps, mutes, bpm, safeLabel) => {
             const blob = new Blob([window.oaEncodeWav(loopBuf)], { type: 'audio/wav' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.href = url; a.download = `${safeLabel}_${bpm}bpm_${steps}steps.wav`;
+            a.href = url; a.download = `${safeLabel}_${bpm}bpm_${steps}steps_x${LOOPS}.wav`;
             document.body.appendChild(a); a.click(); a.remove();
             setTimeout(() => URL.revokeObjectURL(url), 2000);
         } catch (e) { console.error('🛑 [Sequencer] render failed:', e); }

@@ -8,9 +8,24 @@ window.DrumSynthEditor = ({ idx, name, onClose }) => {
         return () => window.removeEventListener('oa-synth-changed', onChange);
     }, [idx]);
 
+    // Every edit writes straight through to the live patch and localStorage, so
+    // the only way back is a copy taken before any of it happened. Re-taken when
+    // the panel switches voice, not on every render.
+    const opened = React.useRef(null);
+    React.useEffect(() => {
+        opened.current = window.oaSynthPatch(window.OA_DRUM_SYNTH[idx]);
+    }, [idx]);
+
+    const abort = () => {
+        if (!opened.current) return;
+        window.oaSetSynthPatch(idx, opened.current);
+    };
+
     const patch = window.oaSynthPatch(window.OA_DRUM_SYNTH[idx]);
     const engine = window.OA_SYNTH_ENGINES[patch.engine];
     if (!engine) return null;
+
+    const dirty = !!opened.current && JSON.stringify(opened.current) !== JSON.stringify(patch);
 
     const set = (key, value) => window.oaSetSynthParam(idx, key, value);
     const audition = () => window.oaTriggerDrum(idx, 0.9);
@@ -31,6 +46,10 @@ window.DrumSynthEditor = ({ idx, name, onClose }) => {
                 </span>
                 <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px' }}>
                     <window.SeqButton label="▶ Audition" onClick={audition} color="#388e3c" textColor="#fff"
+                        style={{ padding: '4px 10px', border: 'none' }} />
+                    <window.SeqButton label="⟲ Abort" onClick={abort} disabled={!dirty}
+                        color={dirty ? '#b71c1c' : undefined} textColor={dirty ? '#fff' : undefined}
+                        title="Discard every change made since this panel was opened"
                         style={{ padding: '4px 10px', border: 'none' }} />
                     <window.SeqButton label="↺ Reset" onClick={() => window.oaResetSynthPatch(idx)}
                         title="Back to the factory patch for this voice"

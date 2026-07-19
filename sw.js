@@ -4,7 +4,7 @@
  * ./dist/precache.json — app shell, vendored React, the compiled bundle and the
  * whole sample library.
  */
-const CACHE = 'sampler-v3';
+const CACHE = 'sampler-v4';
 
 self.addEventListener('install', (e) => {
   e.waitUntil((async () => {
@@ -29,9 +29,28 @@ self.addEventListener('activate', (e) => {
   })());
 });
 
+// The app shell changes on every build; samples never do. Serving the shell
+// cache-first pinned an old bundle in the browser forever — a new build only
+// landed if CACHE itself was renamed. These few files go to the network first
+// and fall back to cache, so an offline start still works.
+const SHELL = /(\/|\/index\.html|\/dist\/app\.js|\/manifest\.json)$/;
+
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
   e.respondWith((async () => {
+    const isShell = e.request.mode === 'navigate' || SHELL.test(new URL(e.request.url).pathname);
+    if (isShell) {
+      try {
+        const fresh = await fetch(e.request);
+        if (fresh && fresh.ok) {
+          const cache = await caches.open(CACHE);
+          cache.put(e.request, fresh.clone());
+          return fresh;
+        }
+      } catch (err) { /* offline — fall through to the cached copy */ }
+      const cached = await caches.match(e.request, { ignoreSearch: true });
+      if (cached) return cached;
+    }
     const hit = await caches.match(e.request, { ignoreSearch: true });
     if (hit) return hit;
     try {

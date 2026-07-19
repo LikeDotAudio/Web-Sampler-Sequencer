@@ -31,8 +31,8 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
         stepsRef, patternRef, bpmRef, toneTrackRef, toneRootRef,
         setPattern, setBpm, tapping, tapTempo, setSteps, doubleTo,
         clickVol, setClickVol, clickVolRef,
-        mutes, mutesRef, toggleMute,
-        solos, solosRef, toggleSolo, clearSolos,
+        mutes, mutesRef, toggleMute, setMutes,
+        solos, solosRef, toggleSolo, clearSolos, setSolos,
         trackVol, setTrackVol, trackVolRef, trackPan, setTrackPan, trackPanRef,
         masterVol, setMasterVol, masterVolRef,
         recording, toggleRecording, recordingRef,
@@ -132,7 +132,12 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
         boxShadow: '0 -4px 16px rgba(0,0,0,0.6)',
         maxHeight: '75vh',
         overflowY: 'auto',
-        gap: '12px'
+        gap: '12px',
+        // Sized by its contents on a desktop, but never wider than the screen —
+        // on a phone it shrinks to the viewport and the rows inside wrap.
+        width: 'max-content',
+        maxWidth: 'calc(100vw - 24px)',
+        boxSizing: 'border-box'
     };
 
     const showSeq = activeTabs.includes('SEQ');
@@ -187,8 +192,10 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
                     song={song} 
                     togglePlayback={togglePlayback} 
                     playSong={playSong} 
-                    setSongItems={setSongItems} 
-                    setSongPos={setSongPos} 
+                    setSongItems={setSongItems}
+                    setSongPos={setSongPos}
+                    mixer={{ trackVol, trackPan, mutes, solos, masterVol, clickVol, bpm, steps }}
+                    setMixer={{ setTrackVol, setTrackPan, setMutes, setSolos, setMasterVol, setClickVol, setBpm, setSteps }}
                 />
                 </>
             )}

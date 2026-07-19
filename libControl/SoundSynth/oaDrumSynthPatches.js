@@ -67,6 +67,15 @@ window.oaSetSynthParam = function (idx, key, value) {
     window.dispatchEvent(new CustomEvent('oa-synth-changed', { detail: { idx } }));
 };
 
+// Replace a whole patch at once. oaSetSynthParam can't do this: feeding it
+// 'engine' throws the other parameters away, so restoring a snapshot key by key
+// would lose everything the moment the engine differed.
+window.oaSetSynthPatch = function (idx, patch) {
+    window.OA_DRUM_SYNTH[idx] = window.oaSynthPatch(patch);
+    window.oaSaveSynthPatches();
+    window.dispatchEvent(new CustomEvent('oa-synth-changed', { detail: { idx } }));
+};
+
 window.oaResetSynthPatch = function (idx) {
     window.OA_DRUM_SYNTH[idx] = window.oaSynthPatch(window.OA_SYNTH_FACTORY[idx]);
     window.oaSaveSynthPatches();

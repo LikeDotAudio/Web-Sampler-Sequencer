@@ -1,17 +1,31 @@
-window.SeqSong = ({ songPos, song, togglePlayback, playSong, setSongItems, setSongPos, library, setLibraryItems }) => {
+window.SeqSong = ({ songPos, song, togglePlayback, playSong, setSongItems, setSongPos, library, setLibraryItems, mixer, setMixer }) => {
     const SeqButton = window.SeqButton;
     const fileRef = React.useRef(null);
 
     const exportSong = () => {
         const name = (window.prompt('Name this export:', 'My Song') || '').trim();
         if (!name) return;
-        window.oaExportSong(library, song, name);
+        window.oaExportSong(library, song, name, mixer);
+    };
+
+    // Levels are React/MQTT state, so they are applied here rather than in
+    // oaApplySongState (which only knows about the audio-layer globals).
+    const applyMixer = (m) => {
+        if (!m || !setMixer) return;
+        if (Array.isArray(m.trackVol)) setMixer.setTrackVol(m.trackVol);
+        if (Array.isArray(m.trackPan)) setMixer.setTrackPan(m.trackPan);
+        if (Array.isArray(m.mutes)) setMixer.setMutes(m.mutes);
+        if (Array.isArray(m.solos)) setMixer.setSolos(m.solos);
+        if (m.masterVol != null) setMixer.setMasterVol(m.masterVol);
+        if (m.clickVol != null) setMixer.setClickVol(m.clickVol);
+        if (m.bpm != null) setMixer.setBpm(m.bpm);
+        if (m.steps != null) setMixer.setSteps(m.steps);
     };
 
     const importFile = (file) => {
         if (!file) return;
         const reader = new FileReader();
-        reader.onload = () => {
+        reader.onload = async () => {
             let parsed;
             try {
                 parsed = window.oaParseSongFile(String(reader.result));
@@ -23,11 +37,25 @@ window.SeqSong = ({ songPos, song, togglePlayback, playSong, setSongItems, setSo
             setLibraryItems(merged);
             // The imported arrangement follows its patterns' new names.
             if (parsed.song.length) setSongItems(parsed.song.map((n) => renamed[n] || n));
+            applyMixer(parsed.mixer);
+
+            let state = { synth: 0, samples: 0, sampleNote: '', reverb: false };
+            try { state = await window.oaApplySongState(parsed); }
+            catch (err) { console.error('🛑 [Song] could not restore state:', err); }
+
             const note = Object.keys(renamed).length
                 ? `\n\n${Object.keys(renamed).length} had name clashes and were added with a suffix.`
                 : '';
+            const restored = [
+                parsed.mixer ? 'mixer levels' : null,
+                state.synth ? `${state.synth} synth voice(s)` : null,
+                state.reverb ? 'reverb' : null,
+                state.samples ? `${state.samples} sample(s)` : null,
+            ].filter(Boolean);
             window.alert(`Imported ${parsed.patterns.length} pattern(s)` +
-                (parsed.song.length ? ` and a ${parsed.song.length}-part song.` : '.') + note);
+                (parsed.song.length ? ` and a ${parsed.song.length}-part song.` : '.') +
+                (restored.length ? `\n\nRestored: ${restored.join(', ')}.` : '') +
+                (state.sampleNote ? `\n\n${state.sampleNote}` : '') + note);
         };
         reader.readAsText(file);
     };
@@ -73,8 +101,7 @@ window.SeqSong = ({ songPos, song, togglePlayback, playSong, setSongItems, setSo
                 <SeqButton
                     label="⭳ Export"
                     onClick={exportSong}
-                    disabled={!library || library.length === 0}
-                    title="Download every saved pattern and the current arrangement as a .json file"
+                    title="Download every saved pattern, the arrangement, the kit, mixer levels and synth settings as a .json file"
                     style={{ padding: '4px 10px', border: 'none' }}
                 />
                 <SeqButton
