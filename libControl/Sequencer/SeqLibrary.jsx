@@ -29,11 +29,19 @@ window.SeqLibrary = ({ library, loadPattern, deletePattern, setSongItems, song,
             </div>
             <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '10px' }}>
                 <SeqButton
-                    label={rendering ? '…rendering' : '⭳ RENDER'}
-                    onClick={renderLoop}
+                    label={rendering ? '…rendering' : '⭳ RENDER 1 LOOP'}
+                    onClick={() => renderLoop(1)}
                     disabled={rendering}
                     color="#7b1fa2" textColor="#fff"
-                    title="Render this pattern to a loopable WAV file"
+                    title="Render one pass of this pattern to a loopable WAV file"
+                    style={{ padding: '6px 12px', border: 'none', cursor: rendering ? 'wait' : 'pointer' }}
+                />
+                <SeqButton
+                    label={rendering ? '…rendering' : '⭳ RENDER 8 LOOPS'}
+                    onClick={() => renderLoop(8)}
+                    disabled={rendering}
+                    color="#4a148c" textColor="#fff"
+                    title="Render eight passes of this pattern to a WAV file"
                     style={{ padding: '6px 12px', border: 'none', cursor: rendering ? 'wait' : 'pointer' }}
                 />
                 <SeqButton

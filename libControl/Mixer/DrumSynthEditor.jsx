@@ -1,3 +1,44 @@
+// Hz <-> MIDI note. A440, and midiNoteName's octave numbering (C3 = 60) so a
+// pitch reads the same here as it does on a pad.
+const hzToMidi = (hz) => 69 + 12 * Math.log2(Math.max(1e-6, hz) / 440);
+const midiToHz = (m) => 440 * Math.pow(2, (m - 69) / 12);
+
+// The chromatic partner to a Hz slider. Same underlying value, stepped in
+// semitones — snappy where the Hz fader is granular. Its range is clamped to
+// whole semitones inside the parameter's own min/max so it can never push the
+// value out of bounds.
+const NoteFader = ({ spec, value, onChange, audition }) => {
+    const lo = Math.ceil(hzToMidi(spec.min));
+    const hi = Math.floor(hzToMidi(spec.max));
+    if (hi <= lo) return null;                       // too narrow to be a scale
+    const midi = hzToMidi(value);
+    // Round for display so a Hz nudge does not show a fractional note, but keep
+    // the slider on the true position — otherwise it jumps under the cursor.
+    const nearest = Math.round(midi);
+    const inTune = Math.abs(midi - nearest) < 0.005;
+    return (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '9px', color: '#666', minWidth: '78px', textAlign: 'right', paddingRight: '2px' }}>
+                note
+            </span>
+            <input
+                type="range" min={lo} max={hi} step={1}
+                value={Math.min(hi, Math.max(lo, nearest))}
+                onChange={(e) => onChange(midiToHz(Number(e.target.value)))}
+                onMouseUp={audition}
+                style={{ flex: 1, minWidth: '70px', accentColor: '#4fc3f7', cursor: 'pointer' }}
+            />
+            <span style={{
+                fontSize: '10px', minWidth: '54px', textAlign: 'right',
+                color: inTune ? '#4fc3f7' : '#5a7d8c', fontVariantNumeric: 'tabular-nums'
+            }}>
+                {window.midiNoteName ? window.midiNoteName(nearest) : nearest}
+                {!inTune ? <span style={{ color: '#666', fontSize: '9px' }}> ~</span> : null}
+            </span>
+        </div>
+    );
+};
+
 // The SYNTH panel for one mixer channel. Every control is generated from the
 // engine's parameter schema, so adding a knob to an engine adds it here too.
 window.DrumSynthEditor = ({ idx, name, onClose }) => {
@@ -72,7 +113,9 @@ window.DrumSynthEditor = ({ idx, name, onClose }) => {
                 <span style={{ fontSize: '10px', color: '#777', fontStyle: 'italic' }}>{engine.blurb}</span>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '8px 18px' }}>
+            {/* One parameter per row, always — a two-column grid put a knob's
+                Hz and note faders side by side with an unrelated control. */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '8px' }}>
                 {Object.keys(engine.params).map((key) => {
                     const spec = engine.params[key];
                     const v = patch[key];
@@ -91,18 +134,23 @@ window.DrumSynthEditor = ({ idx, name, onClose }) => {
                         );
                     }
                     return (
-                        <div key={key} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span style={{ ...label, minWidth: '78px' }}>{spec.label}</span>
-                            <input
-                                type="range" min={spec.min} max={spec.max} step={spec.step} value={v}
-                                onChange={(e) => set(key, Number(e.target.value))}
-                                onMouseUp={audition}
-                                style={{ flex: 1, minWidth: '70px', accentColor: '#f4902c', cursor: 'pointer' }}
-                            />
-                            <span style={{ ...value, minWidth: '54px', textAlign: 'right' }}>
-                                {spec.step < 1 ? Number(v).toFixed(2) : Math.round(v)}
-                                {spec.unit ? <span style={{ color: '#777', fontSize: '9px' }}> {spec.unit}</span> : null}
-                            </span>
+                        <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <span style={{ ...label, minWidth: '78px' }}>{spec.label}</span>
+                                <input
+                                    type="range" min={spec.min} max={spec.max} step={spec.step} value={v}
+                                    onChange={(e) => set(key, Number(e.target.value))}
+                                    onMouseUp={audition}
+                                    style={{ flex: 1, minWidth: '70px', accentColor: '#f4902c', cursor: 'pointer' }}
+                                />
+                                <span style={{ ...value, minWidth: '54px', textAlign: 'right' }}>
+                                    {spec.step < 1 ? Number(v).toFixed(2) : Math.round(v)}
+                                    {spec.unit ? <span style={{ color: '#777', fontSize: '9px' }}> {spec.unit}</span> : null}
+                                </span>
+                            </div>
+                            {spec.unit === 'Hz' && (
+                                <NoteFader spec={spec} value={v} onChange={(hz) => set(key, hz)} audition={audition} />
+                            )}
                         </div>
                     );
                 })}

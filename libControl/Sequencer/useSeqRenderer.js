@@ -2,9 +2,10 @@ window.useSeqRenderer = (pattern, steps, mutes, bpm, safeLabel) => {
     const [rendering, setRendering] = React.useState(false);
     const velOf = (c) => (typeof c === 'number' ? c : (c ? 100 : 0));
 
-    const LOOPS = 8;
-
-    const renderLoop = async () => {
+    // How many times the pattern is laid down. One for a single loop to drop
+    // into a DAW, eight for something long enough to play against.
+    const renderLoop = async (loops = 1) => {
+        const LOOPS = Math.max(1, loops | 0);
         setRendering(true);
         try {
             const secPerStep = 0.25 * 60 / (bpm || 120);   // 16th note
