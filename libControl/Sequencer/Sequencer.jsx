@@ -177,12 +177,18 @@ const Sequencer = ({ activeTabs = ['SEQ'], label = "Pattern Sequencer" }) => {
             {showSong && (
                 <>
                 {showSeq && <hr style={{borderColor: '#444', margin: '20px 0'}} />}
-                <window.SeqLibrary 
-                    library={library} 
-                    loadPattern={loadPattern} 
-                    deletePattern={deletePattern} 
-                    setSongItems={setSongItems} 
-                    song={song} 
+                <window.SeqLibrary
+                    library={library}
+                    loadPattern={loadPattern}
+                    deletePattern={deletePattern}
+                    setSongItems={setSongItems}
+                    song={song}
+                    steps={steps}
+                    setSteps={setSteps}
+                    doubleTo={doubleTo}
+                    rendering={rendering}
+                    renderLoop={renderLoop}
+                    clearPattern={clearPattern}
                 />
 
                 <window.SeqSong

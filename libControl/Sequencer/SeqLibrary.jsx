@@ -1,8 +1,50 @@
-window.SeqLibrary = ({ library, loadPattern, deletePattern, setSongItems, song }) => {
+window.SeqLibrary = ({ library, loadPattern, deletePattern, setSongItems, song,
+                       steps, setSteps, doubleTo, rendering, renderLoop, clearPattern }) => {
+    const SeqButton = window.SeqButton;
+    const STEP_OPTIONS = [4, 8, 16, 32, 64];
     return (
         <div style={{ marginTop: '10px', borderTop: '1px solid #333', paddingTop: '8px' }}>
             <div style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px' }}>
                 Patterns Library
+            </div>
+
+            {/* Pattern length and the whole-pattern actions, beside the patterns
+                themselves rather than buried in the ⚙ drop-up. */}
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '5px', flexWrap: 'wrap', marginBottom: '8px' }}>
+                <span style={{ fontSize: '12px', color: '#aaa', marginTop: '6px' }}>Steps:</span>
+                {STEP_OPTIONS.map((n, i) => (
+                    <div key={n} style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                        <SeqButton label={String(n)} active={steps === n} onClick={() => setSteps(n)} />
+                        {i > 0 && (
+                            <SeqButton
+                                label={`+${STEP_OPTIONS[i - 1]}`}
+                                onClick={() => doubleTo(n)}
+                                color="#26323a" textColor="#fca858"
+                                title={`Extend to ${n} steps: copy the first ${n / 2} onto the second ${n / 2}`}
+                                style={{ border: '1px solid #3a4a58' }}
+                            />
+                        )}
+                    </div>
+                ))}
+            </div>
+            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '10px' }}>
+                <SeqButton
+                    label={rendering ? '…rendering' : '⭳ RENDER'}
+                    onClick={renderLoop}
+                    disabled={rendering}
+                    color="#7b1fa2" textColor="#fff"
+                    title="Render this pattern to a loopable WAV file"
+                    style={{ padding: '6px 12px', border: 'none', cursor: rendering ? 'wait' : 'pointer' }}
+                />
+                <SeqButton
+                    label="Clear"
+                    onClick={() => {
+                        if (window.confirm("Are you sure you want to clear the entire pattern?")) {
+                            clearPattern();
+                        }
+                    }}
+                    style={{ padding: '6px 12px', border: 'none' }}
+                />
             </div>
             {library.length === 0 ? (
                 <div style={{ fontSize: '12px', color: '#666', fontStyle: 'italic' }}>
